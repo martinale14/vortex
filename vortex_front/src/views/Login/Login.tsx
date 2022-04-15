@@ -10,21 +10,23 @@ import backgrounLogin from "../assets/Background.svg";
 import logo from "../assets/Logo.svg";
 
 interface propsLogin { }
-console.log("HOLA...")
+function Login(props: propsLogin) {
 
- function Login(props: propsLogin) {
-    console.log("HOLA..")
-        return (
-            <div className="background_login">
-                <img className="backgroundImage_Login" src={backgrounLogin}></img>
-                <div className="cardLogin">
-                    <img className="Logo_login" src={logo}></img>
+    return (
+        <div className="background_login">
+            <img className="backgroundImage_Login" src={backgrounLogin}></img>
+            <div className="card_Login">
+                <img className="Logo_login" src={logo}></img>
+                <div className="cardInformation_login">
                     <p>Correo</p>
-                    <input type="text" placeholder="Ingrese el correo"></input>
+                    <input type="text" placeholder="Ingrese el correo" className="input_Login"></input>
                     <p>Contraseña</p>
-                    <input type="password" placeholder="Ingrese la contraseña"></input>
+                    <input type="password" placeholder="Ingrese la contraseña" className="input_Login"></input>
+                    <button>Iniciar sesión</button>
+                    <a>¿Olvidó su contraseña?</a>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
+}
 export default Login;

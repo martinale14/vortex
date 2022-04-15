@@ -1,26 +1,21 @@
 import * as React from "react";
-//import ReactDOM from 'react-dom/client';//no que que pasa con esto 
+import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './views/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./views/Login/Login";
-/* const root = ReactDOM.createRoot(
+const root = createRoot(
   document.getElementById('root') as HTMLElement
-); */
-
-export default function index() {
-
-  //console.log("entra a index");
-
+);
+root.render(<Index></Index>)
+export default function Index() {
   return (
     <React.StrictMode>
-      <Routes>
-        <App></App>
-        <Route path="/">
-          <Login></Login>
-        </Route>
-      </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login></Login>}></Route>
+        </Routes>
+      </BrowserRouter>
     </React.StrictMode>
   );
 }
