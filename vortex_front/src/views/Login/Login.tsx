@@ -1,6 +1,6 @@
 import styles from './Login.module.css';
 import backgrounLogin from '../../assets/Background.svg';
-import logo from '../../assets/Logo.svg';
+import logo from '../../assets/logo.svg';
 import Input from '../../components/input/Input';
 import Button from '../../components/button/Button';
 
