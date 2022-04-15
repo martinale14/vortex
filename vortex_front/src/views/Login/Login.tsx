@@ -1,32 +1,26 @@
-import "./Login.css";
-import * as React from "react";
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    useLocation
-} from "react-router-dom";
-import backgrounLogin from "../assets/Background.svg";
-import logo from "../assets/Logo.svg";
+import styles from './Login.module.css';
+import backgrounLogin from '../../assets/Background.svg';
+import logo from '../../assets/Logo.svg';
+import Input from '../../components/input/Input';
+import Button from '../../components/button/Button';
 
-interface propsLogin { }
+interface propsLogin {}
 function Login(props: propsLogin) {
-
-    return (
-        <div className="background_login">
-            <img className="backgroundImage_Login" src={backgrounLogin}></img>
-            <div className="card_Login">
-                <img className="Logo_login" src={logo}></img>
-                <div className="cardInformation_login">
-                    <p>Correo</p>
-                    <input type="text" placeholder="Ingrese el correo" className="input_Login"></input>
-                    <p>Contraseña</p>
-                    <input type="password" placeholder="Ingrese la contraseña" className="input_Login"></input>
-                    <button>Iniciar sesión</button>
-                    <a>¿Olvidó su contraseña?</a>
-                </div>
-            </div>
+  return (
+    <div className={styles.background_login}>
+      <img className={styles.backgroundImage_Login} src={backgrounLogin} alt='Vortex_Bird_Effect' />
+      <div className={styles.card_Login}>
+        <img className={styles.Logo_login} src={logo} alt='Vortex_Bird_Logo' />
+        <div className={styles.cardInformation_login}>
+          <p>Correo</p>
+          <Input type='text' placeholder='Ingrese el correo' />
+          <p>Contraseña</p>
+          <Input type='password' placeholder='Ingrese la contraseña' />
+          <Button />
+          <a href='/'>¿Olvidó su contraseña?</a>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 export default Login;
