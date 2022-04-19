@@ -13,9 +13,9 @@ export class UserController {
     } else {
       const email = req.body.email;
 
-      const data = await User.searchUserByEmail(email);
-
       try {
+        const data = await User.searchUserByEmail(email);
+
         if (data.rows.length > 0) {
           result = 'Usuario encontrado';
           parsed = User.fromJson(data.rows[0]).toJson();

@@ -9,12 +9,13 @@ import passport from 'passport';
 import mainRouter from './routes/main.routes';
 import authRouter from './routes/auth.routes';
 import searchRouter from './routes/search.routes';
+import notFoundRouter from './routes/notFound.routes';
 
-// Initializing database
-require('./database');
+import { initializePassport } from './lib/passport.lib';
 
 // Generating the server
 const app = express();
+initializePassport();
 
 // Setting Middlewares
 app.use(cors({ origin: 'http://localhost:3000' }));
@@ -24,7 +25,7 @@ app.use(
   session({
     secret: 'Vortex@Bird_Secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
   })
 );
 app.use(passport.initialize());
@@ -37,6 +38,7 @@ app.set('PORT', process.env.PORT || 4000);
 app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/search', searchRouter);
+app.all('*', notFoundRouter);
 
 // Starting the server
 app.listen(app.get('PORT'), () => {

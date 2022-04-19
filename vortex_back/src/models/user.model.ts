@@ -20,6 +20,7 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
   role: Role;
+  password: string;
 
   constructor(
     id: string,
@@ -30,7 +31,8 @@ export class User {
     acceptedTerms: boolean,
     createdAt: Date,
     updatedAt: Date,
-    role: Role
+    role: Role,
+    password: string
   ) {
     this.id = id;
     this.name = name;
@@ -41,6 +43,7 @@ export class User {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.role = role;
+    this.password = password;
   }
 
   static fromJson(obj: { [key: string]: any }): User {
@@ -53,7 +56,8 @@ export class User {
       obj.accepted_terms_user,
       obj.created_at_user,
       obj.updated_at_user,
-      obj.role_id_user
+      obj.role_id_user,
+      obj.password_user
     );
 
     return user;
@@ -95,7 +99,17 @@ export class User {
 
   static async searchUserByEmail(email: string) {
     try {
-      const data = await pool.query('SELECT * FROM vortex.find_user_by_email($1)', [email]);
+      const data = await pool.query('SELECT * FROM vortex.users WHERE email_user = $1', [email]);
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
+  }
+
+  static async searchUserById(id: string) {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.users WHERE id_user = $1', [id]);
 
       return data;
     } catch (_) {
