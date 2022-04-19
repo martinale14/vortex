@@ -1,17 +1,13 @@
 import express from 'express';
-import { UserController } from '../controllers/user.controller';
-import { UserInterface } from '../models/user.model';
+import passport from 'passport';
+import { AuthController } from '../controllers/auth/auth.controller';
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
-  const userInterface: UserInterface = req.body;
+router.post('/login', passport.authenticate('local'), AuthController.login);
 
-  console.log(userInterface);
+router.get('/logout', AuthController.logout);
 
-  const { result, status } = await UserController.insertNewUser(userInterface);
-
-  res.status(status).json({ msg: result });
-});
+router.post('/register', AuthController.register);
 
 export default router;

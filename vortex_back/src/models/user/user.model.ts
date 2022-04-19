@@ -1,10 +1,13 @@
 import { Role, getRoleName } from './roles.model';
+import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface UserInterface {
   name: string;
   phone: string | null;
   email: string;
   role: Role;
+  pictureUrl : string;
   password: string;
 }
 
@@ -18,6 +21,8 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
   role: Role;
+  pictureUrl : string;
+  password: string;
 
   constructor(
     id: string,
@@ -28,7 +33,9 @@ export class User {
     acceptedTerms: boolean,
     createdAt: Date,
     updatedAt: Date,
-    role: Role
+    role: Role,
+    pictureUrl:string,
+    password: string
   ) {
     this.id = id;
     this.name = name;
@@ -39,11 +46,11 @@ export class User {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.role = role;
+    this.pictureUrl = pictureUrl;
+    this.password = password;
   }
 
   static fromJson(obj: { [key: string]: any }): User {
-    console.log(obj);
-
     const user: User = new User(
       obj.id_user,
       obj.name_user,
@@ -53,7 +60,9 @@ export class User {
       obj.accepted_terms_user,
       obj.created_at_user,
       obj.updated_at_user,
-      obj.role_id_user
+      obj.role_id_user,
+      obj.picture_url_user,
+      obj.password_user
     );
 
     return user;
@@ -69,9 +78,50 @@ export class User {
       acceptedTerms: this.acceptedTerms,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      pictureUrl: this.pictureUrl,
       role: getRoleName(this.role)
     };
 
     return userJson;
+  }
+
+  static async createUser(userInterface: UserInterface) {
+    try {
+      await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5, $6)', [
+        userInterface.name,
+        userInterface.phone,
+        userInterface.email,
+        userInterface.password,
+        userInterface.pictureUrl,
+        userInterface.role
+      ]);
+    } catch (e: any) {
+      if (e.constraint === 'unique_email') {
+        throw new VortexException(e.constraint);
+      } else {
+
+        throw e;
+      }
+    }
+  }
+
+  static async searchUserByEmail(email: string) {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.users WHERE email_user = $1', [email]);
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
+  }
+
+  static async searchUserById(id: string) {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.users WHERE id_user = $1', [id]);
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }
