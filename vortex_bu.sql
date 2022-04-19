@@ -59,25 +59,25 @@ CREATE TABLE vortex.users (
     created_at_user timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at_user timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     role_id_user integer NOT NULL,
-    profile_picture_url_user character varying(255)
+    picture_url_user character varying(255)
 );
 
 
 ALTER TABLE vortex.users OWNER TO postgres;
 
 --
--- Name: insert_user(character varying, character varying, character varying, character varying, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+-- Name: insert_user(character varying, character varying, character varying, character varying, character varying, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
 --
 
-CREATE PROCEDURE vortex.insert_user(IN name character varying, IN phone character varying, IN email character varying, IN password character varying, IN role_id integer)
+CREATE PROCEDURE vortex.insert_user(IN name character varying, IN phone character varying, IN email character varying, IN password character varying, IN picture_url character varying, IN role_id integer)
     LANGUAGE sql
     BEGIN ATOMIC
- INSERT INTO vortex.users (name_user, phone_user, email_user, password_user, role_id_user)
-   VALUES (insert_user.name, insert_user.phone, insert_user.email, insert_user.password, insert_user.role_id);
+ INSERT INTO vortex.users (name_user, phone_user, email_user, password_user, picture_url_user, role_id_user)
+   VALUES (insert_user.name, insert_user.phone, insert_user.email, insert_user.password, insert_user.picture_url, insert_user.role_id);
 END;
 
 
-ALTER PROCEDURE vortex.insert_user(IN name character varying, IN phone character varying, IN email character varying, IN password character varying, IN role_id integer) OWNER TO postgres;
+ALTER PROCEDURE vortex.insert_user(IN name character varying, IN phone character varying, IN email character varying, IN password character varying, IN picture_url character varying, IN role_id integer) OWNER TO postgres;
 
 --
 -- Name: on_update_acc_criteria(); Type: FUNCTION; Schema: vortex; Owner: postgres
@@ -248,25 +248,6 @@ ALTER SEQUENCE vortex.acceptance_criteria_id_acc_seq OWNED BY vortex.acc_criteri
 
 
 --
--- Name: companies; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.companies (
-    id_comp integer NOT NULL,
-    name_comp character varying(20) NOT NULL,
-    email_comp character varying(70) NOT NULL,
-    phone_comp character varying(12),
-    direction_comp character varying(70),
-    created_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_comp integer NOT NULL,
-    updated_by_comp integer NOT NULL
-);
-
-
-ALTER TABLE vortex.companies OWNER TO postgres;
-
---
 -- Name: companies_id_comp_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
 --
 
@@ -282,32 +263,23 @@ CREATE SEQUENCE vortex.companies_id_comp_seq
 ALTER TABLE vortex.companies_id_comp_seq OWNER TO postgres;
 
 --
--- Name: companies_id_comp_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
+-- Name: companies; Type: TABLE; Schema: vortex; Owner: postgres
 --
 
-ALTER SEQUENCE vortex.companies_id_comp_seq OWNED BY vortex.companies.id_comp;
-
-
---
--- Name: histories; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.histories (
-    id_hist integer NOT NULL,
-    status_hist character varying(12) NOT NULL,
-    is_epic_hist boolean DEFAULT false NOT NULL,
-    created_at_hist timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_hist timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_hist integer NOT NULL,
-    updated_by_hist integer NOT NULL,
-    project_id_hist integer NOT NULL,
-    user_responsable_id_hist integer,
-    epic_parent_id_hist integer,
-    sprint_id_hist integer
+CREATE TABLE vortex.companies (
+    id_comp integer DEFAULT nextval('vortex.companies_id_comp_seq'::regclass) NOT NULL,
+    name_comp character varying(20) NOT NULL,
+    email_comp character varying(70) NOT NULL,
+    phone_comp character varying(12),
+    direction_comp character varying(70),
+    created_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_comp integer NOT NULL,
+    updated_by_comp integer NOT NULL
 );
 
 
-ALTER TABLE vortex.histories OWNER TO postgres;
+ALTER TABLE vortex.companies OWNER TO postgres;
 
 --
 -- Name: histories_id_hist_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
@@ -325,11 +297,25 @@ CREATE SEQUENCE vortex.histories_id_hist_seq
 ALTER TABLE vortex.histories_id_hist_seq OWNER TO postgres;
 
 --
--- Name: histories_id_hist_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
+-- Name: histories; Type: TABLE; Schema: vortex; Owner: postgres
 --
 
-ALTER SEQUENCE vortex.histories_id_hist_seq OWNED BY vortex.histories.id_hist;
+CREATE TABLE vortex.histories (
+    id_hist integer DEFAULT nextval('vortex.histories_id_hist_seq'::regclass) NOT NULL,
+    status_hist character varying(12) NOT NULL,
+    is_epic_hist boolean DEFAULT false NOT NULL,
+    created_at_hist timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_hist timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_hist integer NOT NULL,
+    updated_by_hist integer NOT NULL,
+    project_id_hist integer NOT NULL,
+    user_responsable_id_hist integer,
+    epic_parent_id_hist integer,
+    sprint_id_hist integer
+);
 
+
+ALTER TABLE vortex.histories OWNER TO postgres;
 
 --
 -- Name: projects; Type: TABLE; Schema: vortex; Owner: postgres
@@ -450,26 +436,6 @@ ALTER SEQUENCE vortex.sprints_id_spri_seq OWNED BY vortex.sprints.id_spri;
 
 
 --
--- Name: versions; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.versions (
-    id_vers integer NOT NULL,
-    number_vers integer NOT NULL,
-    title_vers character varying(100) NOT NULL,
-    description_vers character varying(250) NOT NULL,
-    is_base_doc_vers boolean DEFAULT false NOT NULL,
-    created_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_vers integer NOT NULL,
-    updated_by_vers integer NOT NULL,
-    history_id_vers integer NOT NULL
-);
-
-
-ALTER TABLE vortex.versions OWNER TO postgres;
-
---
 -- Name: versions_id_vers_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
 --
 
@@ -485,31 +451,30 @@ CREATE SEQUENCE vortex.versions_id_vers_seq
 ALTER TABLE vortex.versions_id_vers_seq OWNER TO postgres;
 
 --
--- Name: versions_id_vers_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
+-- Name: versions; Type: TABLE; Schema: vortex; Owner: postgres
 --
 
-ALTER SEQUENCE vortex.versions_id_vers_seq OWNED BY vortex.versions.id_vers;
+CREATE TABLE vortex.versions (
+    id_vers integer DEFAULT nextval('vortex.versions_id_vers_seq'::regclass) NOT NULL,
+    number_vers integer NOT NULL,
+    title_vers character varying(100) NOT NULL,
+    description_vers character varying(250) NOT NULL,
+    is_base_doc_vers boolean DEFAULT false NOT NULL,
+    created_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_vers integer NOT NULL,
+    updated_by_vers integer NOT NULL,
+    history_id_vers integer NOT NULL
+);
 
+
+ALTER TABLE vortex.versions OWNER TO postgres;
 
 --
 -- Name: acc_criterias id_acc; Type: DEFAULT; Schema: vortex; Owner: postgres
 --
 
 ALTER TABLE ONLY vortex.acc_criterias ALTER COLUMN id_acc SET DEFAULT nextval('vortex.acceptance_criteria_id_acc_seq'::regclass);
-
-
---
--- Name: companies id_comp; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.companies ALTER COLUMN id_comp SET DEFAULT nextval('vortex.companies_id_comp_seq'::regclass);
-
-
---
--- Name: histories id_hist; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.histories ALTER COLUMN id_hist SET DEFAULT nextval('vortex.histories_id_hist_seq'::regclass);
 
 
 --
@@ -534,18 +499,10 @@ ALTER TABLE ONLY vortex.sprints ALTER COLUMN id_spri SET DEFAULT nextval('vortex
 
 
 --
--- Name: versions id_vers; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.versions ALTER COLUMN id_vers SET DEFAULT nextval('vortex.versions_id_vers_seq'::regclass);
-
-
---
 -- Data for Name: acc_criterias; Type: TABLE DATA; Schema: vortex; Owner: postgres
 --
 
 COPY vortex.acc_criterias (id_acc, description_acc, type_acc, created_at_acc, updated_at_acc, created_by_acc, updated_by_acc, history_id_acc) FROM stdin;
-1	El fonde debe ser amarillo	DOUI	2022-04-14 19:30:43.622767	2022-04-14 19:30:43.622767	1	1	1
 \.
 
 
@@ -554,7 +511,6 @@ COPY vortex.acc_criterias (id_acc, description_acc, type_acc, created_at_acc, up
 --
 
 COPY vortex.companies (id_comp, name_comp, email_comp, phone_comp, direction_comp, created_at_comp, updated_at_comp, created_by_comp, updated_by_comp) FROM stdin;
-2	GoLiving	GoLiving@Living.com	573185824979	Avenida 3 norte - #36	2022-04-14 17:19:46.906394	2022-04-14 17:19:46.906394	1	1
 \.
 
 
@@ -563,8 +519,6 @@ COPY vortex.companies (id_comp, name_comp, email_comp, phone_comp, direction_com
 --
 
 COPY vortex.histories (id_hist, status_hist, is_epic_hist, created_at_hist, updated_at_hist, created_by_hist, updated_by_hist, project_id_hist, user_responsable_id_hist, epic_parent_id_hist, sprint_id_hist) FROM stdin;
-1	OPEN	f	2022-04-14 19:13:40.236472	2022-04-14 19:15:28.995536	1	1	1	1	2	\N
-2	OPEN	t	2022-04-14 19:14:05.018772	2022-04-14 19:16:26.166149	1	1	1	1	\N	1
 \.
 
 
@@ -573,7 +527,6 @@ COPY vortex.histories (id_hist, status_hist, is_epic_hist, created_at_hist, upda
 --
 
 COPY vortex.projects (id_proj, name_proj, estimated_time_proj, start_date_proj, created_at_proj, updated_at_proj, created_by_proj, updated_by_proj, company_id_proj) FROM stdin;
-1	Sistema de compras	25	2022-10-02	2022-04-14 18:45:24.17918	2022-04-14 18:45:24.17918	1	1	2
 \.
 
 
@@ -591,7 +544,6 @@ COPY vortex.roles (id_role, name_role, created_at_role, updated_at_role) FROM st
 --
 
 COPY vortex.sprints (id_spri, start_date_spri, end_date_spri, status_spri, created_at_spri, updated_at_spri, created_by_spri, updated_by_spri, project_id_spri) FROM stdin;
-1	2022-10-15	2022-10-30	OPEN	2022-04-14 19:07:27.02559	2022-04-14 19:07:27.02559	1	1	1
 \.
 
 
@@ -599,9 +551,9 @@ COPY vortex.sprints (id_spri, start_date_spri, end_date_spri, status_spri, creat
 -- Data for Name: users; Type: TABLE DATA; Schema: vortex; Owner: postgres
 --
 
-COPY vortex.users (id_user, name_user, phone_user, email_user, password_user, forgot_password_user, accepted_terms_user, created_at_user, updated_at_user, role_id_user, profile_picture_url_user) FROM stdin;
-1	Martin Alejandro Escobar Espinel	573185824979	martinale4@hotmail.com	Chechonito14	f	f	2022-04-14 17:19:26.699591	2022-04-14 17:19:26.699591	1	\N
-2	Juan Pablo Rivera	573185824979	juanpari1766@gmail.com	Juanpari176600QA	f	f	2022-04-14 21:06:44.087942	2022-04-14 21:06:44.087942	1	\N
+COPY vortex.users (id_user, name_user, phone_user, email_user, password_user, forgot_password_user, accepted_terms_user, created_at_user, updated_at_user, role_id_user, picture_url_user) FROM stdin;
+5	Martín Alejandro Escobar Espinel	\N	martinale4@hotmail.com	$2b$10$sEfLC/SeytVrthXRD0NqOOkjIFwZAsF1fthQcTgGUrkoRBzW6/oFi	f	f	2022-04-19 11:08:04.325309	2022-04-19 17:31:35.038145	1	https://res.cloudinary.com/dhlvkhuhz/image/upload/v1650363525/vortex/profile_pictures/01_i24e1l.jpg
+13	Camilo Bolañis	\N	bolañoselpapi@hotmail.com	$2b$10$lOh0iUdeozj7hJyR.2vB2uhWcq0t0Nq9dR9nibmqhHq8WDUGDdmla	f	f	2022-04-19 12:49:48.360245	2022-04-19 17:31:35.038145	1	https://res.cloudinary.com/dhlvkhuhz/image/upload/v1650363525/vortex/profile_pictures/01_i24e1l.jpg
 \.
 
 
@@ -610,7 +562,6 @@ COPY vortex.users (id_user, name_user, phone_user, email_user, password_user, fo
 --
 
 COPY vortex.versions (id_vers, number_vers, title_vers, description_vers, is_base_doc_vers, created_at_vers, updated_at_vers, created_by_vers, updated_by_vers, history_id_vers) FROM stdin;
-3	1	El usuario debe poder registrarse	El usuario general debe poder registrarse para ingresar al proyecto	f	2022-04-14 19:33:32.94117	2022-04-14 19:33:32.94117	1	1	1
 \.
 
 
@@ -625,14 +576,14 @@ SELECT pg_catalog.setval('vortex.acceptance_criteria_id_acc_seq', 1, true);
 -- Name: companies_id_comp_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.companies_id_comp_seq', 2, true);
+SELECT pg_catalog.setval('vortex.companies_id_comp_seq', 1, true);
 
 
 --
 -- Name: histories_id_hist_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.histories_id_hist_seq', 2, true);
+SELECT pg_catalog.setval('vortex.histories_id_hist_seq', 1, true);
 
 
 --
@@ -660,14 +611,14 @@ SELECT pg_catalog.setval('vortex.sprints_id_spri_seq', 1, true);
 -- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.users_id_user_seq', 24, true);
+SELECT pg_catalog.setval('vortex.users_id_user_seq', 14, true);
 
 
 --
 -- Name: versions_id_vers_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.versions_id_vers_seq', 3, true);
+SELECT pg_catalog.setval('vortex.versions_id_vers_seq', 1, true);
 
 
 --
