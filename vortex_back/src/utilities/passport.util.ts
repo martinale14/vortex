@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-import { User } from '../models/user.model';
+import { User } from '../models/user/user.model';
 import { compare } from 'bcrypt';
 
 export function initializePassport() {

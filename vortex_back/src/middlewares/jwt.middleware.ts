@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user.model';
+import { User } from '../models/user/user.model';
 
 export const verifyJWT = async (req: Request, res: Response, next: any) => {
   let status = 200;
@@ -12,7 +12,7 @@ export const verifyJWT = async (req: Request, res: Response, next: any) => {
     result = 'Token no encontrado';
   } else {
     try {
-      const decoded = jwt.verify(token.toString(), process.env.JWT_SECRET || 'TEMP_SECRET') as jwt.JwtPayload;
+      const decoded = jwt.verify(token.toString(), process.env.JWT_SECRET || 'TEMP_SECRET') as jwt.JwtPayload;      
 
       const user = await User.searchUserById(decoded.id);
 

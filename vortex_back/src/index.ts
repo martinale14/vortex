@@ -6,20 +6,23 @@ import session from 'express-session';
 import passport from 'passport';
 
 // Importing routers
-import mainRouter from './routes/main.routes';
-import authRouter from './routes/auth.routes';
-import searchRouter from './routes/search.routes';
-import notFoundRouter from './routes/notFound.routes';
+import mainRouter from './services/main.routes';
+import authRouter from './services/auth.routes';
+import searchRouter from './services/search.routes';
+import notFoundRouter from './services/notFound.routes';
+import jwtrouter from './services/jwt.routes';
 
-import { initializePassport } from './lib/passport.lib';
+import { initializePassport } from './utilities/passport.util';
+import { TokenManager } from './utilities/tokenManager.util';
 
 // Generating the server
 const app = express();
 initializePassport();
+console.log(TokenManager.refreshTokens);
 
 // Setting Middlewares
 app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(express.json());
+app.use(express.json({limit: '10mb'}));
 app.use(morgan(':method :url :status'));
 app.use(
   session({
@@ -37,6 +40,8 @@ app.set('PORT', process.env.PORT || 4000);
 // Routes
 app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth/token', jwtrouter);
+app.use('/api/v1/search', searchRouter);
 app.use('/api/v1/search', searchRouter);
 app.all('*', notFoundRouter);
 

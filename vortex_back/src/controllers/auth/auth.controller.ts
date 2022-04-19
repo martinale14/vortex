@@ -1,12 +1,12 @@
-import { User, UserInterface } from '../models/user.model';
+import { User, UserInterface } from '../../models/user/user.model';
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { JwtController } from './jwt.controller';
 
 export class AuthController {
   static async register(req: Request, res: Response) {
     let status = 201;
-    let result = 'Se ha creado el usuario satisfactoriamente';
+    let result = 'Se ha creado el usuario satisfactoriamente';       
 
     const userInterface: UserInterface = req.body;
 
@@ -21,6 +21,7 @@ export class AuthController {
       } else {
         status = 500;
         result = 'Hubo un error inesperado';
+        
       }
     }
 
@@ -28,11 +29,13 @@ export class AuthController {
   }
 
   static login(req: any, res: Response) {
-    const token = jwt.sign({ id: req.session.passport.user.id }, process.env.JWT_SECRET || 'TEMP_SECRET', {
-      expiresIn: 365
-    });
 
-    res.status(200).json({ result: 'Authentication succesfull', token });
+    const user = { id: req.session.passport.user.id, role: req.session.passport.user.role };
+    
+    const token = JwtController.getSignedToken(user);
+    const refreshToken = JwtController.createRefreshToken(req.session.passport.user.email);    
+
+    res.status(200).json({ result: 'Authentication succesfull', token, refreshToken });
   }
 
   static logout(req: Request, res: Response) {

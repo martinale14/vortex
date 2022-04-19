@@ -1,12 +1,13 @@
 import { Role, getRoleName } from './roles.model';
-import pool from '../database';
-import { VortexException } from './exception.model';
+import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface UserInterface {
   name: string;
   phone: string | null;
   email: string;
   role: Role;
+  pictureUrl : string;
   password: string;
 }
 
@@ -20,6 +21,7 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
   role: Role;
+  pictureUrl : string;
   password: string;
 
   constructor(
@@ -32,6 +34,7 @@ export class User {
     createdAt: Date,
     updatedAt: Date,
     role: Role,
+    pictureUrl:string,
     password: string
   ) {
     this.id = id;
@@ -43,6 +46,7 @@ export class User {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.role = role;
+    this.pictureUrl = pictureUrl;
     this.password = password;
   }
 
@@ -57,6 +61,7 @@ export class User {
       obj.created_at_user,
       obj.updated_at_user,
       obj.role_id_user,
+      obj.picture_url_user,
       obj.password_user
     );
 
@@ -73,6 +78,7 @@ export class User {
       acceptedTerms: this.acceptedTerms,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      pictureUrl: this.pictureUrl,
       role: getRoleName(this.role)
     };
 
@@ -81,17 +87,19 @@ export class User {
 
   static async createUser(userInterface: UserInterface) {
     try {
-      await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5)', [
+      await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5, $6)', [
         userInterface.name,
         userInterface.phone,
         userInterface.email,
         userInterface.password,
+        userInterface.pictureUrl,
         userInterface.role
       ]);
     } catch (e: any) {
       if (e.constraint === 'unique_email') {
-        throw new VortexException(e.constrain);
+        throw new VortexException(e.constraint);
       } else {
+
         throw e;
       }
     }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserController } from '../controllers/user.controller';
+import { UserController } from '../controllers/user/user.controller';
 import { verifyJWT } from '../middlewares/jwt.middleware';
 
 const router = express.Router();
