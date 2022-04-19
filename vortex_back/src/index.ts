@@ -6,9 +6,9 @@ import session from 'express-session';
 import passport from 'passport';
 
 // Importing routers
-import mainRouter from './services/main.routes';
-import authRouter from './services/auth.routes';
-import searchRouter from './services/search.routes';
+import mainRouter from './routes/main.routes';
+import authRouter from './routes/auth.routes';
+import searchRouter from './routes/search.routes';
 
 // Initializing database
 require('./database');

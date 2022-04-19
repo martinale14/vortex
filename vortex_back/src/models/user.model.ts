@@ -1,4 +1,6 @@
 import { Role, getRoleName } from './roles.model';
+import pool from '../database';
+import { VortexException } from './exception.model';
 
 export interface UserInterface {
   name: string;
@@ -42,8 +44,6 @@ export class User {
   }
 
   static fromJson(obj: { [key: string]: any }): User {
-    console.log(obj);
-
     const user: User = new User(
       obj.id_user,
       obj.name_user,
@@ -73,5 +73,33 @@ export class User {
     };
 
     return userJson;
+  }
+
+  static async createUser(userInterface: UserInterface) {
+    try {
+      await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5)', [
+        userInterface.name,
+        userInterface.phone,
+        userInterface.email,
+        userInterface.password,
+        userInterface.role
+      ]);
+    } catch (e: any) {
+      if (e.constraint === 'unique_email') {
+        throw new VortexException(e.constrain);
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  static async searchUserByEmail(email: string) {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.find_user_by_email($1)', [email]);
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }

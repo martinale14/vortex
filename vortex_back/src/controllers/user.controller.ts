@@ -1,38 +1,38 @@
-import { User, UserInterface } from '../models/user.model';
-import pool from '../database';
+import { User } from '../models/user.model';
+import { Request, Response } from 'express';
 
 export class UserController {
-  static async insertNewUser(userInterface: UserInterface): Promise<{ [key: string]: any }> {
-    try {
-      await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5)', [
-        userInterface.name,
-        userInterface.phone,
-        userInterface.email,
-        userInterface.password,
-        userInterface.role
-      ]);
-    } catch (e: any) {
-      if (e.constraint === 'unique_email') {
-        return { result: 'El usuario ya se encuentra registrado', status: 300 };
-      } else {
-        console.log(e);
+  static async searchUser(req: Request, res: Response) {
+    let status = 200;
+    let result = '';
+    let parsed = {};
+
+    if (req.body.email === undefined) {
+      status = 406;
+      result = 'El parametro email no fue encontrado';
+    } else {
+      const email = req.body.email;
+
+      const data = await User.searchUserByEmail(email);
+
+      try {
+        if (data.rows.length > 0) {
+          result = 'Usuario encontrado';
+          parsed = User.fromJson(data.rows[0]).toJson();
+        } else {
+          status = 404;
+          result = 'Usuario no encontrado';
+        }
+      } catch (e: any) {
+        status = 500;
+        if (e.type === 'database_error') {
+          result = 'Hubo un error con la base de datos';
+        } else {
+          result = 'Hubo un error inesperado';
+        }
       }
     }
 
-    return { result: 'El usuario se registro exitosamente', status: 200 };
-  }
-
-  static async getUserByEmail(email: string): Promise<{ [key: string]: any }> {
-    try {
-      const result = await pool.query('SELECT * FROM vortex.find_user_by_email($1)', [email]);
-
-      if (result.rows.length > 0) {
-        return { user: User.fromJson(result.rows[0]) };
-      }
-    } catch (e) {
-      console.log(e);
-    }
-
-    return { result: 'El usuario no fue encontrado', status: 400 };
+    res.status(status).json({ ...parsed, result });
   }
 }
