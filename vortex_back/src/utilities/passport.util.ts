@@ -10,7 +10,7 @@ export function initializePassport() {
         const result = await User.searchUserByEmail(email);
 
         if (result.rows.length > 0) {
-          const user = User.fromJson(result.rows[0]);
+          const user = User.fromDB(result.rows[0]);
 
           if (await compare(password, user.password)) {
             return done(null, user);

@@ -12,7 +12,7 @@ export const verifyJWT = async (req: Request, res: Response, next: any) => {
     result = 'Token no encontrado';
   } else {
     try {
-      const decoded = jwt.verify(token.toString(), process.env.JWT_SECRET || 'TEMP_SECRET') as jwt.JwtPayload;      
+      const decoded = jwt.verify(token.toString(), process.env.JWT_SECRET || 'TEMP_SECRET') as jwt.JwtPayload;
 
       const user = await User.searchUserById(decoded.id);
 
@@ -20,9 +20,14 @@ export const verifyJWT = async (req: Request, res: Response, next: any) => {
         status = 404;
         result = 'Tu usuario no ha sido encontrado';
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e.message === 'jwt expired') {
+        result = 'Token expirado';
+      } else {
+        result = 'No esta autorizado';
+      }
+
       status = 401;
-      result = 'No esta autorizado';
     }
   }
 

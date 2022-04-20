@@ -1,3 +1,3 @@
 export class TokenManager {
-    static refreshTokens : {[key:string] : any} = {};
+  static refreshTokens: { [key: string]: any } = {};
 }

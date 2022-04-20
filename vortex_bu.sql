@@ -26,6 +26,233 @@ CREATE SCHEMA vortex;
 ALTER SCHEMA vortex OWNER TO postgres;
 
 --
+-- Name: create_history(character varying, boolean, integer, integer, integer, integer, integer); Type: FUNCTION; Schema: vortex; Owner: postgres
+--
+
+CREATE FUNCTION vortex.create_history(status character varying, is_epic boolean, created_by integer, project_id integer, user_responsable_id integer, epic_parent_id integer, sprint_id integer) RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    myresult integer;
+BEGIN 
+  INSERT INTO vortex.histories (status_hist, is_epic_hist, created_by_hist, updated_by_hist, project_id_hist, user_responsable_id_hist, epic_parent_id_hist, sprint_id_hist)
+   VALUES (create_history.status, 
+           create_history.is_epic, 
+           create_history.created_by, 
+           create_history.created_by, 
+           create_history.project_id, 
+           create_history.user_responsable_id, 
+           create_history.epic_parent_id, 
+           create_history.sprint_id)
+    RETURNING id_hist 
+    INTO myresult;
+    
+    
+    RETURN myresult;
+ END;
+    
+    
+$$;
+
+
+ALTER FUNCTION vortex.create_history(status character varying, is_epic boolean, created_by integer, project_id integer, user_responsable_id integer, epic_parent_id integer, sprint_id integer) OWNER TO postgres;
+
+--
+-- Name: acceptance_criteria_id_acc_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
+--
+
+CREATE SEQUENCE vortex.acceptance_criteria_id_acc_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE vortex.acceptance_criteria_id_acc_seq OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: acc_criterias; Type: TABLE; Schema: vortex; Owner: postgres
+--
+
+CREATE TABLE vortex.acc_criterias (
+    id_acc integer DEFAULT nextval('vortex.acceptance_criteria_id_acc_seq'::regclass) NOT NULL,
+    description_acc character varying(200) NOT NULL,
+    type_acc character varying(15) NOT NULL,
+    created_at_acc timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_acc timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_acc integer NOT NULL,
+    updated_by_acc integer NOT NULL,
+    history_id_acc integer NOT NULL
+);
+
+
+ALTER TABLE vortex.acc_criterias OWNER TO postgres;
+
+--
+-- Name: insert_acc_criteria(character varying, character varying, integer, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+--
+
+CREATE PROCEDURE vortex.insert_acc_criteria(IN description character varying, IN type character varying, IN created_by integer, IN history_id integer)
+    LANGUAGE sql
+    BEGIN ATOMIC
+ INSERT INTO vortex.acc_criterias (description_acc, type_acc, created_by_acc, updated_by_acc, history_id_acc)
+   VALUES (insert_acc_criteria.description, insert_acc_criteria.type, insert_acc_criteria.created_by, insert_acc_criteria.created_by, insert_acc_criteria.history_id);
+END;
+
+
+ALTER PROCEDURE vortex.insert_acc_criteria(IN description character varying, IN type character varying, IN created_by integer, IN history_id integer) OWNER TO postgres;
+
+--
+-- Name: companies_id_comp_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
+--
+
+CREATE SEQUENCE vortex.companies_id_comp_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE vortex.companies_id_comp_seq OWNER TO postgres;
+
+--
+-- Name: companies; Type: TABLE; Schema: vortex; Owner: postgres
+--
+
+CREATE TABLE vortex.companies (
+    id_comp integer DEFAULT nextval('vortex.companies_id_comp_seq'::regclass) NOT NULL,
+    name_comp character varying(20) NOT NULL,
+    email_comp character varying(70) NOT NULL,
+    phone_comp character varying(12),
+    direction_comp character varying(70),
+    created_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_comp integer NOT NULL,
+    updated_by_comp integer NOT NULL
+);
+
+
+ALTER TABLE vortex.companies OWNER TO postgres;
+
+--
+-- Name: insert_company(character varying, character varying, character varying, character, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+--
+
+CREATE PROCEDURE vortex.insert_company(IN name character varying, IN email character varying, IN phone character varying, IN direction character, IN created_by integer)
+    LANGUAGE sql
+    BEGIN ATOMIC
+ INSERT INTO vortex.companies (name_comp, email_comp, phone_comp, direction_comp, created_by_comp, updated_by_comp)
+   VALUES (insert_company.name, insert_company.email, insert_company.phone, insert_company.direction, insert_company.created_by, insert_company.created_by);
+END;
+
+
+ALTER PROCEDURE vortex.insert_company(IN name character varying, IN email character varying, IN phone character varying, IN direction character, IN created_by integer) OWNER TO postgres;
+
+--
+-- Name: projects_id_proj_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
+--
+
+CREATE SEQUENCE vortex.projects_id_proj_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE vortex.projects_id_proj_seq OWNER TO postgres;
+
+--
+-- Name: projects; Type: TABLE; Schema: vortex; Owner: postgres
+--
+
+CREATE TABLE vortex.projects (
+    id_proj integer DEFAULT nextval('vortex.projects_id_proj_seq'::regclass) NOT NULL,
+    name_proj character varying(50) NOT NULL,
+    estimated_time_proj integer,
+    start_date_proj date,
+    created_at_proj timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_proj timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_proj integer NOT NULL,
+    updated_by_proj integer NOT NULL,
+    company_id_proj integer NOT NULL
+);
+
+
+ALTER TABLE vortex.projects OWNER TO postgres;
+
+--
+-- Name: insert_project(character varying, integer, date, integer, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+--
+
+CREATE PROCEDURE vortex.insert_project(IN name character varying, IN estimated_time integer, IN start_date date, IN created_by integer, IN company_id integer)
+    LANGUAGE sql
+    BEGIN ATOMIC
+ INSERT INTO vortex.projects (name_proj, estimated_time_proj, start_date_proj, created_by_proj, updated_by_proj, company_id_proj)
+   VALUES (insert_project.name, insert_project.estimated_time, insert_project.start_date, insert_project.created_by, insert_project.created_by, insert_project.company_id);
+END;
+
+
+ALTER PROCEDURE vortex.insert_project(IN name character varying, IN estimated_time integer, IN start_date date, IN created_by integer, IN company_id integer) OWNER TO postgres;
+
+--
+-- Name: sprints_id_spri_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
+--
+
+CREATE SEQUENCE vortex.sprints_id_spri_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE vortex.sprints_id_spri_seq OWNER TO postgres;
+
+--
+-- Name: sprints; Type: TABLE; Schema: vortex; Owner: postgres
+--
+
+CREATE TABLE vortex.sprints (
+    id_spri integer DEFAULT nextval('vortex.sprints_id_spri_seq'::regclass) NOT NULL,
+    start_date_spri date,
+    end_date_spri date,
+    status_spri character varying(10) NOT NULL,
+    created_at_spri timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_spri timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_spri integer NOT NULL,
+    updated_by_spri integer NOT NULL,
+    project_id_spri integer NOT NULL
+);
+
+
+ALTER TABLE vortex.sprints OWNER TO postgres;
+
+--
+-- Name: insert_sprint(date, date, character varying, integer, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+--
+
+CREATE PROCEDURE vortex.insert_sprint(IN start_date date, IN end_date date, IN status character varying, IN created_by integer, IN project_id integer)
+    LANGUAGE sql
+    BEGIN ATOMIC
+ INSERT INTO vortex.sprints (start_date_spri, end_date_spri, status_spri, created_by_spri, updated_by_spri, project_id_spri)
+   VALUES (insert_sprint.start_date, insert_sprint.end_date, insert_sprint.status, insert_sprint.created_by, insert_sprint.created_by, insert_sprint.project_id);
+END;
+
+
+ALTER PROCEDURE vortex.insert_sprint(IN start_date date, IN end_date date, IN status character varying, IN created_by integer, IN project_id integer) OWNER TO postgres;
+
+--
 -- Name: users_id_user_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
 --
 
@@ -39,10 +266,6 @@ CREATE SEQUENCE vortex.users_id_user_seq
 
 
 ALTER TABLE vortex.users_id_user_seq OWNER TO postgres;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 
 --
 -- Name: users; Type: TABLE; Schema: vortex; Owner: postgres
@@ -78,6 +301,55 @@ END;
 
 
 ALTER PROCEDURE vortex.insert_user(IN name character varying, IN phone character varying, IN email character varying, IN password character varying, IN picture_url character varying, IN role_id integer) OWNER TO postgres;
+
+--
+-- Name: versions_id_vers_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
+--
+
+CREATE SEQUENCE vortex.versions_id_vers_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE vortex.versions_id_vers_seq OWNER TO postgres;
+
+--
+-- Name: versions; Type: TABLE; Schema: vortex; Owner: postgres
+--
+
+CREATE TABLE vortex.versions (
+    id_vers integer DEFAULT nextval('vortex.versions_id_vers_seq'::regclass) NOT NULL,
+    number_vers integer NOT NULL,
+    title_vers character varying(100) NOT NULL,
+    description_vers character varying(250) NOT NULL,
+    is_base_doc_vers boolean DEFAULT false NOT NULL,
+    created_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by_vers integer NOT NULL,
+    updated_by_vers integer NOT NULL,
+    history_id_vers integer NOT NULL
+);
+
+
+ALTER TABLE vortex.versions OWNER TO postgres;
+
+--
+-- Name: insert_version(integer, character varying, character varying, boolean, integer, integer); Type: PROCEDURE; Schema: vortex; Owner: postgres
+--
+
+CREATE PROCEDURE vortex.insert_version(IN number integer, IN title character varying, IN description character varying, IN is_base_doc boolean, IN created_by integer, IN history_id integer)
+    LANGUAGE sql
+    BEGIN ATOMIC
+ INSERT INTO vortex.versions (number_vers, title_vers, description_vers, is_base_doc_vers, created_by_vers, updated_by_vers, history_id_vers)
+   VALUES (insert_version.number, insert_version.title, insert_version.description, insert_version.is_base_doc, insert_version.created_by, insert_version.created_by, insert_version.history_id);
+END;
+
+
+ALTER PROCEDURE vortex.insert_version(IN number integer, IN title character varying, IN description character varying, IN is_base_doc boolean, IN created_by integer, IN history_id integer) OWNER TO postgres;
 
 --
 -- Name: on_update_acc_criteria(); Type: FUNCTION; Schema: vortex; Owner: postgres
@@ -208,78 +480,53 @@ $$;
 ALTER FUNCTION vortex.on_update_version() OWNER TO postgres;
 
 --
--- Name: acc_criterias; Type: TABLE; Schema: vortex; Owner: postgres
+-- Name: select_project_by_company(integer); Type: FUNCTION; Schema: vortex; Owner: postgres
 --
 
-CREATE TABLE vortex.acc_criterias (
-    id_acc integer NOT NULL,
-    description_acc character varying(70) NOT NULL,
-    type_acc character varying(15) NOT NULL,
-    created_at_acc timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_acc timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_acc integer NOT NULL,
-    updated_by_acc integer NOT NULL,
-    history_id_acc integer NOT NULL
-);
+CREATE FUNCTION vortex.select_project_by_company(company_id integer) RETURNS TABLE(id_proj integer, name_proj character varying, estimated_time_proj integer, start_date_proj date, created_at_proj timestamp without time zone, updated_at_proj timestamp without time zone, company_id_proj integer, created_by_proj character varying, updated_by_proj character varying)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+  RETURN QUERY SELECT proj.id_proj, 
+    proj.name_proj, 
+    proj.estimated_time_proj, 
+    proj.start_date_proj, 
+    proj.created_at_proj, 
+    proj.updated_at_proj, 
+    proj.company_id_proj,
+  	usrcreate.name_user AS created_by_proj,
+  	usrupdate.name_user AS updated_by_proj
+  FROM vortex.projects proj
+  LEFT JOIN vortex.users usrcreate ON proj.created_by_proj = usrcreate.id_user
+  LEFT JOIN vortex.users usrupdate ON proj.updated_by_proj = usrupdate.id_user
+  WHERE proj.company_id_proj = select_project_by_company.company_id;
+END;
+$$;
 
 
-ALTER TABLE vortex.acc_criterias OWNER TO postgres;
-
---
--- Name: acceptance_criteria_id_acc_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
---
-
-CREATE SEQUENCE vortex.acceptance_criteria_id_acc_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE vortex.acceptance_criteria_id_acc_seq OWNER TO postgres;
+ALTER FUNCTION vortex.select_project_by_company(company_id integer) OWNER TO postgres;
 
 --
--- Name: acceptance_criteria_id_acc_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
+-- Name: allCompanies; Type: VIEW; Schema: vortex; Owner: postgres
 --
 
-ALTER SEQUENCE vortex.acceptance_criteria_id_acc_seq OWNED BY vortex.acc_criterias.id_acc;
+CREATE VIEW vortex."allCompanies" AS
+ SELECT comp.id_comp,
+    comp.name_comp,
+    comp.email_comp,
+    comp.phone_comp,
+    comp.direction_comp,
+    comp.created_at_comp,
+    comp.updated_at_comp,
+    usrcreate.name_user AS created_by_comp,
+    usrupdate.name_user AS updated_by_comp
+   FROM ((vortex.companies comp
+     LEFT JOIN vortex.users usrcreate ON ((comp.created_by_comp = usrcreate.id_user)))
+     LEFT JOIN vortex.users usrupdate ON ((comp.updated_by_comp = usrupdate.id_user)));
 
 
---
--- Name: companies_id_comp_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
---
-
-CREATE SEQUENCE vortex.companies_id_comp_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE vortex.companies_id_comp_seq OWNER TO postgres;
-
---
--- Name: companies; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.companies (
-    id_comp integer DEFAULT nextval('vortex.companies_id_comp_seq'::regclass) NOT NULL,
-    name_comp character varying(20) NOT NULL,
-    email_comp character varying(70) NOT NULL,
-    phone_comp character varying(12),
-    direction_comp character varying(70),
-    created_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_comp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_comp integer NOT NULL,
-    updated_by_comp integer NOT NULL
-);
-
-
-ALTER TABLE vortex.companies OWNER TO postgres;
+ALTER TABLE vortex."allCompanies" OWNER TO postgres;
 
 --
 -- Name: histories_id_hist_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
@@ -318,61 +565,6 @@ CREATE TABLE vortex.histories (
 ALTER TABLE vortex.histories OWNER TO postgres;
 
 --
--- Name: projects; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.projects (
-    id_proj integer NOT NULL,
-    name_proj character varying(50) NOT NULL,
-    estimated_time_proj integer,
-    start_date_proj date,
-    created_at_proj timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_proj timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_proj integer NOT NULL,
-    updated_by_proj integer NOT NULL,
-    company_id_proj integer NOT NULL
-);
-
-
-ALTER TABLE vortex.projects OWNER TO postgres;
-
---
--- Name: projects_id_proj_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
---
-
-CREATE SEQUENCE vortex.projects_id_proj_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE vortex.projects_id_proj_seq OWNER TO postgres;
-
---
--- Name: projects_id_proj_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
---
-
-ALTER SEQUENCE vortex.projects_id_proj_seq OWNED BY vortex.projects.id_proj;
-
-
---
--- Name: roles; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.roles (
-    id_role integer NOT NULL,
-    name_role character varying(20) NOT NULL,
-    created_at_role timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_role timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
-
-
-ALTER TABLE vortex.roles OWNER TO postgres;
-
---
 -- Name: roles_id_role_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
 --
 
@@ -388,121 +580,31 @@ CREATE SEQUENCE vortex.roles_id_role_seq
 ALTER TABLE vortex.roles_id_role_seq OWNER TO postgres;
 
 --
--- Name: roles_id_role_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
+-- Name: roles; Type: TABLE; Schema: vortex; Owner: postgres
 --
 
-ALTER SEQUENCE vortex.roles_id_role_seq OWNED BY vortex.roles.id_role;
-
-
---
--- Name: sprints; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.sprints (
-    id_spri integer NOT NULL,
-    start_date_spri date,
-    end_date_spri date,
-    status_spri character varying(10) NOT NULL,
-    created_at_spri timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_spri timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_spri integer NOT NULL,
-    updated_by_spri integer NOT NULL,
-    project_id_spri integer NOT NULL
+CREATE TABLE vortex.roles (
+    id_role integer DEFAULT nextval('vortex.roles_id_role_seq'::regclass) NOT NULL,
+    name_role character varying(20) NOT NULL,
+    created_at_role timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at_role timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
-ALTER TABLE vortex.sprints OWNER TO postgres;
-
---
--- Name: sprints_id_spri_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
---
-
-CREATE SEQUENCE vortex.sprints_id_spri_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE vortex.sprints_id_spri_seq OWNER TO postgres;
-
---
--- Name: sprints_id_spri_seq; Type: SEQUENCE OWNED BY; Schema: vortex; Owner: postgres
---
-
-ALTER SEQUENCE vortex.sprints_id_spri_seq OWNED BY vortex.sprints.id_spri;
-
-
---
--- Name: versions_id_vers_seq; Type: SEQUENCE; Schema: vortex; Owner: postgres
---
-
-CREATE SEQUENCE vortex.versions_id_vers_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE vortex.versions_id_vers_seq OWNER TO postgres;
-
---
--- Name: versions; Type: TABLE; Schema: vortex; Owner: postgres
---
-
-CREATE TABLE vortex.versions (
-    id_vers integer DEFAULT nextval('vortex.versions_id_vers_seq'::regclass) NOT NULL,
-    number_vers integer NOT NULL,
-    title_vers character varying(100) NOT NULL,
-    description_vers character varying(250) NOT NULL,
-    is_base_doc_vers boolean DEFAULT false NOT NULL,
-    created_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at_vers timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    created_by_vers integer NOT NULL,
-    updated_by_vers integer NOT NULL,
-    history_id_vers integer NOT NULL
-);
-
-
-ALTER TABLE vortex.versions OWNER TO postgres;
-
---
--- Name: acc_criterias id_acc; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.acc_criterias ALTER COLUMN id_acc SET DEFAULT nextval('vortex.acceptance_criteria_id_acc_seq'::regclass);
-
-
---
--- Name: projects id_proj; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.projects ALTER COLUMN id_proj SET DEFAULT nextval('vortex.projects_id_proj_seq'::regclass);
-
-
---
--- Name: roles id_role; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.roles ALTER COLUMN id_role SET DEFAULT nextval('vortex.roles_id_role_seq'::regclass);
-
-
---
--- Name: sprints id_spri; Type: DEFAULT; Schema: vortex; Owner: postgres
---
-
-ALTER TABLE ONLY vortex.sprints ALTER COLUMN id_spri SET DEFAULT nextval('vortex.sprints_id_spri_seq'::regclass);
-
+ALTER TABLE vortex.roles OWNER TO postgres;
 
 --
 -- Data for Name: acc_criterias; Type: TABLE DATA; Schema: vortex; Owner: postgres
 --
 
 COPY vortex.acc_criterias (id_acc, description_acc, type_acc, created_at_acc, updated_at_acc, created_by_acc, updated_by_acc, history_id_acc) FROM stdin;
+2	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 10:22:03.290198	2022-04-20 10:22:03.290198	13	13	4
+3	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:39:51.431431	2022-04-20 11:39:51.431431	13	13	4
+4	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:39:51.492515	2022-04-20 11:39:51.492515	13	13	4
+5	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:39:51.495004	2022-04-20 11:39:51.495004	13	13	4
+6	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:42:10.206634	2022-04-20 11:42:10.206634	13	13	15
+7	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:42:10.265494	2022-04-20 11:42:10.265494	13	13	15
+8	El background de la aplicaión debe ser rosado	DOUI	2022-04-20 11:42:10.266981	2022-04-20 11:42:10.266981	13	13	15
 \.
 
 
@@ -511,6 +613,9 @@ COPY vortex.acc_criterias (id_acc, description_acc, type_acc, created_at_acc, up
 --
 
 COPY vortex.companies (id_comp, name_comp, email_comp, phone_comp, direction_comp, created_at_comp, updated_at_comp, created_by_comp, updated_by_comp) FROM stdin;
+2	GoLiving	goLiving@gmail.com	\N	\N	2022-04-20 04:54:00.643967	2022-04-20 05:12:05.863141	5	13
+3	America de Cali	america@cali.com	\N	Avenida estadio	2022-04-20 05:35:28.207545	2022-04-20 05:35:28.207545	13	13
+4	Ricardo Creativo	ricardoCreativo@hotmail.com	574178543291	Carrera 29 # 24 73	2022-04-20 05:37:01.959089	2022-04-20 05:37:01.959089	5	5
 \.
 
 
@@ -519,6 +624,18 @@ COPY vortex.companies (id_comp, name_comp, email_comp, phone_comp, direction_com
 --
 
 COPY vortex.histories (id_hist, status_hist, is_epic_hist, created_at_hist, updated_at_hist, created_by_hist, updated_by_hist, project_id_hist, user_responsable_id_hist, epic_parent_id_hist, sprint_id_hist) FROM stdin;
+4	open	f	2022-04-20 10:07:11.417463	2022-04-20 10:07:47.306773	13	13	2	5	\N	\N
+5	open	f	2022-04-20 11:19:36.876732	2022-04-20 11:19:36.876732	13	13	2	\N	\N	\N
+6	open	f	2022-04-20 11:20:02.365508	2022-04-20 11:20:02.365508	13	13	2	\N	\N	\N
+7	open	f	2022-04-20 11:20:22.986055	2022-04-20 11:20:22.986055	13	13	2	\N	\N	\N
+8	open	f	2022-04-20 11:20:44.778609	2022-04-20 11:20:44.778609	13	13	2	\N	\N	\N
+9	open	f	2022-04-20 11:21:44.757615	2022-04-20 11:21:44.757615	13	13	2	\N	\N	\N
+10	open	f	2022-04-20 11:23:08.930347	2022-04-20 11:23:08.930347	13	13	2	\N	\N	\N
+11	open	f	2022-04-20 11:23:10.790122	2022-04-20 11:23:10.790122	13	13	2	\N	\N	\N
+12	open	f	2022-04-20 11:23:11.346531	2022-04-20 11:23:11.346531	13	13	2	\N	\N	\N
+13	open	f	2022-04-20 11:29:40.676035	2022-04-20 11:29:40.676035	13	13	2	\N	\N	\N
+14	open	f	2022-04-20 11:39:51.421128	2022-04-20 11:39:51.421128	13	13	2	\N	\N	\N
+15	open	f	2022-04-20 11:42:10.172621	2022-04-20 11:42:10.172621	13	13	2	\N	\N	\N
 \.
 
 
@@ -527,6 +644,7 @@ COPY vortex.histories (id_hist, status_hist, is_epic_hist, created_at_hist, upda
 --
 
 COPY vortex.projects (id_proj, name_proj, estimated_time_proj, start_date_proj, created_at_proj, updated_at_proj, created_by_proj, updated_by_proj, company_id_proj) FROM stdin;
+2	estr	40	2022-04-22	2022-04-20 10:00:43.626271	2022-04-20 10:00:43.626271	5	5	2
 \.
 
 
@@ -544,6 +662,7 @@ COPY vortex.roles (id_role, name_role, created_at_role, updated_at_role) FROM st
 --
 
 COPY vortex.sprints (id_spri, start_date_spri, end_date_spri, status_spri, created_at_spri, updated_at_spri, created_by_spri, updated_by_spri, project_id_spri) FROM stdin;
+3	2022-04-22	2022-04-30	open	2022-04-20 10:11:41.183355	2022-04-20 10:11:41.183355	5	5	2
 \.
 
 
@@ -562,6 +681,10 @@ COPY vortex.users (id_user, name_user, phone_user, email_user, password_user, fo
 --
 
 COPY vortex.versions (id_vers, number_vers, title_vers, description_vers, is_base_doc_vers, created_at_vers, updated_at_vers, created_by_vers, updated_by_vers, history_id_vers) FROM stdin;
+2	1	El administrador necesita entrar al sistema para administrarlo	El administrador debe entrar al sistema porque sus funciones principales son las de crear, editar y eliminar usuarios	t	2022-04-20 10:15:54.316817	2022-04-20 10:15:54.316817	13	13	4
+3	1	El administrador necesita entrar al sistema para administrarlo	El administrador debe entrar al sistema porque sus funciones principales son las de crear, editar y eliminar usuarios	t	2022-04-20 11:29:40.719117	2022-04-20 11:29:40.719117	13	13	13
+4	1	El administrador necesita entrar al sistema para administrarlo	El administrador debe entrar al sistema porque sus funciones principales son las de crear, editar y eliminar usuarios	f	2022-04-20 11:39:51.427046	2022-04-20 11:39:51.427046	13	13	14
+5	1	El administrador necesita entrar al sistema para administrarlo	El administrador debe entrar al sistema porque sus funciones principales son las de crear, editar y eliminar usuarios	f	2022-04-20 11:42:10.202318	2022-04-20 11:42:10.202318	13	13	15
 \.
 
 
@@ -569,28 +692,28 @@ COPY vortex.versions (id_vers, number_vers, title_vers, description_vers, is_bas
 -- Name: acceptance_criteria_id_acc_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.acceptance_criteria_id_acc_seq', 1, true);
+SELECT pg_catalog.setval('vortex.acceptance_criteria_id_acc_seq', 8, true);
 
 
 --
 -- Name: companies_id_comp_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.companies_id_comp_seq', 1, true);
+SELECT pg_catalog.setval('vortex.companies_id_comp_seq', 4, true);
 
 
 --
 -- Name: histories_id_hist_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.histories_id_hist_seq', 1, true);
+SELECT pg_catalog.setval('vortex.histories_id_hist_seq', 15, true);
 
 
 --
 -- Name: projects_id_proj_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.projects_id_proj_seq', 1, true);
+SELECT pg_catalog.setval('vortex.projects_id_proj_seq', 2, true);
 
 
 --
@@ -604,7 +727,7 @@ SELECT pg_catalog.setval('vortex.roles_id_role_seq', 1, true);
 -- Name: sprints_id_spri_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.sprints_id_spri_seq', 1, true);
+SELECT pg_catalog.setval('vortex.sprints_id_spri_seq', 3, true);
 
 
 --
@@ -618,7 +741,7 @@ SELECT pg_catalog.setval('vortex.users_id_user_seq', 14, true);
 -- Name: versions_id_vers_seq; Type: SEQUENCE SET; Schema: vortex; Owner: postgres
 --
 
-SELECT pg_catalog.setval('vortex.versions_id_vers_seq', 1, true);
+SELECT pg_catalog.setval('vortex.versions_id_vers_seq', 5, true);
 
 
 --
@@ -842,7 +965,7 @@ ALTER TABLE ONLY vortex.sprints
 --
 
 ALTER TABLE ONLY vortex.histories
-    ADD CONSTRAINT fk_project_id FOREIGN KEY (project_id_hist) REFERENCES vortex.users(id_user);
+    ADD CONSTRAINT fk_project_id FOREIGN KEY (project_id_hist) REFERENCES vortex.projects(id_proj) NOT VALID;
 
 
 --
@@ -925,17 +1048,10 @@ GRANT USAGE ON SCHEMA vortex TO vortex_admin;
 
 
 --
--- Name: SEQUENCE users_id_user_seq; Type: ACL; Schema: vortex; Owner: postgres
+-- Name: SEQUENCE acceptance_criteria_id_acc_seq; Type: ACL; Schema: vortex; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE vortex.users_id_user_seq TO vortex_admin;
-
-
---
--- Name: TABLE users; Type: ACL; Schema: vortex; Owner: postgres
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.users TO vortex_admin;
+GRANT USAGE ON SEQUENCE vortex.acceptance_criteria_id_acc_seq TO vortex_admin;
 
 
 --
@@ -946,6 +1062,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.acc_criterias TO vortex_admin;
 
 
 --
+-- Name: SEQUENCE companies_id_comp_seq; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT USAGE ON SEQUENCE vortex.companies_id_comp_seq TO vortex_admin;
+
+
+--
 -- Name: TABLE companies; Type: ACL; Schema: vortex; Owner: postgres
 --
 
@@ -953,10 +1076,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.companies TO vortex_admin;
 
 
 --
--- Name: TABLE histories; Type: ACL; Schema: vortex; Owner: postgres
+-- Name: SEQUENCE projects_id_proj_seq; Type: ACL; Schema: vortex; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.histories TO vortex_admin;
+GRANT USAGE ON SEQUENCE vortex.projects_id_proj_seq TO vortex_admin;
 
 
 --
@@ -967,10 +1090,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.projects TO vortex_admin;
 
 
 --
--- Name: TABLE roles; Type: ACL; Schema: vortex; Owner: postgres
+-- Name: SEQUENCE sprints_id_spri_seq; Type: ACL; Schema: vortex; Owner: postgres
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.roles TO vortex_admin;
+GRANT USAGE ON SEQUENCE vortex.sprints_id_spri_seq TO vortex_admin;
 
 
 --
@@ -981,10 +1104,73 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.sprints TO vortex_admin;
 
 
 --
+-- Name: SEQUENCE users_id_user_seq; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT USAGE ON SEQUENCE vortex.users_id_user_seq TO vortex_admin;
+
+
+--
+-- Name: TABLE users; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.users TO vortex_admin;
+
+
+--
+-- Name: SEQUENCE versions_id_vers_seq; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT USAGE ON SEQUENCE vortex.versions_id_vers_seq TO vortex_admin;
+
+
+--
 -- Name: TABLE versions; Type: ACL; Schema: vortex; Owner: postgres
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.versions TO vortex_admin;
+
+
+--
+-- Name: TABLE "allCompanies"; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex."allCompanies" TO vortex_admin;
+
+
+--
+-- Name: SEQUENCE histories_id_hist_seq; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT USAGE ON SEQUENCE vortex.histories_id_hist_seq TO vortex_admin;
+
+
+--
+-- Name: TABLE histories; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.histories TO vortex_admin;
+
+
+--
+-- Name: SEQUENCE roles_id_role_seq; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT USAGE ON SEQUENCE vortex.roles_id_role_seq TO vortex_admin;
+
+
+--
+-- Name: TABLE roles; Type: ACL; Schema: vortex; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE vortex.roles TO vortex_admin;
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: vortex; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA vortex GRANT SELECT,INSERT,DELETE,UPDATE ON TABLES  TO vortex_admin;
 
 
 --
