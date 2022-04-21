@@ -14,38 +14,40 @@
   background: transparent;
   cursor: pointer;
   overflow: hidden;
-  transition:         0.18s ease-in;
-  -o-transition:      0.18s ease-in;
-  -ms-transition:     0.18s ease-in;
-  -moz-transition:    0.18s ease-in;
+  transition: 0.18s ease-in;
+  -o-transition: 0.18s ease-in;
+  -ms-transition: 0.18s ease-in;
+  -moz-transition: 0.18s ease-in;
   -webkit-transition: 0.18s ease-in;
   color: var(--primaryColor);
 }
 
-.button_vortex:hover, .button_vortex:hover .button_vortex_icon{
+.button_vortex:hover,
+.button_vortex:hover .button_vortex_icon {
   color: white;
 }
 
-.button_vortex_next_fill{
+.button_vortex_next_fill {
   color: var(--primaryColor);
   border: 1px solid var(--primaryColor);
 }
 
-.button_vortex_back_fill{
+.button_vortex_back_fill {
   color: var(--secondaryColor);
   border: 1px solid var(--secondaryColor);
 }
 
-.button_vortex_next_fill::before{
+.button_vortex_next_fill::before {
   background: var(--primaryColor);
 }
 
-.button_vortex_back_fill::before{
+.button_vortex_back_fill::before {
   background: var(--secondaryColor);
 }
 
-.button_vortex_next_fill::before, .button_vortex_back_fill::before {
-  content: "";
+.button_vortex_next_fill::before,
+.button_vortex_back_fill::before {
+  content: '';
   position: absolute;
   border-radius: 10px;
   bottom: 0;
@@ -54,20 +56,14 @@
   top: 0;
   z-index: -1;
   -webkit-transition: right 0.2s ease-in;
+  transition: right 0.2s ease-in;
 }
 
 .button_vortex:hover:before {
   right: 0;
 }
 
-.button_vortex_icon{
-  width: 20px;
-  height: 20px;
-  color: #ff9312;
-  background: url("../../assets/next.svg");
-}
-
-.arrow{
+.arrow {
   position: absolute;
   right: 15px;
 }

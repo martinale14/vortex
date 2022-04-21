@@ -41,4 +41,10 @@ export class AuthController {
 
     res.status(200).json({ result: 'Sign out succesfull' });
   }
+
+  static passportCallback(req: any, res: any, other: any) {
+    console.log(req);
+    console.log(res);
+    console.log(other);
+  }
 }

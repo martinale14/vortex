@@ -1,10 +1,10 @@
 import express from 'express';
-import passport from 'passport';
 import { AuthController } from '../../controllers/auth/auth.controller';
+import { authenticate } from '../../middlewares/auth.middleware';
 
 const router = express.Router();
 
-router.post('/login', passport.authenticate('local'), AuthController.login);
+router.post('/login', authenticate, AuthController.login);
 
 router.get('/logout', AuthController.logout);
 
