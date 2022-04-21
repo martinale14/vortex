@@ -4,7 +4,7 @@ import { IoMdArrowDropright } from 'react-icons/io'
 interface propsSprint {
     sprint: Sprint;
     onClick: any;
-    key: number;
+    key: string;
 }
 
 interface Sprint {

@@ -1,13 +1,14 @@
 import NavBar from '../../components/navBar/NavBar';
 import Table from '../../components/table/Table';
+import styles from './Home.module.css';
 
 interface propsLogin {}
-function Login(props: propsLogin) {
+function Home(props: propsLogin) {
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
       <Table />
     </div>
   );
 }
-export default Login;
+export default Home;

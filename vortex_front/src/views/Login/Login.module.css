@@ -6,6 +6,15 @@
   max-height: 100%;
   position: absolute;
   z-index: -1;
+  left: 0;
+}
+
+.background_login {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .card_Login {
@@ -18,7 +27,6 @@
 
 .Logo_login {
   width: 200px;
-  margin-top: 10vh;
   margin-bottom: 5vh;
 }
 
@@ -35,6 +43,10 @@
   align-self: center;
   color: red;
   font-size: 18px;
+}
+
+.cardInformation_login button {
+  margin-top: 35px;
 }
 
 a {

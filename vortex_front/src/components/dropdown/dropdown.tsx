@@ -1,24 +1,23 @@
-import { FocusEvent, ChangeEventHandler } from 'react';
-import styles from './Input.module.css';
+import styles from './dropdown.module.css';
 import { IoMdAlert } from 'react-icons/io';
 
 interface propsInput {
-  type: string;
   placeholder: string;
-  value?: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: any;
   label: string;
   validationText?: string | null;
+  options :string [];
+  values : number[];
 }
 
 function Login(props: propsInput) {
-  const effectExit = (event: FocusEvent<HTMLInputElement>) => {
+  const effectExit = (event: any):any => {
     if (event.target.value.length === 0) {
       event.target.classList.toggle(styles.input_filled, false);
     }
   };
 
-  const effectEnter = (event: FocusEvent<HTMLInputElement>) => {
+  const effectEnter = (event: any):any => {
     (event.target as HTMLInputElement).classList.toggle(styles.input_filled, true);
   };
 
@@ -27,15 +26,18 @@ function Login(props: propsInput) {
       <p className={styles.label}>{props.label}</p>
 
       <div className={styles.input_container}>
-        <input
-          onFocus={effectEnter}
-          value={props.value}
+        <select
+          defaultValue={0}
           onBlur={effectExit}
-          onChange={props.onChange}
-          type={props.type}
+          onChange={(event) => {
+            props.onChange(event);
+          }}
+          onClick={effectEnter}
           placeholder={props.placeholder}
           className={styles.input_Login}
-        />
+        >
+          {props.options.map((opt, i) => <option value={props.values[i]} key={'opt_' + i}>{opt}</option>)}
+        </select>
         <div className={styles.input_background}></div>
       </div>
 

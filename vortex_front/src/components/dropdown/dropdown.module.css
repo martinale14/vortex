@@ -9,11 +9,12 @@
   font-weight: 400;
   display: flex;
   margin-top: 0px;
-  padding: 0 10px;
   outline: none;
   border: 1px solid #008f82;
   overflow: hidden;
   background: none;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .input_Login[type='date']::-webkit-calendar-picker-indicator {

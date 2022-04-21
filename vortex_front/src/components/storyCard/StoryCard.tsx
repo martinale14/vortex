@@ -1,8 +1,7 @@
 import styles from './StoryCard.module.css';
-
 interface propsStory{
     story: any;
-    key: number;
+    key: string;
 }
 
 function StoryCard(props: propsStory) {
@@ -23,7 +22,7 @@ function StoryCard(props: propsStory) {
                     {
                         accept.map((acc: any, i) => {
                             return(
-                                <li>{`${acc.description}`}</li>
+                                <li key={'acc_' + acc.id}>{`${acc.description}`}</li>
                             )
                         })
                     }
