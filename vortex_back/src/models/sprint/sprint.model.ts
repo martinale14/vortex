@@ -1,4 +1,5 @@
 import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface SprintPayload {
   startDate: Date;
@@ -81,5 +82,15 @@ export class Sprint {
       payload.createdBy,
       payload.projectId
     ]);
+  }
+
+  static async getSprintsByProject(idProject: string) {
+    try {
+      const sprints = await pool.query('SELECT * FROM vortex.select_sprint_by_project($1)', [idProject]);
+
+      return sprints;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }

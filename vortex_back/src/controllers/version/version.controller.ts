@@ -17,4 +17,23 @@ export class VersionController {
 
     res.status(status).json({ result });
   }
+
+  static async getLastVersionByHistory(req: Request, res: Response) {
+    let status = 200;
+    let result = 'Version traida exitosamente';
+    let version = {};
+
+    const historyId = req.params.idHistory;
+
+    try {
+      const data = await Version.getLastVersionByHistory(historyId);
+
+      version = Version.fromDB(data.rows[0]).toJson();
+    } catch (_) {
+      status = 500;
+      result = 'Hubo un error inesperado';
+    }
+
+    res.status(status).json({ result, version });
+  }
 }

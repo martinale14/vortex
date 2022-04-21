@@ -1,4 +1,5 @@
 import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface ProjectPayload {
   name: string;
@@ -81,5 +82,15 @@ export class Project {
       payload.createdBy,
       payload.companyId
     ]);
+  }
+
+  static async getProjectsByCompany(idCompany: string) {
+    try {
+      const projects = await pool.query('SELECT * FROM vortex.select_project_by_company($1)', [idCompany]);
+
+      return projects;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }

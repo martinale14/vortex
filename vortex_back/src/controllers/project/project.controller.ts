@@ -17,4 +17,23 @@ export class ProjectController {
 
     res.status(status).json({ result });
   }
+
+  static async getProjectsByCompany(req: Request, res: Response) {
+    let status = 200;
+    let result = 'proyectos traidos exitosamente';
+    let projects = {};
+
+    const companyId = req.params.companyId;
+
+    try {
+      const data = await Project.getProjectsByCompany(companyId);
+
+      projects = data.rows.map((project) => Project.fromDB(project).toJson());
+    } catch (_) {
+      status = 500;
+      result = 'Hubo un error inesperado';
+    }
+
+    res.status(status).json({ result, projects });
+  }
 }

@@ -1,4 +1,5 @@
 import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface HistoryPayload {
   status: string;
@@ -56,7 +57,7 @@ export class History {
       object.is_epic_hist,
       object.created_at_hist,
       object.updated_at_hist,
-      object.created_at_hist,
+      object.created_by_hist,
       object.updated_by_hist,
       object.project_id_hist,
       object.user_responsable_id_hist,
@@ -95,5 +96,25 @@ export class History {
       payload.epicParentId,
       payload.sprintId
     ]);
+  }
+
+  static async getHistoriesByProject(idProject: string) {
+    try {
+      const histories = await pool.query('SELECT * FROM vortex.select_history_by_project($1)', [idProject]);
+
+      return histories;
+    } catch (e) {
+      throw new VortexException('database_error');
+    }
+  }
+
+  static async getHistoriesBySprint(idSprint: string) {
+    try {
+      const histories = await pool.query('SELECT * FROM vortex.select_history_by_sprint($1)', [idSprint]);
+
+      return histories;
+    } catch (e) {
+      throw new VortexException('database_error');
+    }
   }
 }

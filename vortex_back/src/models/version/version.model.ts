@@ -1,7 +1,7 @@
 import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface VersionPayload {
-  number: number;
   title: string;
   description: string;
   isBaseDoc: boolean;
@@ -80,13 +80,22 @@ export class Version {
   }
 
   static async createVersion(payload: VersionPayload) {
-    await pool.query('CALL vortex.insert_version($1, $2, $3, $4, $5, $6)', [
-      payload.number,
+    await pool.query('SELECT vortex.insert_version($1, $2, $3, $4, $5)', [
       payload.title,
       payload.description,
       payload.isBaseDoc,
       payload.createdBy,
       payload.historyId
     ]);
+  }
+
+  static async getLastVersionByHistory(idHistory: string) {
+    try {
+      const version = await pool.query('SELECT * FROM vortex.get_history_last_version($1)', [idHistory]);
+
+      return version;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }

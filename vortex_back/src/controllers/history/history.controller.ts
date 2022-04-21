@@ -33,4 +33,38 @@ export class HistoryController {
 
     res.status(status).json({ result });
   }
+
+  static async getHistoriesByProjectOrSprint(req: Request, res: Response) {
+    let status = 200;
+    let result = 'Compañias traidas exitosamente';
+    const histories = [];
+
+    const { idProject, idSprint } = req.params;
+
+    try {
+      const data =
+        idSprint !== undefined
+          ? await History.getHistoriesBySprint(idSprint)
+          : await History.getHistoriesByProject(idProject);
+
+      for (const history of data.rows) {
+        const hist = History.fromDB(history);
+
+        const accs = (await AcceptanceCriteria.getAccByHistory(hist.id)).rows;
+
+        for (const [i, acc] of accs.entries()) {
+          accs[i] = AcceptanceCriteria.fromDB(acc).toJson();
+        }
+
+        const version = Version.fromDB((await Version.getLastVersionByHistory(hist.id)).rows[0]).toJson();
+
+        histories.push({ hist: hist.toJson(), accs, version });
+      }
+    } catch (e) {
+      status = 500;
+      result = 'Hubo un error inesperado';
+    }
+
+    res.status(status).json({ result, histories });
+  }
 }

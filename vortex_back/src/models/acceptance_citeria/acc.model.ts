@@ -1,4 +1,5 @@
 import pool from '../../database';
+import { VortexException } from '../exceptions/exception.model';
 
 export interface AcceptanceCriteriaPayload {
   description: string;
@@ -74,5 +75,15 @@ export class AcceptanceCriteria {
       payload.createdBy,
       payload.historyId
     ]);
+  }
+
+  static async getAccByHistory(idHistory: string) {
+    try {
+      const acc = await pool.query('SELECT * FROM vortex.select_acc_by_history($1)', [idHistory]);
+
+      return acc;
+    } catch (_) {
+      throw new VortexException('database_error');
+    }
   }
 }
