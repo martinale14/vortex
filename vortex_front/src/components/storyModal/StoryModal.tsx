@@ -26,7 +26,7 @@ function StoryModal(props: storyProps) {
                     <Input type='text' placeholder='Ingrese una descripción' label='Descripción*' onChange={(e : any) => {}}/>
                 </div>
                 <div className={styles.vortex_button_save}>
-                    <Button /* text='Guardar' */></Button>
+                    {/* <Button></Button> */}
                 </div>
             </div>
         </div>
