@@ -1,1 +1,1 @@
-export const URL = 'https://3c49-186-169-17-198.ngrok.io/api/v1';
+export const URL = 'http://localhost:4000/api/v1';

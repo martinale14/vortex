@@ -4,6 +4,8 @@ import { IoMdArrowDropright } from 'react-icons/io'
 import SprintCard from '../sprintCard/SprintCard'
 import StoryCard from '../storyCard/StoryCard'
 import { useEffect, useState } from 'react'
+import { GET_ALL_COMPANIES } from '../../utils/url_utils'
+import ProjectModal from '../projectModal/projectModal'
 
 interface propsTable {}
 interface VortexObject {
@@ -18,17 +20,20 @@ interface Sprint {
     status: string;
 }
 
-function Table(props: propsTable) {
+function Table(_: propsTable) {
 
-    const [companies, setCompanies] = useState([]);
+    const [companies, setCompanies] = useState<any[]>([]);
     const [projects, setProjects] = useState([]);
     const [sprints, setSprints] = useState([]);
     const [stories, setStories] = useState([]);
-    const PATH = 'https://3c49-186-169-17-198.ngrok.io/api/v1/';
+
+    const [addProject, setAddProject] = useState(false);
+
+    const PATH = 'http://localhost:4000/api/v1/';
 
     useEffect(() => {
         if (companies.length <= 0) {
-            fetch(PATH + 'company')
+            fetch(GET_ALL_COMPANIES)
                 .then(res => res.json())
                 .then(data => {
                     setCompanies(data.companies);
@@ -46,6 +51,7 @@ function Table(props: propsTable) {
     } */
 
     return (
+        <>
         <table className={styles.vortex_table}>
             <thead>
                 <tr className={styles.vortex_table_head}>
@@ -60,7 +66,9 @@ function Table(props: propsTable) {
                     <th className={styles.vortex_th1}>
                         <div className={styles.vortex_table_head_container}>
                             <p>Proyectos</p>
-                            <button className={styles.vortex_add_button}>
+                            <button className={styles.vortex_add_button} onClick={()=>{
+                                setAddProject(true);
+                                }}>
                                 <AiFillPlusCircle className={styles.vortex_add_icon}/>
                             </button>
                         </div>
@@ -86,7 +94,7 @@ function Table(props: propsTable) {
                         {
                             companies.map((company: VortexObject, i) => {
                                 return(
-                                    <div key={company.id}
+                                    <div key={'company_' + company.id}
                                         onClick={() => {
                                             fetch(PATH + `project/${company.id}`)
                                                 .then(res => res.json())
@@ -108,7 +116,7 @@ function Table(props: propsTable) {
                         {
                             projects.map((project: VortexObject, i) => {
                                 return(
-                                    <div key={project.id}
+                                    <div key={'project_' + project.id}
                                         onClick={() => {
                                             fetch(PATH + `sprint/fromProject/${project.id}`)
                                                 .then(res => res.json())
@@ -130,7 +138,7 @@ function Table(props: propsTable) {
                             {
                                 sprints.map((sprint: Sprint, i) => {
                                     return(
-                                        <SprintCard key={sprint.id}
+                                        <SprintCard key={'sprint_' + sprint.id}
                                             sprint={sprint}
                                             onClick={() => {
                                                 fetch(PATH + `history/fromSprint/${sprint.id}`)
@@ -148,9 +156,10 @@ function Table(props: propsTable) {
                     <td className={styles.vortex_last}>
                         <div className={styles.vortex_container}>
                             {
-                                stories.map((story: any, i) => {
+                                stories.map((story: any) => {
+                                    
                                     return(
-                                        <StoryCard key={story.id}
+                                        <StoryCard key={'story_' + story.hist.id}
                                             story={story}
                                         />
                                     );
@@ -161,6 +170,8 @@ function Table(props: propsTable) {
                 </tr>
             </tbody>
         </table>
+        {addProject ? <ProjectModal companies={companies} onClose={() => {setAddProject(false);}}/> : <></>}
+        </>
     )
 }
 

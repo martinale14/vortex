@@ -64,7 +64,7 @@ function Login(_: propsLogin) {
             type='password'
             placeholder='Ingrese la contraseña'
           />
-          <Button onClick={handleClick} />
+          <Button text='Iniciar sesión' onClick={handleClick} />
           {/* <a href='/'>¿Olvidó su contraseña?</a> */}
           <p className={styles.message}>{message}</p>
         </div>

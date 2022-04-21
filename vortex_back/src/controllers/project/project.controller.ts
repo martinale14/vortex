@@ -10,7 +10,7 @@ export class ProjectController {
 
     try {
       await Project.createProject(payload);
-    } catch (e) {
+    } catch (e) {      
       status = 500;
       result = 'Hubo un error inesperado';
     }
