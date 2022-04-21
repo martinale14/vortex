@@ -1,17 +1,26 @@
 import styles from './Button.module.css';
-import nextIcon from '../../assets/next.svg'
+import { IoMdArrowDroprightCircle } from 'react-icons/io'
 
 interface PropsButton {
-  next? : Boolean //Optional value
+  back? : Boolean; //Optional value to change button style
+  click? : any; //Button function 
 }
+
+/**
+ * 
+ * @description Button to use in the application
+ * @param props props to use in the button component
+ * @returns Button component
+ */
 function Login(props: PropsButton) {
   return (
-    <button className={`${styles.button_vortex} ${props.next === false ? styles.button_vortex_back_fill : styles.button_vortex_next_fill}`}>
+    <button className={`${styles.button_vortex} ${props.back ? styles.button_vortex_back_fill : styles.button_vortex_next_fill}`}
+      onClick={props.click}
+    >
       
       Iniciar sesión
 
-      {/* trying to use span as an svg (It didn't work) */}
-      {/* <span className={styles.button_vortex_icon}></span> */}
+      <IoMdArrowDroprightCircle className={styles.arrow}/>
     
     </button>);
 }

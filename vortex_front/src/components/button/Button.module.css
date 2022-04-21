@@ -1,13 +1,6 @@
-*{
-  --primaryColor: #ff9312;
-  --secondaryColor: #008F82;
-}
-
 .button_vortex {
   position: relative;
-  font-family: 'Roboto', sans-serif;
   width: 100%;
-  min-width: 300px;
   height: 42px;
   padding: 10px;
   margin-top: 35px;
@@ -15,7 +8,6 @@
   font-size: 20px;
   font-weight: bold;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   outline: none;
@@ -27,6 +19,7 @@
   -ms-transition:     0.18s ease-in;
   -moz-transition:    0.18s ease-in;
   -webkit-transition: 0.18s ease-in;
+  color: var(--primaryColor);
 }
 
 .button_vortex:hover, .button_vortex:hover .button_vortex_icon{
@@ -72,4 +65,9 @@
   height: 20px;
   color: #ff9312;
   background: url("../../assets/next.svg");
+}
+
+.arrow{
+  position: absolute;
+  right: 15px;
 }
