@@ -4,7 +4,8 @@ import { MouseEventHandler } from 'react';
 
 interface PropsButton {
   back?: Boolean; //Optional value to change button style
-  onClick?: MouseEventHandler<HTMLButtonElement>; //Button function
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  text: string; //Button function
 }
 
 /**
@@ -21,7 +22,7 @@ function Login(props: PropsButton) {
       }`}
       onClick={props.onClick}
     >
-      Iniciar sesión
+      {props.text}
       <IoMdArrowDroprightCircle className={styles.arrow} />
     </button>
   );

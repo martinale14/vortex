@@ -23,7 +23,7 @@ function Login(props: propsInput) {
   };
 
   return (
-    <>
+    <div>
       <p className={styles.label}>{props.label}</p>
 
       <div className={styles.input_container}>
@@ -47,7 +47,7 @@ function Login(props: propsInput) {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 }
 

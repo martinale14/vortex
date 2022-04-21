@@ -8,13 +8,16 @@
   font-size: 18px;
   font-weight: 400;
   display: flex;
-  flex-direction: column;
   margin-top: 0px;
   padding: 10px;
   outline: none;
   border: 1px solid #008f82;
   overflow: hidden;
   background: none;
+}
+
+.input_Login[type='date']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
 }
 
 .input_Login::placeholder {

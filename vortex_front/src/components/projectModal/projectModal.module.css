@@ -1,0 +1,67 @@
+.darkBackground {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #3c3c3c;
+  display: grid;
+  place-items: center;
+  z-index: -3;
+}
+
+.modal {
+  position: relative;
+  max-width: 1000px;
+  height: 600px;
+  width: 85%;
+  background-color: white;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: -2;
+  color: var(--secondaryColor);
+}
+
+.modal > h2 {
+  margin: 27px 0 20px 0;
+  font-size: 36px;
+}
+
+.modal > hr {
+  border: none;
+  height: 2px;
+  background-color: var(--primaryColor);
+  width: 100%;
+}
+
+.modal > p {
+  margin-top: 41px;
+  font-size: 24px;
+}
+
+.icon {
+  color: var(--primaryColor);
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  left: 27px;
+  top: 27px;
+  cursor: pointer;
+}
+
+.form {
+  margin-top: 63px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 55px;
+}
+
+.button {
+  width: 370px;
+  height: 48px;
+  margin-top: 82px;
+}
+
+.form input[type='date'] {
+  cursor: pointer;
+}
