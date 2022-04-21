@@ -4,6 +4,8 @@ import Login from './Login/Login';
 import Home from './Home/Home';
 
 import './App.css';
+import SprintModal from '../components/sprintModal/SprintModal';
+import StoryModal from '../components/storyModal/StoryModal';
 
 export default function App() {
   return (
@@ -12,6 +14,8 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Login/>} />
           <Route path='/home' element={<Home/>} />
+          <Route path='/modalEJ' element={<SprintModal/>} />
+          <Route path='/modalEJ2' element={<StoryModal/>} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
