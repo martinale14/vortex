@@ -1,0 +1,68 @@
+p{
+    margin: 0;
+}
+
+.vortex_story_card{
+    -webkit-box-shadow: var(--dropShdow); 
+    box-shadow: var(--dropShdow);
+    width: 80%;
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    transition: .2s;
+    padding: 0 10px;
+    align-items: center;
+}
+
+.vortex_story_header{
+    width: calc(100% - 10px);
+    height: 15%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+.vortex_story_header > p{
+    margin: 0 2px 0 5px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.vortex_story_body{
+    width: calc(100% - 10px);
+    height: 78%;
+    display: flex;
+    flex-direction: column;
+}
+
+.vortex_story_body p{
+    color: var(--darkColor);
+    font-size: 14px;
+}
+
+.vortex_story_desc{
+    margin: 15px 0 0 0;
+}
+
+.vortex_story_sub{
+    margin: 20px 0 0 0;
+    font-weight: bold;
+}
+
+.vortex_story_acc{
+    margin: 10px 0 0 20px;
+    font-size: 14px;
+    color: var(--darkColor);
+}
+
+.vortex_story_res{
+    margin: 10px 0 0 0;
+}
+
+.vortex_story_version{
+    text-align: end;
+    margin: auto 10px 0 auto;
+}
