@@ -545,10 +545,41 @@ $$;
 ALTER FUNCTION vortex.select_acc_by_history(history_id integer) OWNER TO postgres;
 
 --
+-- Name: select_history_by_project(integer); Type: FUNCTION; Schema: vortex; Owner: postgres
+--
+
+CREATE FUNCTION vortex.select_history_by_project(project_id integer) RETURNS TABLE(id_hist integer, status_hist character varying, is_epic_hist boolean, created_at_hist timestamp without time zone, updated_at_hist timestamp without time zone, project_id_hist integer, user_responsable_id_hist integer, epic_parent_id_hist integer, sprint_id_hist integer, created_by_hist character varying, updated_by_hist character varying)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+  RETURN QUERY SELECT 
+  	hist.id_hist,
+    hist.status_hist,
+    hist.is_epic_hist,
+    hist.created_at_hist,
+    hist.updated_at_hist, 
+    hist.project_id_hist,
+    hist.user_responsable_id_hist,
+    hist.epic_parent_id_hist,
+    hist.sprint_id_hist,
+  	usrcreate.name_user AS created_by_hist,
+  	usrupdate.name_user AS updated_by_hist
+  FROM vortex.histories hist
+  LEFT JOIN vortex.users usrcreate ON hist.created_by_hist = usrcreate.id_user
+  LEFT JOIN vortex.users usrupdate ON hist.updated_by_hist = usrupdate.id_user
+  WHERE hist.project_id_hist = select_history_by_project.project_id;
+END;
+$$;
+
+
+ALTER FUNCTION vortex.select_history_by_project(project_id integer) OWNER TO postgres;
+
+--
 -- Name: select_history_by_sprint(integer); Type: FUNCTION; Schema: vortex; Owner: postgres
 --
 
-CREATE FUNCTION vortex.select_history_by_sprint(sprint_id integer) RETURNS TABLE(id_hist integer, status_hist character varying, is_epic_hist boolean, created_at_hist timestamp without time zone, updated_at_hist timestamp without time zone, project_id_hist integer, user_responsable_id_hist integer, epic_parent_id_hist integer, sprint_id_hist integer, created_by_spri character varying, updated_by_spri character varying)
+CREATE FUNCTION vortex.select_history_by_sprint(sprint_id integer) RETURNS TABLE(id_hist integer, status_hist character varying, is_epic_hist boolean, created_at_hist timestamp without time zone, updated_at_hist timestamp without time zone, project_id_hist integer, user_responsable_id_hist integer, epic_parent_id_hist integer, sprint_id_hist integer, created_by_hist character varying, updated_by_hist character varying)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -779,8 +810,8 @@ COPY vortex.companies (id_comp, name_comp, email_comp, phone_comp, direction_com
 --
 
 COPY vortex.histories (id_hist, status_hist, is_epic_hist, created_at_hist, updated_at_hist, created_by_hist, updated_by_hist, project_id_hist, user_responsable_id_hist, epic_parent_id_hist, sprint_id_hist) FROM stdin;
-2	open	f	2022-04-20 21:06:46.537814	2022-04-20 21:06:46.537814	13	13	2	\N	\N	\N
-3	open	f	2022-04-20 21:09:32.561419	2022-04-20 21:09:32.561419	13	13	2	\N	\N	\N
+2	open	f	2022-04-20 21:06:46.537814	2022-04-20 22:49:01.274622	13	13	2	\N	\N	3
+3	open	f	2022-04-20 21:09:32.561419	2022-04-20 22:49:01.274622	13	13	2	\N	\N	3
 \.
 
 

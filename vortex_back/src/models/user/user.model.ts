@@ -2,39 +2,39 @@ import { Role, getRoleName } from './roles.model';
 import pool from '../../database';
 import { VortexException } from '../exceptions/exception.model';
 
-export interface UserInterface {
+export interface UserPayload {
   name: string;
-  phone: string | null;
+  phone: string;
   email: string;
   role: Role;
-  pictureUrl : string;
+  pictureUrl: string;
   password: string;
 }
 
 export class User {
   id: string;
   name: string;
-  phone: string | null;
+  phone: string;
   email: string;
   forgotPassword: boolean;
   acceptedTerms: boolean;
   createdAt: Date;
   updatedAt: Date;
   role: Role;
-  pictureUrl : string;
+  pictureUrl: string;
   password: string;
 
   constructor(
     id: string,
     name: string,
-    phone: string | null,
+    phone: string,
     email: string,
     forgotPassword: boolean,
     acceptedTerms: boolean,
     createdAt: Date,
     updatedAt: Date,
     role: Role,
-    pictureUrl:string,
+    pictureUrl: string,
     password: string
   ) {
     this.id = id;
@@ -50,19 +50,19 @@ export class User {
     this.password = password;
   }
 
-  static fromJson(obj: { [key: string]: any }): User {
+  static fromDB(object: { [key: string]: any }): User {
     const user: User = new User(
-      obj.id_user,
-      obj.name_user,
-      obj.phone_user,
-      obj.email_user,
-      obj.forgot_password_user,
-      obj.accepted_terms_user,
-      obj.created_at_user,
-      obj.updated_at_user,
-      obj.role_id_user,
-      obj.picture_url_user,
-      obj.password_user
+      object.id_user,
+      object.name_user,
+      object.phone_user,
+      object.email_user,
+      object.forgot_password_user,
+      object.accepted_terms_user,
+      object.created_at_user,
+      object.updated_at_user,
+      object.role_id_user,
+      object.picture_url_user,
+      object.password_user
     );
 
     return user;
@@ -85,21 +85,20 @@ export class User {
     return userJson;
   }
 
-  static async createUser(userInterface: UserInterface) {
+  static async createUser(payload: UserPayload) {
     try {
       await pool.query('CALL vortex.insert_user($1, $2, $3, $4, $5, $6)', [
-        userInterface.name,
-        userInterface.phone,
-        userInterface.email,
-        userInterface.password,
-        userInterface.pictureUrl,
-        userInterface.role
+        payload.name,
+        payload.phone,
+        payload.email,
+        payload.password,
+        payload.pictureUrl,
+        payload.role
       ]);
     } catch (e: any) {
       if (e.constraint === 'unique_email') {
         throw new VortexException(e.constraint);
       } else {
-
         throw e;
       }
     }

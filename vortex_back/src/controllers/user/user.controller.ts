@@ -18,7 +18,7 @@ export class UserController {
 
         if (data.rows.length > 0) {
           result = 'Usuario encontrado';
-          parsed = User.fromJson(data.rows[0]).toJson();
+          parsed = User.fromDB(data.rows[0]).toJson();
         } else {
           status = 404;
           result = 'Usuario no encontrado';
