@@ -1,25 +1,26 @@
-import React, {createContext} from 'react';
+import React, { useState} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './Login/Login';
 import Home from './Home/Home';
 
 import './App.css';
-import SprintModal from '../components/sprintModal/SprintModal';
-import StoryModal from '../components/storyModal/StoryModal';
+import { UserContext } from '../utils/contexts';
 
 export default function App() {
 
-  const userContext = createContext({})
+  const [user, setUser] : [{[key:string]:any}, any]= useState({});
+
+
   return (
     <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login/>} />
-          <Route path='/home' element={<Home/>} />
-          <Route path='/modalEJ' element={<SprintModal/>} />
-          <Route path='/modalEJ2' element={<StoryModal/>} />
-        </Routes>
-      </BrowserRouter>
+      <UserContext.Provider value={{user, setUser}}>
+        <BrowserRouter>
+          <Routes>
+            {user.id !== undefined ? <Route path='/' element={<Home />} /> : <Route path='/' element={<Login />} />}
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+    
     </React.StrictMode>
   );
 }
