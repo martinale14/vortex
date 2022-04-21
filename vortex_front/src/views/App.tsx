@@ -20,7 +20,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
-      
+    
     </React.StrictMode>
   );
 }
