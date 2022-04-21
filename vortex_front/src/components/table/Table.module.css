@@ -1,12 +1,16 @@
 .vortex_table{
-    width: 90%;
+    width: 85%;
     height: 700px;
     margin: 25px auto;
     border-radius: 10px;
     background-color: white;
-    -webkit-box-shadow: 0px 0px 21px 3px #5E5E5E; 
-    box-shadow: 0px 0px 21px 3px #5E5E5E;
+    -webkit-box-shadow: var(--dropShdow); 
+    box-shadow: var(--dropShdow);
     border-collapse: collapse;
+}
+
+.vortex_table_head:first-child{
+    width: 28%;
 }
 
 th{
@@ -16,6 +20,14 @@ th{
     column-span: 0;
 }
 
+.vortex_last{
+    border-right: none;
+}
+
+.vortex_th1{
+    width: 20%;
+}
+
 .vortex_table_head_container{
     display: flex;
     flex-direction: row;
@@ -23,12 +35,13 @@ th{
     height: 100%;
     width: 100%;
     text-align: left;
-    padding-left: 5px;
-    color: var(--secondaryColor);
+    padding-left: 10px;
+    color: var(--darkColor);
 }
 
 .vortex_table_head_container > p{
     margin: 0;
+    font-size: 18px;
 }
 
 .vortex_add_button{
@@ -40,7 +53,7 @@ th{
     cursor: pointer;
     border-radius: 50px;
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .vortex_add_icon{
@@ -59,6 +72,9 @@ td{
     width: 100%;
     transition: .2s;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .vortex_table_body_one p{
@@ -66,7 +82,7 @@ td{
     align-items: center;
     margin: 0 0 0 10px;
     height: 30px;
-    color: var(--secondaryColor);
+    color: var(--darkColor);
     transition: .2s;
 }
 
@@ -75,6 +91,25 @@ td{
     color: white;
 }
 
-.vortex_table_body_one div:hover > p{
+.vortex_table_body_one div:hover p{
     color: white;
+}
+
+.vortex_table_body_one div:hover .arrow{
+    color: white;
+}
+
+.arrow{
+    font-size: 20px;
+    color: rgb(98, 98, 98);
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.vortex_container{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
 }
