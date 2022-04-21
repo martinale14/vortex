@@ -6,6 +6,7 @@ import StoryCard from '../storyCard/StoryCard'
 import { useEffect, useState } from 'react'
 import { GET_ALL_COMPANIES } from '../../utils/url_utils'
 import ProjectModal from '../projectModal/projectModal'
+import CompanyModal from '../companyModal/CompanyModal'
 
 interface propsTable {}
 interface VortexObject {
@@ -28,6 +29,7 @@ function Table(_: propsTable) {
     const [stories, setStories] = useState([]);
 
     const [addProject, setAddProject] = useState(false);
+    const [addCompany, setAddCompany] = useState(false);
 
     const PATH = 'http://localhost:4000/api/v1/';
 
@@ -58,7 +60,7 @@ function Table(_: propsTable) {
                     <th className={styles.vortex_th1}>
                         <div className={styles.vortex_table_head_container}>
                             <p>Empresas</p>
-                            <button className={styles.vortex_add_button}>
+                            <button className={styles.vortex_add_button} onClick={() => {setAddCompany(true)}}>
                                 <AiFillPlusCircle className={styles.vortex_add_icon}/>
                             </button>
                         </div>
@@ -170,7 +172,21 @@ function Table(_: propsTable) {
                 </tr>
             </tbody>
         </table>
-        {addProject ? <ProjectModal companies={companies} onClose={() => {setAddProject(false);}}/> : <></>}
+        {addProject ? <ProjectModal companies={companies} onSave={(companyId:any) => {fetch(PATH + `project/${companyId}`)
+                                                .then(res => res.json())
+                                                .then(data => {
+                                                    setSprints([]);
+                                                    setStories([]);
+                                                    setProjects(data.projects);
+                                                })}} onClose={() => {setAddProject(false);}}/> : <></>}
+        {addCompany ? <CompanyModal onSave={() => {
+            fetch(GET_ALL_COMPANIES)
+            .then(res => res.json())
+            .then(data => {
+                setCompanies(data.companies);
+            })
+            .catch(error => console.error(error));
+        }} onClose={() => {setAddCompany(false);}}/> : <></>}
         </>
     )
 }

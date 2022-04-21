@@ -3,10 +3,11 @@ import backgrounLogin from '../../assets/Background.svg';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/input/Input';
 import Button from '../../components/button/Button';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useContext } from 'react';
 import ValidationManager from '../../utils/validationManager';
 import { MouseEvent } from 'react';
 import LoginService from './LoginService';
+import { UserContext } from '../../utils/contexts';
 
 interface propsLogin {}
 
@@ -16,6 +17,8 @@ function Login(_: propsLogin) {
 
   const [emailValidationText, setEmailValidationText] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+
+  const {setUser} = useContext(UserContext);
 
   const handleClick = async (_?: MouseEvent<HTMLButtonElement>) => {
     setEmailValidationText(ValidationManager.validateEmail(email));
@@ -32,7 +35,7 @@ function Login(_: propsLogin) {
         if (data.status === 200) {
           console.log(decoded);
 
-          setMessage('Sesión iniciada correctamente');
+          setUser({id : decoded.idUser});
         }
       }
     }

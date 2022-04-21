@@ -32,8 +32,9 @@ export class AuthController {
 
     const token = JwtController.getSignedToken(user);
     const refreshToken = JwtController.createRefreshToken(req.session.passport.user.email);
+    const idUser = req.session.passport.user.id;
 
-    res.status(200).json({ result: 'Authentication succesfull', token, refreshToken });
+    res.status(200).json({ result: 'Authentication succesfull', token, refreshToken, idUser });
   }
 
   static logout(req: Request, res: Response) {
