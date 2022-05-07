@@ -5,6 +5,7 @@ interface propsSprint {
     sprint: Sprint;
     onClick: any;
     key: string;
+    index: string;
 }
 
 interface Sprint {
@@ -18,7 +19,7 @@ function SprintCard(props: propsSprint) {
     return (
         <div className={styles.vortex_sprint_card} onClick={props.onClick}>
             <header className={styles.vortex_sprint_header}>
-                <p>Sprint #1</p>
+                <p>Sprint # {props.index}</p>
                 <IoMdArrowDropright className={styles.arrow}/>
             </header>
             <article className={styles.vortex_sprint_body}>

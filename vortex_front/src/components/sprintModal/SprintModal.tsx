@@ -22,7 +22,7 @@ function SprintModal (props: sprintProps){
                     <Input type='date' placeholder='dd/mm/aaaa' label='Fecha de inicio' onChange={(e : any) => {}}/>
                     <Input type='date' placeholder='dd/mm/aaaa' label='Fecha de fin' onChange={(e : any) => {}}/>
                 </div>
-                <Button/>
+                <Button text="Guardar"/>
             </div>
         </div>
     );
