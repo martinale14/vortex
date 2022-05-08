@@ -1,9 +1,10 @@
 .vortex_background{
+    top: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: #3c3c3cd5;
-    justify-content: center;
     position: absolute;
+    z-index: 50;
 }
 
 .vortex_cardSprint{
@@ -14,6 +15,7 @@
     background-color: #fff;
     border-radius: 18px;
     color: var(--secondaryColor);
+    z-index: 51;
 }
 
 .vortex_cardSprint_header{
@@ -74,7 +76,7 @@
     font-size: 18px;
 }
 
-Input{
+.vortex_cardSprint > Input{
     margin: 20px;
 }
 

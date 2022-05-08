@@ -11,7 +11,7 @@ interface PropsButton {
 /**
  *
  * @description Button to use in the application
- * @param props props to use in the button component
+ * @param {PropsButton} props props to use in the button component
  * @returns Button component
  */
 function Login(props: PropsButton) {
