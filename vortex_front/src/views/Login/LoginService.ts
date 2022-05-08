@@ -1,4 +1,5 @@
-import { HEADERS, LOGIN_ROUTE } from '../../utils/url_utils';
+import { LOGIN_ROUTE } from '../../utils/url_utils';
+import axios from '../../utils/axios_config';
 
 export interface LoginPayload {
   email: string;
@@ -7,11 +8,7 @@ export interface LoginPayload {
 
 class LoginService {
   static async login(credentials: LoginPayload) {
-    const response = await fetch(LOGIN_ROUTE, {
-      method: 'POST',
-      headers: { ...HEADERS },
-      body: JSON.stringify(credentials)
-    });
+    const response = await axios.post(LOGIN_ROUTE, credentials);
 
     return response;
   }
