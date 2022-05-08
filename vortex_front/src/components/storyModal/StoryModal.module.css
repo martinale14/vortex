@@ -1,7 +1,7 @@
 .vortex_background{
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: #3c3c3cd5;
     position: absolute;
     z-index: 50;

@@ -6,14 +6,16 @@ import Input from '../input/Input';
 import Button from '../button/Button';
 import { RiCalendar2Fill } from 'react-icons/ri';
 
-interface sprintProps { }
+interface sprintProps {
+    onClose?: any;
+ }
 
 function SprintModal (props: sprintProps){
     return(
         <div className={styles.vortex_background}>
             <div className={styles.vortex_cardSprint}>
                 <div className={styles.vortex_cardSprint_header}>
-                    <img src={exit} className={styles.vortex_imgExit} alt="exit" />
+                    <img src={exit} className={styles.vortex_imgExit} alt="exit" onClick={props.onClose}/>
                     <img src={sprint} className={styles.vortex_imgSprint} alt="sprints" />
                     <h2>Nuevo sprint</h2>
                 </div>
