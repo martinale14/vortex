@@ -151,7 +151,7 @@ function Table(_: propsTable) {
                             {
                                 sprints.map((sprint: Sprint, i) => {
                                     return(
-                                        <SprintCard number={`Sprint #${i + 1}`} key={'sprint_' + sprint.id}
+                                        <SprintCard index={(i+1).toString()} key={'sprint_' + sprint.id}
                                             sprint={sprint}
                                             onClick={() => {
                                                 fetch(PATH + `/history/fromSprint/${sprint.id}`)

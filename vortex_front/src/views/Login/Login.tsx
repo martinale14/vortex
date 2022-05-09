@@ -26,15 +26,13 @@ function Login(_: propsLogin) {
     if (email !== '' && password !== '') {
       if (ValidationManager.validateGroup([emailValidationText])) {
         const data = await LoginService.login({ email, password });
-        const decoded = await data.json();
+        const decoded = data.data;
 
         if (data.status === 401) {
           setMessage(decoded.result);
         }
 
         if (data.status === 200) {
-          console.log(decoded);
-
           setUser({id : decoded.idUser});
         }
       }

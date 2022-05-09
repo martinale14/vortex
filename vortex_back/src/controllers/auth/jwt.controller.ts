@@ -15,7 +15,7 @@ export class JwtController {
     if (refreshToken in TokenManager.refreshTokens && TokenManager.refreshTokens[refreshToken] === email) {
       token = JwtController.getSignedToken({ id: req.body.id, role: req.body.role });
     } else {
-      status = 401;
+      status = 2;
       result = 'Acceso prohibído';
     }
 
