@@ -45,4 +45,18 @@ a {
 
 .container{
   position: relative;
+  width:calc(100% - 0px);
+  height: calc(100% - 45px);
+}
+
+.container_body{
+    position: absolute;
+    width:calc(100%);
+    height: calc(100%);
+    display: flex;
+    flex-direction: row-reverse
+}
+
+.vortex_body_home{
+  position: relative;
 }
