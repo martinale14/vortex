@@ -35,7 +35,7 @@ function Table(_: propsTable) {
     const [addSprint, setAddSprint] = useState(false);
     const [addStory, setAddStory] = useState(false);
 
-    const PATH = 'https://9109-186-169-21-173.ngrok.io/api/v1';
+    const PATH = 'https://592b-186-169-21-173.ngrok.io/api/v1';
 
     useEffect(() => {
         if (companies.length <= 0) {

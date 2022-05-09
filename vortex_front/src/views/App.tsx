@@ -15,9 +15,9 @@ export default function App() {
       <UserContext.Provider value={{user, setUser}}>
         <BrowserRouter>
           <Routes>
-            {user.id !== undefined ? <Route path='/' element={<Home />} /> : <Route path='/' element={<Login />} />}
-            {/* <Route path='/' element={<Login />} />
-            <Route path='/home' element={<Home />} /> */}
+            {/* {user.id !== undefined ? <Route path='/' element={<Home />} /> : <Route path='/' element={<Login />} />} */}
+            <Route path='/' element={<Login />} />
+            <Route path='/home' element={<Home />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

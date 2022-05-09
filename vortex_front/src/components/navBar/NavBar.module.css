@@ -10,5 +10,28 @@
 .vortex_navbar > img{
     height: 60%;
     margin-right: auto;
-    margin-left: 35px;
+    margin-left: 20px;
+}
+
+.vortex_nav_profile{
+    width: 45px;
+    height: 45px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid white;
+    overflow: hidden;
+}
+
+.vortex_nav_profile_img{
+    height: 100%;
+}
+
+.vortex_nav_name{
+    color: white;
+    font-size: 20px;
+    height: fit-content;
+    margin-right: 30px;
 }
