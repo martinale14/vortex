@@ -5,7 +5,6 @@ import Home from './Home/Home';
 
 import './App.css';
 import { UserContext } from '../utils/contexts';
-
 export default function App() {
 
   const [user, setUser] : [{[key:string]:any}, any]= useState({});

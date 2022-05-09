@@ -1,0 +1,34 @@
+.vortex_menuBar{
+    display: flex;
+    width: 150px;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: var(--dropShdow);
+    padding: 20px;
+}
+
+.vortex_container_img{
+    display: flex;
+    flex-direction: column;
+}
+
+.vortex_container_img > img{
+    width: 35px;
+    height: 35px;
+    padding: 20px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: -8px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.vortex_text{
+    display: flex;
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+p{
+    font-size: 15px;
+}
