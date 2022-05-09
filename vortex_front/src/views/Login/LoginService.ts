@@ -8,8 +8,13 @@ export interface LoginPayload {
 
 class LoginService {
   static async login(credentials: LoginPayload) {
-    const response = await axios.post(LOGIN_ROUTE, credentials);
+    let response: any = {};
 
+    try {
+      response = await axios.post(LOGIN_ROUTE, credentials);
+    } catch (err) {
+      response = err;
+    }
     return response;
   }
 }
