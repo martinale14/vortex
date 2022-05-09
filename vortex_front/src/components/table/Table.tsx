@@ -4,9 +4,11 @@ import { IoMdArrowDropright } from 'react-icons/io'
 import SprintCard from '../sprintCard/SprintCard'
 import StoryCard from '../storyCard/StoryCard'
 import { useEffect, useState } from 'react'
-import { GET_ALL_COMPANIES } from '../../utils/url_utils'
+import { GET_ALL_COMPANIES, GET_STORIES_BYSPRINT } from '../../utils/url_utils'
 import ProjectModal from '../projectModal/projectModal'
 import CompanyModal from '../companyModal/CompanyModal'
+import SprintModal from '../sprintModal/SprintModal'
+import StoryModal from '../storyModal/StoryModal'
 
 interface propsTable {}
 interface VortexObject {
@@ -30,8 +32,10 @@ function Table(_: propsTable) {
 
     const [addProject, setAddProject] = useState(false);
     const [addCompany, setAddCompany] = useState(false);
+    const [addSprint, setAddSprint] = useState(false);
+    const [addStory, setAddStory] = useState(false);
 
-    const PATH = 'http://localhost:4000/api/v1/';
+    const PATH = 'https://9109-186-169-21-173.ngrok.io/api/v1';
 
     useEffect(() => {
         if (companies.length <= 0) {
@@ -78,7 +82,9 @@ function Table(_: propsTable) {
                     <th className={styles.vortex_th1}>
                         <div className={styles.vortex_table_head_container}>
                             <p>Sprints</p>
-                            <button className={styles.vortex_add_button}>
+                            <button className={styles.vortex_add_button} onClick={()=>{
+                                setAddSprint(true);
+                                }}>
                                 <AiFillPlusCircle className={styles.vortex_add_icon}/>
                             </button>
                         </div>
@@ -86,6 +92,11 @@ function Table(_: propsTable) {
                     <th className={styles.vortex_last}>
                         <div className={styles.vortex_table_head_container}>
                             <p>Historias de usuario</p>
+                            <button className={styles.vortex_add_button} onClick={()=>{
+                                setAddStory(true);
+                                }}>
+                                <AiFillPlusCircle className={styles.vortex_add_icon}/>
+                            </button>
                         </div>
                     </th>
                 </tr>
@@ -98,7 +109,7 @@ function Table(_: propsTable) {
                                 return(
                                     <div key={'company_' + company.id}
                                         onClick={() => {
-                                            fetch(PATH + `project/${company.id}`)
+                                            fetch(PATH + `/project/${company.id}`)
                                                 .then(res => res.json())
                                                 .then(data => {
                                                     setSprints([]);
@@ -120,7 +131,7 @@ function Table(_: propsTable) {
                                 return(
                                     <div key={'project_' + project.id}
                                         onClick={() => {
-                                            fetch(PATH + `sprint/fromProject/${project.id}`)
+                                            fetch(PATH + `/sprint/fromProject/${project.id}`)
                                                 .then(res => res.json())
                                                 .then(data => {
                                                     setStories([]);
@@ -143,7 +154,7 @@ function Table(_: propsTable) {
                                         <SprintCard index={(i+1).toString()} key={'sprint_' + sprint.id}
                                             sprint={sprint}
                                             onClick={() => {
-                                                fetch(PATH + `history/fromSprint/${sprint.id}`)
+                                                fetch(PATH + `/history/fromSprint/${sprint.id}`)
                                                     .then(res => res.json())
                                                     .then(data => {
                                                         setStories(data.histories);
@@ -187,6 +198,10 @@ function Table(_: propsTable) {
             })
             .catch(error => console.error(error));
         }} onClose={() => {setAddCompany(false);}}/> : <></>}
+        {addSprint ? <SprintModal onClose={() => {setAddSprint(false);}}/> : <></>}
+        {addStory ? <StoryModal onSave={() => {
+            setStories([]);
+        }} onClose={() => {setAddStory(false);}}/> : <></>}
         </>
     )
 }
