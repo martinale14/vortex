@@ -37,15 +37,13 @@ function Table(_: propsTable) {
   const PATH = 'https://592b-186-169-21-173.ngrok.io/api/v1';
 
   useEffect(() => {
-    if (companies.length <= 0) {
-      fetch(GET_ALL_COMPANIES)
-        .then((res) => res.json())
-        .then((data) => {
-          setCompanies(data.companies);
-        })
-        .catch((error) => console.error(error));
-    }
-  });
+    fetch(GET_ALL_COMPANIES)
+      .then((res) => res.json())
+      .then((data) => {
+        setCompanies(data.companies);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   /* const fetchProjects: any = (company: VortexObject) => {
         fetch(PATH + `project/${company.id}`)
