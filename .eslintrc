@@ -16,6 +16,7 @@
     "comma-dangle": 2,
     "no-debugger": 2,
     "semi": 0,
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    
   }
 }

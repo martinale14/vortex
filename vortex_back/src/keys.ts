@@ -4,9 +4,9 @@ import path from 'path';
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 export default {
-  user: process.env.DB_USERNAME ?? '',
-  host: process.env.DB_HOST ?? '',
-  database: process.env.DB_DATABASE ?? '',
-  password: process.env.DB_PASSWORD ?? '',
-  port: process.env.DB_PORT ?? ''
+  user: 'yzsyamkkxquatj',
+  host: 'ec2-44-196-223-128.compute-1.amazonaws.com',
+  database: 'd6eucvkgkdn9mu',
+  password: '23f2346009644577c8c1d5f82106ccba33e9997433bf32cca951cdad5e00fe69',
+  port: '5432'
 };

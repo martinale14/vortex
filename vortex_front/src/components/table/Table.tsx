@@ -39,7 +39,7 @@ function Table(_: propsTable) {
 
   useEffect(() => {
     initialize();
-  });
+  }, []);
 
   const initialize = async () => {
       const data = await TableService.fetchCompanies();

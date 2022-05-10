@@ -19,6 +19,8 @@ export class AuthController {
         status = 406;
         result = 'El usuario ya se encuentra registrado';
       } else {
+        console.log(e);
+
         status = 500;
         result = 'Hubo un error inesperado';
       }

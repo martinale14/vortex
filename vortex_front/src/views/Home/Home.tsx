@@ -25,7 +25,7 @@ function Home(_: propsLogin) {
           <SideBar />
         </section>
         <section className={styles.vortex_main_container_body}>
-          <p className={styles.vortex_welcome}>Bienvenido prro</p>
+          <p className={styles.vortex_welcome}>Bienvenido {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}</p>
           <Table />
         </section>
       </div>

@@ -20,12 +20,22 @@ import versionRouter from './services/versions.routes';
 
 import { initializePassport } from './utilities/passport.util';
 
+const allowedOrigins: [string, string] = ['https://anahu-1428.web.app', 'http://localhost:3000'];
+
 // Generating the server
 const app = express();
 initializePassport();
 
 // Setting Middlewares
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(
+  cors((req, cb) => {
+    if (allowedOrigins.includes(req.header('Origin')!)) {
+      cb(null, { origin: true });
+    } else {
+      cb(null, { origin: false });
+    }
+  })
+);
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan(':method :url :status'));
 app.use(

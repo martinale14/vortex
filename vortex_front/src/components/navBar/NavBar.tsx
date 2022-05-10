@@ -21,10 +21,10 @@ function NavBar(props: NavProps) {
     <nav className={styles.vortex_navbar}>
       <img src={logoWhite} alt="Ana's Logo" />
       <section className={styles.vortex_nav_profile}>
-        <img className={styles.vortex_nav_profile_img} src={profileImg} alt='Profile' />
+        <img className={styles.vortex_nav_profile_img} src={user?.pictureUrl || profileImg} alt='Profile' />
       </section>
       <p className={styles.vortex_nav_name}>
-        {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}
+      {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}
       </p>
     </nav>
   );
