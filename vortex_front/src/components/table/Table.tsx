@@ -9,6 +9,7 @@ import ProjectModal from '../projectModal/projectModal';
 import CompanyModal from '../companyModal/CompanyModal';
 import SprintModal from '../sprintModal/SprintModal';
 import StoryModal from '../storyModal/StoryModal';
+import TableService from './TableService'
 
 interface propsTable {}
 interface VortexObject {
@@ -37,21 +38,28 @@ function Table(_: propsTable) {
   const PATH = 'https://592b-186-169-21-173.ngrok.io/api/v1';
 
   useEffect(() => {
-    fetch(GET_ALL_COMPANIES)
-      .then((res) => res.json())
-      .then((data) => {
-        setCompanies(data.companies);
-      })
-      .catch((error) => console.error(error));
+    initialize();
   }, []);
 
-  /* const fetchProjects: any = (company: VortexObject) => {
-        fetch(PATH + `project/${company.id}`)
-            .then(res => res.json())
-            .then(data => {
-                setProjects(data.projects);
-            })
-    } */
+  const initialize = async () => {
+      const data = await TableService.fetchCompanies();
+      setCompanies(data);
+  }
+
+  const fetchProjects = async (company: VortexObject) => {
+      const data = await TableService.fetchProjects(company.id.toString());
+      setStories([]);
+      setSprints([]);
+      setProjects(data);
+  }
+
+  const fetchSprints = async (project: VortexObject) => {
+      const data = await TableService.fetchSprints(project.id.toString());
+      console.log(data);
+      
+      setStories([]);
+      setSprints(data);
+  }
 
   return (
     <>
@@ -119,15 +127,7 @@ function Table(_: propsTable) {
                 return (
                   <div
                     key={'company_' + company.id}
-                    onClick={() => {
-                      fetch(PATH + `/project/${company.id}`)
-                        .then((res) => res.json())
-                        .then((data) => {
-                          setSprints([]);
-                          setStories([]);
-                          setProjects(data.projects);
-                        });
-                    }}
+                    onClick={() => {fetchProjects(company)}}
                   >
                     <p>{company.name}</p>
                     <IoMdArrowDropright className={styles.arrow} />
@@ -141,12 +141,13 @@ function Table(_: propsTable) {
                   <div
                     key={'project_' + project.id}
                     onClick={() => {
-                      fetch(PATH + `/sprint/fromProject/${project.id}`)
+                        fetchSprints(project);
+                      /* fetch(PATH + `/sprint/fromProject/${project.id}`)
                         .then((res) => res.json())
                         .then((data) => {
                           setStories([]);
                           setSprints(data.sprints);
-                        });
+                        }); */
                     }}
                   >
                     <p>{project.name}</p>
@@ -214,9 +215,7 @@ function Table(_: propsTable) {
               })
               .catch((error) => console.error(error));
           }}
-          onClose={() => {
-            setAddCompany(false);
-          }}
+          onClose={() => {setAddCompany(false)}}
         />
       ) : (
         <></>
