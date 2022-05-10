@@ -1,6 +1,3 @@
-* {
-  margin: 0;
-}
 .backgroundImage_Login {
   max-width: 100%;
   max-height: 100%;
@@ -43,27 +40,27 @@ a {
   justify-content: center;
 }
 
-.container{
+.container {
   position: relative;
-  width:calc(100% - 0px);
+  width: calc(100% - 0px);
   height: 100%;
 }
 
-.container_body{
+.container_body {
   display: flex;
   width: calc(100%);
   height: calc(100% - 70px);
 }
 
-.vortex_body_home{
+.vortex_body_home {
   height: 100%;
 }
 
-.vortex_main_container_body{
+.vortex_main_container_body {
   width: calc(100% - 230px);
 }
 
-.vortex_welcome{
+.vortex_welcome {
   margin: 20px 0 0 2.5%;
   font-size: 30px;
   font-weight: bold;

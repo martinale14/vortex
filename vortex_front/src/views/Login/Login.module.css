@@ -1,12 +1,9 @@
-* {
-  margin: 0;
-}
 .backgroundImage_Login {
-  max-width: 100%;
-  max-height: 100%;
   position: absolute;
   z-index: -1;
-  left: 0;
+  animation-name: move_background;
+  animation-duration: 28s;
+  animation-iteration-count: infinite;
 }
 
 .background_login {
@@ -15,10 +12,11 @@
   width: 100%;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .card_Login {
-  margin-bottom: 20px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,15 +25,16 @@
 
 .Logo_login {
   width: 200px;
-  margin-bottom: 5vh;
+  margin-bottom: 50px;
 }
 
 .cardInformation_login {
   display: flex;
   flex-direction: column;
-  align-items: initial;
-  margin-left: 10px;
-  margin-right: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 5px;
+  min-width: calc(100% / 3);
 }
 
 .message {
@@ -49,15 +48,84 @@
   margin-top: 35px;
 }
 
-a {
+.mainSection {
+  width: 100%;
+  overflow: hidden;
+}
+
+.mainSection > div {
+  display: flex;
+  transition: all 0.5s ease-out;
+  width: 300%;
+}
+
+.secondSection > div {
+  margin-left: -100%;
+}
+
+.thirdthSection > div {
+  margin-left: -200%;
+}
+
+.loginInput {
+  width: 100%;
+}
+
+.raisedButton {
+  width: 70%;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  color: #008f82;
+  color: var(--secondaryColor);
   margin-top: 50px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s ease-in-out;
+  padding: 5px 15px;
+  border-radius: 50px;
+}
+
+.raisedButton:hover {
+  background-color: var(--secondaryColor);
+  color: white;
+}
+
+.recoverText {
+  text-align: center;
+  line-height: 25px;
+  color: var(--primaryColor);
+}
+
+@keyframes move_background {
+  0% {
+    left: -40%;
+    top: -25%;
+    transform: rotate(0deg);
+  }
+  25% {
+    left: 40%;
+    top: -30%;
+    transform: rotate(55deg);
+  }
+  50% {
+    left: 35%;
+    top: 30%;
+    transform: rotate(24deg);
+  }
+  75% {
+    left: -45%;
+    top: 35%;
+    transform: rotate(82deg);
+  }
+  100% {
+    left: -40%;
+    top: -25%;
+    transform: rotate(0deg);
+  }
 }

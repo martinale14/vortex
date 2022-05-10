@@ -5,7 +5,8 @@ import { MouseEventHandler } from 'react';
 interface PropsButton {
   back?: Boolean; //Optional value to change button style
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  text: string; //Button function
+  text: string;
+  type?: 'button' | 'submit' | 'reset' | undefined; //Button function
 }
 
 /**
@@ -14,9 +15,10 @@ interface PropsButton {
  * @param {PropsButton} props props to use in the button component
  * @returns Button component
  */
-function Login(props: PropsButton) {
+function Button(props: PropsButton) {
   return (
     <button
+      type={props.type ?? 'button'}
       className={`${styles.button_vortex} ${
         props.back ? styles.button_vortex_back_fill : styles.button_vortex_next_fill
       }`}
@@ -28,4 +30,4 @@ function Login(props: PropsButton) {
   );
 }
 
-export default Login;
+export default Button;

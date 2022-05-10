@@ -1,25 +1,16 @@
 import { URL } from './current_url';
 
-const LOGIN_ROUTE = `${URL}/auth/login`;
-const GET_ALL_COMPANIES = `${URL}/company`;
-const GET_STORIES_BYSPRINT = `${URL}/history/fromSprint`;
-const CREATE_PROJECT = `${URL}/project`;
-const CREATE_COMPANY = `${URL}/company`;
-const CREATE_SPRINT = `${URL}/sprint`;
-const CREATE_STORY = `${URL}/history`;
+export const LOGIN_ROUTE = `${URL}/auth/login`;
+export const GET_ALL_COMPANIES = `${URL}/company`;
+export const GET_STORIES_BYSPRINT = `${URL}/history/fromSprint`;
+export const CREATE_PROJECT = `${URL}/project`;
+export const CREATE_COMPANY = `${URL}/company`;
+export const CREATE_SPRINT = `${URL}/sprint`;
+export const CREATE_STORY = `${URL}/history`;
+export const SEARCH_BY_JWT = `${URL}/search/user/id`;
+export const GENERATE_NEW_TOKEN = `${URL}/auth/token`;
 
-const HEADERS = {
+export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: '/'
-};
-
-export {
-  CREATE_COMPANY,
-  CREATE_PROJECT,
-  GET_ALL_COMPANIES,
-  LOGIN_ROUTE,
-  HEADERS,
-  CREATE_SPRINT,
-  CREATE_STORY,
-  GET_STORIES_BYSPRINT
 };

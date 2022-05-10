@@ -2,6 +2,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './views/App';
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service_worker.js', {
+    scope: '.'
+  });
+}
+
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);
 

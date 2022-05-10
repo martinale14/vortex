@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Request, Response } from 'express';
 
 export const authenticate = (req: Request, res: Response, next: any) => {
-  const status = 200;
+  const status = 401;
   const result = 'Usuario o contraseña incorrectos';
   passport.authenticate('local', function (err, user) {
     if (user !== null && err === null) {

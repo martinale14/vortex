@@ -1,2 +1,4 @@
-export const authToken = '';
-export const refreshToken = '';
+export class Token {
+  static authToken = '';
+  static refreshToken = '';
+}
