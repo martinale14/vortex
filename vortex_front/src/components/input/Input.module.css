@@ -1,6 +1,6 @@
+input:-webkit-autofill,
 .input_Login {
-  width: 80%;
-  min-width: 300px;
+  width: 100%;
   height: 40px;
   border-radius: 12px;
   font-family: 'Roboto', sans-serif;
@@ -43,6 +43,7 @@
 
 .input_container {
   position: relative;
+  width: 100%;
 }
 
 .input_background {

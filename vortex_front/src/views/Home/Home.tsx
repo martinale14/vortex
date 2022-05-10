@@ -2,9 +2,21 @@ import NavBar from '../../components/navBar/NavBar';
 import SideBar from '../../components/sideBar/SideBar';
 import Table from '../../components/table/Table';
 import styles from './Home.module.css';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../utils/contexts';
+import { useContext, useEffect } from 'react';
 
 interface propsLogin {}
-function Home(props: propsLogin) {
+function Home(_: propsLogin) {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user === null) {
+      navigate('/');
+    }
+  });
+
   return (
     <div className={styles.container}>
       <NavBar />

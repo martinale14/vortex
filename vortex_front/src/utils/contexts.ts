@@ -1,4 +1,10 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
-  export const UserContext = createContext({user: {}, setUser:(usr:{[key:string]:any}) => {}});
-  
+interface userInterface {
+  user: null | any;
+  setUser: any;
+}
+
+const user: userInterface = { user: {}, setUser: () => {} };
+
+export const UserContext = createContext(user);

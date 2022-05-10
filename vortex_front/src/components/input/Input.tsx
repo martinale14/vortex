@@ -3,6 +3,8 @@ import styles from './Input.module.css';
 import { IoMdAlert } from 'react-icons/io';
 
 interface propsInput {
+  name?: string;
+  id?: string;
   type: string;
   placeholder: string;
   value?: string;
@@ -13,9 +15,10 @@ interface propsInput {
   className?: any;
   inputStyle?: any;
   textArea?: Boolean;
+  autocomplete?: string;
 }
 
-function Login(props: propsInput) {
+function Input(props: propsInput) {
   const effectExit = (event: FocusEvent<HTMLInputElement>) => {
     if (event.target.value.length === 0) {
       event.target.classList.toggle(styles.input_filled, false);
@@ -41,28 +44,30 @@ function Login(props: propsInput) {
       <p className={styles.label}>{props.label}</p>
 
       <div className={styles.input_container}>
-        {
-          !props.textArea ? 
-            <input
-              onFocus={effectEnter}
-              value={props.value}
-              onBlur={effectExit}
-              onChange={props.onChange}
-              type={props.type}
-              placeholder={props.placeholder}
-              className={`${styles.input_Login} ${props.inputStyle}`}
-            />
-            :
-            <textarea
-              onFocus={effectEnterArea}
-              value={props.value}
-              onBlur={effectExitArea}
-              onChange={props.onchange}
-              placeholder={props.placeholder}
-              className={`${styles.input_Login} ${props.inputStyle}`}
-            />
-        }
-        
+        {!props.textArea ? (
+          <input
+            id={props.id}
+            name={props.name}
+            autoComplete={props.autocomplete}
+            onFocus={effectEnter}
+            value={props.value}
+            onBlur={effectExit}
+            onChange={props.onChange}
+            type={props.type}
+            placeholder={props.placeholder}
+            className={`${styles.input_Login} ${props.inputStyle}`}
+          />
+        ) : (
+          <textarea
+            onFocus={effectEnterArea}
+            value={props.value}
+            onBlur={effectExitArea}
+            onChange={props.onchange}
+            placeholder={props.placeholder}
+            className={`${styles.input_Login} ${props.inputStyle}`}
+          />
+        )}
+
         <div className={styles.input_background}></div>
       </div>
 
@@ -78,4 +83,4 @@ function Login(props: propsInput) {
   );
 }
 
-export default Login;
+export default Input;
