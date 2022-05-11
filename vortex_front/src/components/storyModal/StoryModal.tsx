@@ -7,10 +7,13 @@ import Button from '../button/Button';
 import { CREATE_SPRINT, HEADERS } from '../../utils/url_utils';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../utils/contexts';
+import Dropdown from '../dropdown/dropdown'
 
 interface storyProps {
   onClose: any;
   onSave: any;
+  sprintId?: number;
+  companies: any[];
 }
 
 function StoryModal(props: storyProps) {
@@ -42,15 +45,13 @@ function StoryModal(props: storyProps) {
               setTitle(e.target.value);
             }}
           />
-          <Input
-            className={styles.vortex_input_left}
-            type='text'
-            placeholder='Empresa'
-            label='Empresa'
-            onChange={(e: any) => {
-              setCompanyId(e.target.value);
-            }}
-          />
+          <Dropdown 
+           options={['Empresa o razón social', ...props.companies.map(comp => comp.name)]} 
+           values={[0, ...props.companies.map(comp => comp.id)]} 
+           label='Empresa' placeholder='Empresa o razón social' 
+           onChange={(event:any) => {
+             setCompanyId(event.target.value);
+          }}></Dropdown>
           <Input
             className={styles.vortex_input_left}
             type='text'
@@ -100,7 +101,7 @@ function StoryModal(props: storyProps) {
                   projectId: 2,
                   userResponsableId: null,
                   epicParentId: null,
-                  sprintId: null,
+                  sprintId: props.sprintId,
                   version: {
                     createdBy: user.id
                   },

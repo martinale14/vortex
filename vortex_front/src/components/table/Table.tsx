@@ -35,7 +35,10 @@ function Table(_: propsTable) {
   const [addSprint, setAddSprint] = useState(false);
   const [addStory, setAddStory] = useState(false);
 
-  const PATH = 'https://592b-186-169-21-173.ngrok.io/api/v1';
+  const [selectedProject, setSelectedProject] = useState<number>(-1);
+  const [selectedSprint, setSelectedSprint] = useState<number>(-1);
+
+  const PATH = 'https://ana-hu-backend.herokuapp.com/api/v1';
 
   useEffect(() => {
     initialize();
@@ -55,8 +58,6 @@ function Table(_: propsTable) {
 
   const fetchSprints = async (project: VortexObject) => {
       const data = await TableService.fetchSprints(project.id.toString());
-      console.log(data);
-      
       setStories([]);
       setSprints(data);
   }
@@ -142,12 +143,7 @@ function Table(_: propsTable) {
                     key={'project_' + project.id}
                     onClick={() => {
                         fetchSprints(project);
-                      /* fetch(PATH + `/sprint/fromProject/${project.id}`)
-                        .then((res) => res.json())
-                        .then((data) => {
-                          setStories([]);
-                          setSprints(data.sprints);
-                        }); */
+                        setSelectedProject(project.id);
                     }}
                   >
                     <p>{project.name}</p>
@@ -165,6 +161,7 @@ function Table(_: propsTable) {
                       key={'sprint_' + sprint.id}
                       sprint={sprint}
                       onClick={() => {
+                        setSelectedSprint(sprint.id);
                         fetch(PATH + `/history/fromSprint/${sprint.id}`)
                           .then((res) => res.json())
                           .then((data) => {
@@ -221,7 +218,7 @@ function Table(_: propsTable) {
         <></>
       )}
       {addSprint ? (
-        <SprintModal
+        <SprintModal projectId={selectedProject}
           onClose={() => {
             setAddSprint(false);
           }}
@@ -230,7 +227,7 @@ function Table(_: propsTable) {
         <></>
       )}
       {addStory ? (
-        <StoryModal
+        <StoryModal companies={companies} sprintId={selectedSprint}
           onSave={() => {
             setStories([]);
           }}
