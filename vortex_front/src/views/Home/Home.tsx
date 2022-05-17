@@ -6,6 +6,7 @@ import styles from './Home.module.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
 import { useContext, useEffect } from 'react';
+import TableAdministration from '../../components/tableAdministration/TableAdministration';
 
 interface propsLogin {}
 function Home(_: propsLogin) {
@@ -27,7 +28,8 @@ function Home(_: propsLogin) {
         </section>
         <section className={styles.vortex_main_container_body}>
           <p className={styles.vortex_welcome}>Bienvenido {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}</p>
-          <Table />
+          {/* <Table /> */}
+          <TableAdministration/>
         </section>
         {/* <Profile/> */}
       </div>
