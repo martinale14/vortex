@@ -1,0 +1,125 @@
+.vortex_main_container_body {
+    width: calc(100% - 230px);
+    position: relative;
+}
+
+.vortex_background_profile{
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vortex_background_profile > img{
+    z-index: -1;
+    height: 250px;
+    min-width: 100%;
+    background: linear-gradient(top, rgba(255, 255, 255, 0.4) 40%, white 60%);
+}
+
+.vortex_profile_section{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.vortex_profile_user{
+    height: 120px;
+    position: relative;
+}
+
+.vortex_profile_image_container{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+    top: -50px;
+    left: 50px;
+    border-radius: 50px;
+    border: 2px solid white;
+}
+
+.vortex_profile_image_container > img{
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vortex_profile_userinfo{
+    margin-left: 160px;
+    width: calc(100% - 170px);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.vortex_profile_username{
+    width: 70%;
+    height: 100%;
+}
+
+.vortex_username{
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--darkColor);
+}
+
+.vortex_user_role{
+    margin-top: 5px;
+    color: grey;
+}
+
+.vortex_edit_profile{
+    width: 15%;
+    height: 30px;
+    margin-top: 15px;
+    margin-right: 15px;
+    z-index: 2;
+}
+
+.vortex_edit_profile > button{
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+}
+
+.vortex_profile_box{
+    width: 90%;
+    background-color: white;
+    -webkit-box-shadow: var(--dropShdow); 
+    box-shadow: var(--dropShdow);
+    border-radius: 8px;
+}
+
+.vortex_profile_information{
+    height: 450px;
+}
+
+.vortex_profile_input_container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 80px;
+}
+
+.vortex_profile_main_info, .vortex_profile_dates{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 80px;
+    row-gap: 30px;
+}
+
+.vortex_profile_dates{
+    margin-bottom: 10px;
+}

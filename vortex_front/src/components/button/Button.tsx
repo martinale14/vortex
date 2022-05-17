@@ -7,6 +7,7 @@ interface PropsButton {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   text: string;
   type?: 'button' | 'submit' | 'reset' | undefined; //Button function
+  noArrow?: any;
 }
 
 /**
@@ -25,7 +26,8 @@ function Button(props: PropsButton) {
       onClick={props.onClick}
     >
       {props.text}
-      <IoMdArrowDroprightCircle className={styles.arrow} />
+      {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
+      
     </button>
   );
 }

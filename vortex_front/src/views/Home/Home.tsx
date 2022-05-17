@@ -1,6 +1,7 @@
 import NavBar from '../../components/navBar/NavBar';
 import SideBar from '../../components/sideBar/SideBar';
 import Table from '../../components/table/Table';
+import Profile from '../../components/profile/Profile';
 import styles from './Home.module.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
@@ -28,6 +29,7 @@ function Home(_: propsLogin) {
           <p className={styles.vortex_welcome}>Bienvenido {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}</p>
           <Table />
         </section>
+        {/* <Profile/> */}
       </div>
     </div>
   );
