@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
 import { useContext, useEffect } from 'react';
 import TableAdministration from '../../components/tableAdministration/TableAdministration';
+//Icons
+import { AiFillPlusCircle } from 'react-icons/ai';
 
-interface propsLogin {}
+interface propsLogin { }
 function Home(_: propsLogin) {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
@@ -27,10 +29,18 @@ function Home(_: propsLogin) {
           <SideBar />
         </section>
         <section className={styles.vortex_main_container_body}>
-          <p className={styles.vortex_welcome}>Bienvenido {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}</p>
+          <section className={styles.vortex_main_container_administration}>
+            <p className={styles.vortex_welcome}>Administrar usuarios {/* {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')} */}</p>
+            <section className={styles.vortex_main_container_administration_two}>
+              <AiFillPlusCircle ></AiFillPlusCircle>
+              <p>Nuevo usuario</p>
+            </section>
+          </section>
           {/* <Table /> */}
-          <TableAdministration/>
+          {/* NOTA... De forma temporal, se comenta el componente <Table> para visualizar el nuevo componente <TableAdministration> de la misma forma con todos aquellos comentados en esta view... */}
+          <TableAdministration />
         </section>
+        {/* Section -container_administration-, para agregar button de nuevo usuario... */}
         {/* <Profile/> */}
       </div>
     </div>

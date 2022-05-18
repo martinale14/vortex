@@ -60,6 +60,28 @@ a {
   width: calc(100% - 230px);
 }
 
+/* Desde esta línea se encuentran los estilos para la sección Administrador... */
+.vortex_main_container_administration{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  align-items: baseline;
+  color: #008f82;
+}
+
+.vortex_main_container_administration_two{
+  display: flex;
+  flex-direction: row;
+  margin-right: 40px;
+}
+
+.vortex_main_container_administration_two p{
+  margin-left: 5px;
+}
+/* Finaliza estilos de la sección Administrador... */
 .vortex_welcome {
   margin: 20px 0 0 2.5%;
   font-size: 30px;
