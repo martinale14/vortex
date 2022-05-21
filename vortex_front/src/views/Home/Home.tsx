@@ -1,49 +1,68 @@
 import NavBar from '../../components/navBar/NavBar';
 import SideBar from '../../components/sideBar/SideBar';
-import Table from '../../components/table/Table';
-import Profile from '../../components/profile/Profile';
 import styles from './Home.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
 import { useContext, useEffect } from 'react';
-import TableAdministration from '../../components/tableAdministration/TableAdministration';
-//Icons
-import { AiFillPlusCircle } from 'react-icons/ai';
+import LoginService from '../Login/LoginService';
+import Loading from '../../components/loading/Loading';
 
-interface propsLogin { }
+interface propsLogin {}
 function Home(_: propsLogin) {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const location = useLocation();
 
   useEffect(() => {
-    if (user === null) {
-      navigate('/');
-    }
+    initialize();
   });
 
-  return (
-    <div className={styles.container}>
-      <NavBar />
-      <div className={styles.container_body}>
-        <section className={styles.vortex_body_home}>
-          <SideBar />
-        </section>
-        <section className={styles.vortex_main_container_body}>
-          <section className={styles.vortex_main_container_administration}>
-            <p className={styles.vortex_welcome}>Administrar usuarios {/* {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')} */}</p>
-            <section className={styles.vortex_main_container_administration_two}>
-              <AiFillPlusCircle ></AiFillPlusCircle>
-              <p>Nuevo usuario</p>
-            </section>
+  const initialize = async () => {
+    if (user === null) {
+      const usr = await LoginService.verifySession();
+      if (usr !== undefined) {
+        setUser(usr);
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
+  const defineTitle = () => {
+    switch (location.pathname) {
+      case '/home/admin':
+        return <p className={styles.vortex_welcome}>Administrar usuarios</p>;
+      default:
+        return (
+          <p className={styles.vortex_welcome}>
+            Bienvenido{' '}
+            {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}
+          </p>
+        );
+    }
+  };
+
+  if (user !== null) {
+    return (
+      <div className={styles.container}>
+        <NavBar />
+        <div className={styles.container_body}>
+          <section className={styles.vortex_body_home}>
+            <SideBar />
           </section>
-          {/* <Table /> */}
-          {/* NOTA... De forma temporal, se comenta el componente <Table> para visualizar el nuevo componente <TableAdministration> de la misma forma con todos aquellos comentados en esta view... */}
-          <TableAdministration />
-        </section>
-        {/* Section -container_administration-, para agregar button de nuevo usuario... */}
-        {/* <Profile/> */}
+          {location.pathname === '/home/profile' ? (
+            <Outlet />
+          ) : (
+            <section className={styles.vortex_main_container_body}>
+              {defineTitle()}
+              <Outlet />
+            </section>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <Loading />;
+  }
 }
 export default Home;
