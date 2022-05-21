@@ -204,9 +204,15 @@ function Table(_: propsTable) {
             </td>
             <td className={styles.vortex_last}>
               <div className={styles.vortex_container}>
-                {stories.map((story: any) => {
-                  return <StoryCard key={'story_' + story.hist.id} story={story} />;
-                })}
+                {stories.length === 0 && selectedSprint !== -1 ? (
+                  <div>
+                    <p>No hay historias de usuario para este sprint</p>
+                  </div>
+                ) : (
+                  stories.map((story: any) => {
+                    return <StoryCard key={'story_' + story.hist.id} story={story} />;
+                  })
+                )}
               </div>
             </td>
           </tr>
