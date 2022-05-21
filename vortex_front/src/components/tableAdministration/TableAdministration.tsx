@@ -5,7 +5,6 @@ import { MdFace } from 'react-icons/md';
 import { HiMail } from 'react-icons/hi';
 import { FaUserTie } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
-//import TablerAdministrationService from './TableAdministrationService';
 
 interface propsTableAdmin {}
 
