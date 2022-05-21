@@ -1,115 +1,136 @@
-.vortex_table{
-    width: 95%;
-    height: 85%;
-    margin: 20px auto;
-    border-radius: 10px;
-    background-color: white;
-    -webkit-box-shadow: var(--dropShdow); 
-    box-shadow: var(--dropShdow);
-    border-collapse: collapse;
+.vortex_table {
+  width: 95%;
+  height: 85%;
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: var(--dropShdow);
+  box-shadow: var(--dropShdow);
+  border-collapse: collapse;
 }
 
-.vortex_table_head:first-child{
-    width: 28%;
+.vortex_table_head:first-child {
+  width: 28%;
 }
 
-th{
-    border-bottom: 2px solid #C4C4C4;
-    border-right: 2px solid #C4C4C4;
-    height: 40px;
-    column-span: 0;
+th {
+  border-bottom: 2px solid #c4c4c4;
+  border-right: 2px solid #c4c4c4;
+  height: 40px;
+  column-span: 0;
 }
 
-.vortex_last{
-    border-right: none;
+.vortex_last {
+  border-right: none;
 }
 
-.vortex_th1{
-    width: 20%;
+.vortex_th1 {
+  width: 20%;
 }
 
-.vortex_table_head_container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    text-align: left;
-    padding-left: 10px;
-    color: var(--darkColor);
+.vortex_table_head_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  padding: 0 10px;
+  color: var(--darkColor);
 }
 
-.vortex_table_head_container > p{
-    margin: 0;
-    font-size: 18px;
+.vortex_table_head_container > p {
+  margin: 0;
+  color: var(--secondaryColor);
+  font-size: 18px;
 }
 
-.vortex_add_button{
-    height: 25px;
-    width: 25px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 50px;
-    margin-left: auto;
-    margin-right: 15px;
+.vortex_table_head_container > div {
+  display: flex;
+  align-items: center;
 }
 
-.vortex_add_icon{
-    color: var(--secondaryColor);
-    font-size: 25px;
+.vortex_table_head_container > div > img {
+  width: 15px;
+  margin-right: 5px;
 }
 
-td{
-    height: auto;
-    vertical-align: top;
-    border-right: 2px solid #C4C4C4;
-    padding: 0;
+.vortex_add_button {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50px;
+  margin-left: auto;
+  margin-right: 15px;
 }
 
-.vortex_table_body_one > div{
-    width: 100%;
-    transition: .2s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.vortex_add_icon {
+  color: var(--secondaryColor);
+  font-size: 25px;
 }
 
-.vortex_table_body_one p{
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 10px;
-    height: 30px;
-    color: var(--darkColor);
-    transition: .2s;
+td {
+  height: auto;
+  vertical-align: top;
+  border-right: 2px solid #c4c4c4;
 }
 
-.vortex_table_body_one div:hover{
-    background-color: var(--secondaryColor);
-    color: white;
+.vortex_table_body_one > div {
+  width: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.vortex_table_body_one div:hover p{
-    color: white;
+.vortex_table_body_one p {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 10px;
+  height: 30px;
+  color: var(--darkColor);
+  white-space: nowrap;
+  transition: 0.2s;
+  text-overflow: ellipsis;
 }
 
-.vortex_table_body_one div:hover .arrow{
-    color: white;
+.vortex_table_body_one div:hover {
+  background-color: var(--secondaryColor);
+  color: white;
 }
 
-.arrow{
-    font-size: 20px;
-    color: rgb(98, 98, 98);
-    margin-left: auto;
-    margin-right: 10px;
+.vortex_table_body_one div:hover p {
+  color: white;
 }
 
-.vortex_container{
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 20px;
+.vortex_table_body_one div:hover .arrow {
+  color: white;
+}
+
+.arrow {
+  font-size: 20px;
+  color: rgb(98, 98, 98);
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.vortex_container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.vortex_thead > div > p {
+  color: var(--primaryColor);
+}
+
+.vortex_thead > .vortex_table_head_container {
+  justify-content: flex-start;
 }

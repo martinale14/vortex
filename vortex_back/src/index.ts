@@ -19,6 +19,7 @@ import accRouter from './services/acc.routes';
 import versionRouter from './services/versions.routes';
 
 import { initializePassport } from './utilities/passport.util';
+import { verifyJWT } from './middlewares/jwt.middleware';
 
 const allowedOrigins: [string, string] = ['https://anahu-1428.web.app', 'http://localhost:3000'];
 
@@ -55,13 +56,13 @@ app.set('PORT', process.env.PORT || 4000);
 app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth/token', jwtrouter);
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/company', companyRouter);
-app.use('/api/v1/project', projectRouter);
-app.use('/api/v1/sprint', sprintRouter);
-app.use('/api/v1/history', historyRouter);
-app.use('/api/v1/acc', accRouter);
-app.use('/api/v1/version', versionRouter);
-app.use('/api/v1/search', searchRouter);
+app.use('/api/v1/company', verifyJWT, companyRouter);
+app.use('/api/v1/project', verifyJWT, projectRouter);
+app.use('/api/v1/sprint', verifyJWT, sprintRouter);
+app.use('/api/v1/history', verifyJWT, historyRouter);
+app.use('/api/v1/acc', verifyJWT, accRouter);
+app.use('/api/v1/version', verifyJWT, versionRouter);
+app.use('/api/v1/search', verifyJWT, searchRouter);
 app.all('*', notFoundRouter);
 
 // Starting the server

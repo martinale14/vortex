@@ -1,61 +1,72 @@
-.vortex_side_bar{
-    display: flex;
-    flex-direction: column;
-    width: 230px;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-    box-shadow: var(--dropShdow);
+.vortex_side_bar {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: var(--dropShdow);
+  transition: all 200ms ease-out;
 }
 
-.vortex_side_bar_section{
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 70px;
-    cursor: pointer;
+.vortex_side_bar_section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  cursor: pointer;
 }
 
-.vortex_side_bar_section::before{
-    content: '';
-    position: absolute;
-    background-color: var(--secondaryColor);
-    bottom: 0;
-    left: 100%;
-    right: 0;
-    top: 0;
-    z-index: 0;
-    -webkit-transition: left 0.15s ease-in;
-    transition: left 0.15s ease-in;
+.vortex_side_bar_section p,
+.vortex_side_bar_section .vortex_side_icon {
+  transition: all 200ms ease-out;
 }
 
-.vortex_side_bar_section:hover:before{
-    left: 0;
+.vortex_side_bar_section::before {
+  content: '';
+  position: absolute;
+  background-color: var(--secondaryColor);
+  bottom: 0;
+  left: 100%;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  -webkit-transition: left 0.15s ease-in;
+  transition: all 200ms ease-out;
+}
+
+.vortex_side_bar_section:hover:before {
+  left: 0;
 }
 
 .vortex_side_bar_section:hover p,
-.vortex_side_bar_section:hover .vortex_side_icon{
-    color: white;
+.vortex_side_bar_section:hover .vortex_side_icon {
+  color: white;
 }
 
-.vortex_side_bar_section p, .vortex_side_icon{
-    color: var(--secondaryColor);
-    font-size: 18px;
-    margin-left: 20px;
-    z-index: 1;
+.active::before {
+  left: 95%;
 }
 
-.vortex_container_img{
-    z-index: 1;
+.vortex_side_bar_section p,
+.vortex_side_icon {
+  color: var(--secondaryColor);
+  font-size: 18px;
+  margin-left: 20px;
+  z-index: 1;
 }
 
-.vortex_side_icon{
-    font-size: 32px;
+.vortex_container_img {
+  z-index: 1;
 }
 
-.vortex_text{
-    display: flex;
-    flex-direction: column;
-    margin-top: 6px;
+.vortex_side_icon {
+  font-size: 32px;
+}
+
+.vortex_text {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
 }
 
 .vortex_sign_out{
@@ -67,3 +78,13 @@
     margin-top: auto;
     z-index: 1;
 }
+
+@media (max-width: 1100px) {
+  .vortex_side_bar {
+    margin-left: -100%;
+    position: absolute;
+    transition: all 200ms ease-out;
+  }
+}
+
+

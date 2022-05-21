@@ -9,7 +9,12 @@ import ProjectModal from '../projectModal/projectModal';
 import CompanyModal from '../companyModal/CompanyModal';
 import SprintModal from '../sprintModal/SprintModal';
 import StoryModal from '../storyModal/StoryModal';
-import TableService from './TableService'
+import TableService from './TableService';
+import { FaHome } from 'react-icons/fa';
+import TableTitle from '../tableTitle/TableTitle';
+import { MdBusiness, MdArrowRight, MdLibraryAddCheck } from 'react-icons/md';
+import { HiPresentationChartLine } from 'react-icons/hi';
+import { IoReload } from 'react-icons/io5';
 
 interface propsTable {}
 interface VortexObject {
@@ -35,88 +40,110 @@ function Table(_: propsTable) {
   const [addSprint, setAddSprint] = useState(false);
   const [addStory, setAddStory] = useState(false);
 
+  const [selectedCompany, setSelectedCompany] = useState<number>(-1);
   const [selectedProject, setSelectedProject] = useState<number>(-1);
   const [selectedSprint, setSelectedSprint] = useState<number>(-1);
 
   const PATH = 'https://ana-hu-backend.herokuapp.com/api/v1';
 
   useEffect(() => {
-    initialize();
+    fetchCompanies();
   }, []);
 
-  const initialize = async () => {
-      const data = await TableService.fetchCompanies();
-      setCompanies(data);
-  }
+  const fetchCompanies = async () => {
+    const data = await TableService.fetchCompanies();
+    setCompanies(data);
+  };
 
   const fetchProjects = async (company: VortexObject) => {
-      const data = await TableService.fetchProjects(company.id.toString());
-      setStories([]);
-      setSprints([]);
-      setProjects(data);
-  }
+    const data = await TableService.fetchProjects(company.id.toString());
+    setStories([]);
+    setSprints([]);
+    setProjects(data);
+  };
 
   const fetchSprints = async (project: VortexObject) => {
-      const data = await TableService.fetchSprints(project.id.toString());
-      setStories([]);
-      setSprints(data);
-  }
+    const data = await TableService.fetchSprints(project.id.toString());
+    setStories([]);
+    setSprints(data);
+  };
+
+  const fetchHistories = async (sprint: Sprint) => {
+    const data = await TableService.fetchUserHistories(sprint.id.toString());
+    setStories(data);
+  };
 
   return (
     <>
       <table className={styles.vortex_table}>
         <thead>
+          <tr className={styles.vortex_table_title}>
+            <th className={`${styles.vortex_thead} ${styles.vortex_last}`} colSpan={4}>
+              <div className={styles.vortex_table_head_container}>
+                <div>
+                  <FaHome color='#ff9312' size={25} />
+                  <MdArrowRight color='#ff9312' size={25} />
+                  <TableTitle iconType={MdBusiness} title='Empresas' />
+                  {selectedCompany !== -1 ? (
+                    <>
+                      <MdArrowRight color='#ff9312' size={25} />
+                      <TableTitle iconType={HiPresentationChartLine} title='Proyectos' />
+                    </>
+                  ) : null}
+                  {selectedProject !== -1 ? (
+                    <>
+                      <MdArrowRight color='#ff9312' size={25} />
+                      <TableTitle iconType={IoReload} title='Sprints' />
+                    </>
+                  ) : null}
+                </div>
+                <div className={styles.vortex_table_actions}></div>
+              </div>
+            </th>
+          </tr>
           <tr className={styles.vortex_table_head}>
             <th className={styles.vortex_th1}>
               <div className={styles.vortex_table_head_container}>
-                <p>Empresas</p>
-                <button
-                  className={styles.vortex_add_button}
-                  onClick={() => {
-                    setAddCompany(true);
-                  }}
-                >
-                  <AiFillPlusCircle className={styles.vortex_add_icon} />
-                </button>
+                <TableTitle color='#008f82' iconType={MdBusiness} title='Empresas' />
+                <div>
+                  <AiFillPlusCircle
+                    onClick={() => {
+                      setAddCompany(true);
+                    }}
+                    className={styles.vortex_add_icon}
+                  />
+                </div>
               </div>
             </th>
             <th className={styles.vortex_th1}>
               <div className={styles.vortex_table_head_container}>
-                <p>Proyectos</p>
-                <button
-                  className={styles.vortex_add_button}
-                  onClick={() => {
-                    setAddProject(true);
-                  }}
-                >
-                  <AiFillPlusCircle className={styles.vortex_add_icon} />
-                </button>
+                <TableTitle color='#008f82' iconType={HiPresentationChartLine} title='Proyectos' />
+                <div>
+                  <AiFillPlusCircle
+                    onClick={() => {
+                      setAddProject(true);
+                    }}
+                    className={styles.vortex_add_icon}
+                  />
+                </div>
               </div>
             </th>
             <th className={styles.vortex_th1}>
               <div className={styles.vortex_table_head_container}>
-                <p>Sprints</p>
-                <button
-                  className={styles.vortex_add_button}
-                  onClick={() => {
-                    setAddSprint(true);
-                  }}
-                >
-                  <AiFillPlusCircle className={styles.vortex_add_icon} />
-                </button>
+                <TableTitle color='#008f82' iconType={IoReload} title='Sprints' />
+                <div>
+                  <AiFillPlusCircle
+                    onClick={() => {
+                      setAddSprint(true);
+                    }}
+                    className={styles.vortex_add_icon}
+                  />
+                </div>
               </div>
             </th>
             <th className={styles.vortex_last}>
               <div className={styles.vortex_table_head_container}>
-                <p>Historias de usuario</p>
-                <button
-                  className={styles.vortex_add_button}
-                  onClick={() => {
-                    setAddStory(true);
-                  }}
-                >
-                  <AiFillPlusCircle className={styles.vortex_add_icon} />
-                </button>
+                <TableTitle color='#008f82' iconType={MdLibraryAddCheck} title='Historias de Usuario' />
               </div>
             </th>
           </tr>
@@ -128,7 +155,12 @@ function Table(_: propsTable) {
                 return (
                   <div
                     key={'company_' + company.id}
-                    onClick={() => {fetchProjects(company)}}
+                    onClick={() => {
+                      fetchProjects(company);
+                      setSelectedCompany(company.id);
+                      setSelectedProject(-1);
+                      setSelectedSprint(-1);
+                    }}
                   >
                     <p>{company.name}</p>
                     <IoMdArrowDropright className={styles.arrow} />
@@ -142,8 +174,9 @@ function Table(_: propsTable) {
                   <div
                     key={'project_' + project.id}
                     onClick={() => {
-                        fetchSprints(project);
-                        setSelectedProject(project.id);
+                      fetchSprints(project);
+                      setSelectedProject(project.id);
+                      setSelectedSprint(-1);
                     }}
                   >
                     <p>{project.name}</p>
@@ -161,12 +194,8 @@ function Table(_: propsTable) {
                       key={'sprint_' + sprint.id}
                       sprint={sprint}
                       onClick={() => {
+                        fetchHistories(sprint);
                         setSelectedSprint(sprint.id);
-                        fetch(PATH + `/history/fromSprint/${sprint.id}`)
-                          .then((res) => res.json())
-                          .then((data) => {
-                            setStories(data.histories);
-                          });
                       }}
                     />
                   );
@@ -175,9 +204,15 @@ function Table(_: propsTable) {
             </td>
             <td className={styles.vortex_last}>
               <div className={styles.vortex_container}>
-                {stories.map((story: any) => {
-                  return <StoryCard key={'story_' + story.hist.id} story={story} />;
-                })}
+                {stories.length === 0 && selectedSprint !== -1 ? (
+                  <div>
+                    <p>No hay historias de usuario para este sprint</p>
+                  </div>
+                ) : (
+                  stories.map((story: any) => {
+                    return <StoryCard key={'story_' + story.hist.id} story={story} />;
+                  })
+                )}
               </div>
             </td>
           </tr>
@@ -212,13 +247,16 @@ function Table(_: propsTable) {
               })
               .catch((error) => console.error(error));
           }}
-          onClose={() => {setAddCompany(false)}}
+          onClose={() => {
+            setAddCompany(false);
+          }}
         />
       ) : (
         <></>
       )}
       {addSprint ? (
-        <SprintModal projectId={selectedProject}
+        <SprintModal
+          projectId={selectedProject}
           onClose={() => {
             setAddSprint(false);
           }}
@@ -227,7 +265,9 @@ function Table(_: propsTable) {
         <></>
       )}
       {addStory ? (
-        <StoryModal companies={companies} sprintId={selectedSprint}
+        <StoryModal
+          companies={companies}
+          sprintId={selectedSprint}
           onSave={() => {
             setStories([]);
           }}
