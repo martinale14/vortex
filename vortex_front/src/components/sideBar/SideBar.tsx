@@ -17,39 +17,50 @@ function SideBar(_: sideProps) {
   const verifyActive = () => {
     const elements = document.getElementsByClassName(styles.vortex_side_bar_section);
 
-    for (let element in elements) {
-      console.log(location);
-      console.log(element);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      if (location.pathname === element.id.split(':')[1]) {
+        element.classList.toggle(styles.active, true);
+      } else {
+        element.classList.toggle(styles.active, false);
+      }
     }
   };
 
   useEffect(() => {
-    debugger;
     document.getElementsByClassName(styles.vortex_side_bar_section);
     verifyActive();
   });
 
   return (
     <div className={styles.vortex_side_bar}>
-      <section className={styles.vortex_side_bar_section} onClick={() => navigate('/home')}>
+      <section id='to:/home' className={styles.vortex_side_bar_section} onClick={() => navigate('/home')}>
         <div className={styles.vortex_container_img}>
           <FaHome className={styles.vortex_side_icon} />
         </div>
         <p>Inicio</p>
       </section>
-      <section className={styles.vortex_side_bar_section} onClick={() => navigate('/home/admin')}>
+      <section id='to:/home/admin' className={styles.vortex_side_bar_section} onClick={() => navigate('/home/admin')}>
         <div className={styles.vortex_container_img}>
           <MdAdminPanelSettings className={styles.vortex_side_icon} />
         </div>
         <p>Administrar</p>
       </section>
-      <section className={styles.vortex_side_bar_section} onClick={() => navigate('/home/templates')}>
+      <section
+        id='to:/home/templates'
+        className={styles.vortex_side_bar_section}
+        onClick={() => navigate('/home/templates')}
+      >
         <div className={styles.vortex_container_img}>
           <IoMdDocument className={styles.vortex_side_icon} />
         </div>
         <p>Plantillas</p>
       </section>
-      <section className={styles.vortex_side_bar_section} onClick={() => navigate('/home/profile')}>
+      <section
+        id='to:/home/profile'
+        className={styles.vortex_side_bar_section}
+        onClick={() => navigate('/home/profile')}
+      >
         <div className={styles.vortex_container_img}>
           <IoPersonCircleSharp className={styles.vortex_side_icon} />
         </div>
