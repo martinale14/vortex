@@ -17,7 +17,7 @@ function TableAdministration(_: propsTableAdmin) {
     <table className={styles.vortex_tableAdministration}>
       <thead>
         <tr className={styles.vortex_table_headAdmin}>
-          <th className={styles.vortex_th}>
+          <th className={styles.vortex_th_action}>
             <div className={styles.vortex_tableAdmin_head_container}>
               <HiOutlineCursorClick className={styles.vortex_add_icon}></HiOutlineCursorClick>
               <p>Acción</p>
@@ -45,17 +45,62 @@ function TableAdministration(_: propsTableAdmin) {
       </thead>
       <tbody>
         <tr className={styles.vortex_table_bodyAdmin}>
-          <td className={styles.vortex_table_bodyAdminOne}>
-            {
-              /* logica de acción */
+          <td className={styles.vortex_table_bodyAdminTwo}>
+            <div className={styles.vortex_table_bodyAdmin_info}>
               <button className={styles.vortex_add_buttonDelete} onClick={() => setUsers(true)}>
                 <MdDelete className={styles.vortex_add_icon}></MdDelete>
               </button>
-            }
+              <p>Editar</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <button className={styles.vortex_add_buttonDelete} onClick={() => setUsers(true)}>
+                <MdDelete className={styles.vortex_add_icon}></MdDelete>
+              </button>
+              <p>Editar</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <button className={styles.vortex_add_buttonDelete} onClick={() => setUsers(true)}>
+                <MdDelete className={styles.vortex_add_icon}></MdDelete>
+              </button>
+              <p>Editar</p>
+            </div>
           </td>
-          <td className={styles.vortex_table_bodyAdminOne}>{/* logica de nombre */}</td>
-          <td className={styles.vortex_table_bodyAdminOne}>{/* logica de correo */}</td>
-          <td className={styles.vortex_table_bodyAdminOne}>{/* logica de rol */}</td>
+          <td className={styles.vortex_table_bodyAdminTwo}>
+            {/* logica de nombre */}
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Maria Alejandra Rodriguez Potes</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Andres Fernando Bustamante Arias</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Jairo Hernán Gaviria Fernandez</p>
+            </div>
+          </td>
+          <td className={styles.vortex_table_bodyAdminTwo}>
+            {/* logica de correo */}
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>maria_aleja@hotmail.com</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>fernadez.ing@gmail.com</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>jhg@hotmail.com</p>
+            </div>
+          </td>
+          <td className={styles.vortex_table_bodyAdminTwo}>
+            {/* logica de rol */}
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Analista de desarrollo</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Gerente</p>
+            </div>
+            <div className={styles.vortex_table_bodyAdmin_info}>
+              <p>Desarrollador</p>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
