@@ -42,12 +42,12 @@ export class JwtController {
   }
 
   static getSignedToken(object: { id: string; role: number }) {
-    const token = jwt.sign(object, process.env.JWT_SECRET || 'TEMP_SECRET', { expiresIn: 86400 });
+    const token = jwt.sign(object, process.env.JWT_SECRET || 'TEMP_SECRET', { expiresIn: /* 30 */ 86400 });
     return token;
   }
 
   static createRefreshToken(email: string) {
-    const token = jwt.sign({ email }, process.env.JWT_SECRET || 'TEMP_SECRET', { expiresIn: 604800 });
+    const token = jwt.sign({ email }, process.env.JWT_SECRET || 'TEMP_SECRET', { expiresIn: /* 60 */ 604800 });
     return token;
   }
 

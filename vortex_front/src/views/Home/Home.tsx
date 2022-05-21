@@ -1,39 +1,52 @@
 import NavBar from '../../components/navBar/NavBar';
 import SideBar from '../../components/sideBar/SideBar';
-import Table from '../../components/table/Table';
-import Profile from '../../components/profile/Profile';
 import styles from './Home.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
 import { useContext, useEffect } from 'react';
-import TableAdministration from '../../components/tableAdministration/TableAdministration';
+import LoginService from '../Login/LoginService';
+import Loading from '../../components/loading/Loading';
 
 interface propsLogin {}
 function Home(_: propsLogin) {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (user === null) {
-      navigate('/');
-    }
+    initialize();
   });
 
-  return (
-    <div className={styles.container}>
-      <NavBar />
-      <div className={styles.container_body}>
-        <section className={styles.vortex_body_home}>
-          <SideBar />
-        </section>
-        <section className={styles.vortex_main_container_body}>
-          <p className={styles.vortex_welcome}>Bienvenido {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}</p>
-          {/* <Table /> */}
-          <TableAdministration/>
-        </section>
-        {/* <Profile/> */}
+  const initialize = async () => {
+    if (user === null) {
+      const usr = await LoginService.verifySession();
+      if (usr !== undefined) {
+        setUser(usr);
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
+  if (user !== null) {
+    return (
+      <div className={styles.container}>
+        <NavBar />
+        <div className={styles.container_body}>
+          <section className={styles.vortex_body_home}>
+            <SideBar />
+          </section>
+          <section className={styles.vortex_main_container_body}>
+            <p className={styles.vortex_welcome}>
+              Bienvenido{' '}
+              {user?.name?.split(' ').reduce((prev: string, e: string, i: number) => prev + (i < 2 ? ' ' + e : ''), '')}
+            </p>
+            <Outlet />
+          </section>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <Loading />;
+  }
 }
 export default Home;
