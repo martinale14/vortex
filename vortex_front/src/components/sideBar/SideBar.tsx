@@ -26,7 +26,7 @@ function SideBar(_: sideProps) {
       }
     }
   };
-
+  
   useEffect(() => {
     document.getElementsByClassName(styles.vortex_side_bar_section);
     verifyActive();
@@ -66,6 +66,9 @@ function SideBar(_: sideProps) {
         </div>
         <p>Mi perfil</p>
       </section>
+      <div className={styles.vortex_sign_out}>
+        <Button text='Cerrar sesión' back noArrow/>
+      </div>
     </div>
   );
 }
