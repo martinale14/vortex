@@ -36,9 +36,9 @@ function Home(_: propsLogin) {
               <p>Nuevo usuario</p>
             </section>
           </section>
-          {/* <Table /> */}
+          <Table />
           {/* NOTA... De forma temporal, se comenta el componente <Table> para visualizar el nuevo componente <TableAdministration> de la misma forma con todos aquellos comentados en esta view... */}
-          <TableAdministration />
+          {/* <TableAdministration /> */}
         </section>
         {/* Section -container_administration-, para agregar button de nuevo usuario... */}
         {/* <Profile/> */}

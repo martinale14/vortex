@@ -36,8 +36,8 @@ function SideBar(props: sideProps) {
                 </div>
                 <p>Mi perfil</p>
             </section>
-            <div>
-                <button type='submit' className={styles.vortex_side_bar_button_sign_off}> <IoMdArrowDroprightCircle className={styles.arrow}/>Cerrar sesión</button>
+            <div className={styles.vortex_sign_out}>
+                <Button text='Cerrar sesión' back noArrow/>
             </div>
         </div>
       );
