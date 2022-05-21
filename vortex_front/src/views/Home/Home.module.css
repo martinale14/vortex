@@ -57,11 +57,11 @@ a {
 }
 
 .vortex_main_container_body {
-  width: calc(100% - 230px);
+  width: 100%;
 }
 
 /* Desde esta línea se encuentran los estilos para la sección Administrador... */
-.vortex_main_container_administration{
+.vortex_main_container_administration {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -72,13 +72,13 @@ a {
   color: #008f82;
 }
 
-.vortex_main_container_administration_two{
+.vortex_main_container_administration_two {
   display: flex;
   flex-direction: row;
   margin-right: 40px;
 }
 
-.vortex_main_container_administration_two p{
+.vortex_main_container_administration_two p {
   margin-left: 5px;
 }
 /* Finaliza estilos de la sección Administrador... */

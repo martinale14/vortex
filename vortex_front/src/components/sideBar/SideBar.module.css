@@ -5,6 +5,7 @@
   height: 100%;
   background-color: rgb(255, 255, 255);
   box-shadow: var(--dropShdow);
+  transition: all 200ms ease-out;
 }
 
 .vortex_side_bar_section {
@@ -103,4 +104,12 @@
   margin-right: 5px;
   transform: rotate(180deg);
   position: initial;
+}
+
+@media (max-width: 1100px) {
+  .vortex_side_bar {
+    margin-left: -100%;
+    position: absolute;
+    transition: all 200ms ease-out;
+  }
 }
