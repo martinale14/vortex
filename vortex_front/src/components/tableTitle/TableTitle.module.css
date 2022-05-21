@@ -1,0 +1,9 @@
+.titleContainer {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.titleContainer > p {
+  margin-left: 5px;
+}
