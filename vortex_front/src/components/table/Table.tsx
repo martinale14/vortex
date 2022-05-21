@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './Table.module.css';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoMdArrowDropright } from 'react-icons/io';
@@ -50,6 +51,10 @@ function Table(_: propsTable) {
     fetchCompanies();
   }, []);
 
+  useEffect(() => {
+    setActive();
+  }, [selectedCompany, selectedProject, selectedSprint]);
+
   const fetchCompanies = async () => {
     const data = await TableService.fetchCompanies();
     setCompanies(data);
@@ -73,27 +78,74 @@ function Table(_: propsTable) {
     setStories(data);
   };
 
+  const setActive = () => {
+    const elements = document.getElementsByClassName('table_column');
+
+    let exclude: [number, number] = [-1, -1];
+
+    if (selectedCompany === -1 && selectedProject === -1 && selectedSprint === -1) {
+      exclude = [0, 4];
+    } else if (selectedCompany !== -1 && selectedProject === -1 && selectedSprint === -1) {
+      exclude = [1, 5];
+    } else if (selectedCompany !== -1 && selectedProject !== -1 && selectedSprint === -1) {
+      exclude = [2, 6];
+    } else {
+      exclude = [3, 7];
+    }
+
+    for (let i = 0; i < elements.length; i++) {
+      console.log(exclude.includes(i));
+
+      if (exclude.includes(i)) {
+        elements[i].classList.toggle(styles.hidden, false);
+      } else {
+        elements[i].classList.toggle(styles.hidden, true);
+      }
+    }
+  };
+
   return (
     <>
       <table className={styles.vortex_table}>
         <thead>
-          <tr className={styles.vortex_table_title}>
+          <tr className={`${styles.vortex_table_title}`}>
             <th className={`${styles.vortex_thead} ${styles.vortex_last}`} colSpan={4}>
               <div className={styles.vortex_table_head_container}>
                 <div>
                   <FaHome color='#ff9312' size={25} />
                   <MdArrowRight color='#ff9312' size={25} />
-                  <TableTitle iconType={MdBusiness} title='Empresas' />
+                  <TableTitle
+                    onClick={() => {
+                      setSelectedCompany(-1);
+                      setSelectedProject(-1);
+                      setSelectedSprint(-1);
+                    }}
+                    iconType={MdBusiness}
+                    title='Empresas'
+                  />
                   {selectedCompany !== -1 ? (
                     <>
                       <MdArrowRight color='#ff9312' size={25} />
-                      <TableTitle iconType={HiPresentationChartLine} title='Proyectos' />
+                      <TableTitle
+                        onClick={() => {
+                          setSelectedProject(-1);
+                          setSelectedSprint(-1);
+                        }}
+                        iconType={HiPresentationChartLine}
+                        title='Proyectos'
+                      />
                     </>
                   ) : null}
                   {selectedProject !== -1 ? (
                     <>
                       <MdArrowRight color='#ff9312' size={25} />
-                      <TableTitle iconType={IoReload} title='Sprints' />
+                      <TableTitle
+                        onClick={() => {
+                          setSelectedSprint(-1);
+                        }}
+                        iconType={IoReload}
+                        title='Sprints'
+                      />
                     </>
                   ) : null}
                 </div>
@@ -101,8 +153,8 @@ function Table(_: propsTable) {
               </div>
             </th>
           </tr>
-          <tr className={styles.vortex_table_head}>
-            <th className={styles.vortex_th1}>
+          <tr className={`${styles.vortex_th1} `}>
+            <th className={`${styles.vortex_th1} table_column`}>
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={MdBusiness} title='Empresas' />
                 <div>
@@ -115,7 +167,7 @@ function Table(_: propsTable) {
                 </div>
               </div>
             </th>
-            <th className={styles.vortex_th1}>
+            <th className={`${styles.vortex_th1} table_column`}>
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={HiPresentationChartLine} title='Proyectos' />
                 <div>
@@ -128,7 +180,7 @@ function Table(_: propsTable) {
                 </div>
               </div>
             </th>
-            <th className={styles.vortex_th1}>
+            <th className={`${styles.vortex_th1} table_column`}>
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={IoReload} title='Sprints' />
                 <div>
@@ -141,7 +193,7 @@ function Table(_: propsTable) {
                 </div>
               </div>
             </th>
-            <th className={styles.vortex_last}>
+            <th className={`${styles.vortex_last} table_column`}>
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={MdLibraryAddCheck} title='Historias de Usuario' />
               </div>
@@ -150,7 +202,7 @@ function Table(_: propsTable) {
         </thead>
         <tbody>
           <tr className={styles.vortex_table_body}>
-            <td className={styles.vortex_table_body_one}>
+            <td className={`${styles.vortex_table_body_one} table_column`}>
               {companies.map((company: VortexObject, i) => {
                 return (
                   <div
@@ -168,7 +220,7 @@ function Table(_: propsTable) {
                 );
               })}
             </td>
-            <td className={styles.vortex_table_body_one}>
+            <td className={`${styles.vortex_table_body_one} table_column`}>
               {projects.map((project: VortexObject, i) => {
                 return (
                   <div
@@ -185,7 +237,7 @@ function Table(_: propsTable) {
                 );
               })}
             </td>
-            <td>
+            <td className={`table_column`}>
               <div className={styles.vortex_container}>
                 {sprints.map((sprint: Sprint, i) => {
                   return (
@@ -202,7 +254,7 @@ function Table(_: propsTable) {
                 })}
               </div>
             </td>
-            <td className={styles.vortex_last}>
+            <td className={`${styles.vortex_last} table_column`}>
               <div className={styles.vortex_container}>
                 {stories.length === 0 && selectedSprint !== -1 ? (
                   <div>

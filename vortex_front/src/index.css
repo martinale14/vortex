@@ -21,6 +21,10 @@ code {
   box-sizing: border-box;
 }
 
+p {
+  color: #5d5d5d;
+}
+
 #root {
   height: 100%;
 }

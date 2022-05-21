@@ -68,6 +68,10 @@ th {
   margin-right: 15px;
 }
 
+.vortex_table_sprints {
+  min-width: 200px;
+}
+
 .vortex_add_icon {
   color: var(--secondaryColor);
   font-size: 25px;
@@ -133,4 +137,15 @@ td {
 
 .vortex_thead > .vortex_table_head_container {
   justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .hidden {
+    display: none;
+  }
+
+  td,
+  th {
+    border-right: none;
+  }
 }
