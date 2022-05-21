@@ -1,106 +1,117 @@
-.vortex_tableAdministration{
-    width: 95%;
-    height: 85%;
-    margin: 20px auto;
-    border-radius: 10px;
-    background-color: white;
-    -webkit-box-shadow: var(--dropShdow); 
-    box-shadow: var(--dropShdow);
-    border-collapse: collapse;
+.vortex_tableAdministration {
+  width: 95%;
+  height: 85%;
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: var(--dropShdow);
+  box-shadow: var(--dropShdow);
+  border-collapse: collapse;
 }
 
-.vortex_table_headAdmin{
-    width: 28%;
+.vortex_table_headAdmin {
+  width: 28%;
 }
 
-th{
-    border-bottom: 2px solid #C4C4C4;
-    border-right: 2px solid #C4C4C4;
-    height: 40px;
-    column-span: 0;
+th {
+  border-bottom: 2px solid #c4c4c4;
+  border-right: 2px solid #c4c4c4;
+  height: 40px;
+  column-span: 0;
 }
 
-.vortex_th{
-    width: 20%;
+.vortex_th {
+  width: 20%;
 }
 
-.vortex_th_action{
-    width: 5%;
+.vortex_th_action {
+  width: 5%;
 }
 
-.vortex_tableAdmin_head_container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    text-align: left;
-    padding-left: 10px;
-    color: var(--darkColor);
+.vortex_tableAdmin_head_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  padding-left: 10px;
+  color: var(--darkColor);
 }
 
-.vortex_tableAdmin_head_container > p{
-    margin: 8px;
-    font-size: 16px;
-    font-weight: normal;
-    color: var(--secondaryColor);
+.vortex_tableAdmin_head_container > p {
+  margin: 8px;
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--secondaryColor);
 }
 
-.vortex_add_icon{
-    color: var(--secondaryColor);
-    font-size: 25px;
-    padding: 1px;
+.vortex_add_icon {
+  color: var(--secondaryColor);
+  font-size: 25px;
+  padding: 1px;
 }
 
-td{
-    height: auto;
-    vertical-align: top;
-    border-right: 2px solid #C4C4C4;
-    padding: 0;
+td {
+  height: auto;
+  vertical-align: top;
+  border-right: 2px solid #c4c4c4;
+  padding: 0;
 }
 
-.vortex_table_bodyAdminOne p{
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 10px;
-    height: 30px;
-    color: var(--darkColor);
-    transition: .2s;
+.vortex_table_bodyAdminOne p {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 10px;
+  height: 30px;
+  color: var(--darkColor);
+  transition: 0.2s;
 }
 
-.vortex_table_bodyAdminOne div:hover{
-    background-color: var(--secondaryColor);
-    color: white;
+.vortex_table_bodyAdminOne div:hover {
+  background-color: var(--secondaryColor);
+  color: white;
 }
 
-.vortex_table_bodyAdminOne div:hover p{
-    color: white;
+.vortex_table_bodyAdminOne div:hover p {
+  color: white;
 }
 
-.vortex_table_bodyAdminTwo p{
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 10px;
-    height: 30px;
-    color: var(--darkColor);
-    transition: .2s;
+.vortex_table_bodyAdminTwo p {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 10px;
+  height: 30px;
+  color: var(--darkColor);
+  transition: 0.2s;
 }
 
-.vortex_table_bodyAdmin_info{
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    height: 40px;
-    width: 100%;
-    text-align: left;
-    padding-left: 10px;
-    padding-top: 4px;
-    color: var(--darkColor);
-    /* border: 1px solid #C4C4C4; */
+.vortex_table_bodyAdmin_info {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  height: 40px;
+  width: 100%;
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 4px;
+  color: var(--darkColor);
+  /* border: 1px solid #C4C4C4; */
 }
 
-.vortex_add_buttonDelete{
-    outline: none;
-    border: none;
-    background-color: transparent;
+.vortex_add_buttonDelete {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+@media (max-width: 900px) {
+  .hidden {
+    display: none;
+  }
+
+  td,
+  th {
+    border-right: none;
+  }
 }
