@@ -1,8 +1,9 @@
 import styles from './SideBar.module.css';
-import { IoMdDocument } from 'react-icons/io'
+import { IoMdArrowDroprightCircle, IoMdDocument } from 'react-icons/io'
 import { FaHome } from 'react-icons/fa'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { MdAdminPanelSettings } from 'react-icons/md'
+import Button from '../button/Button';
 
 interface sideProps {
     back?: Boolean;
@@ -35,6 +36,9 @@ function SideBar(props: sideProps) {
                 </div>
                 <p>Mi perfil</p>
             </section>
+            <div>
+                <button type='submit' className={styles.vortex_side_bar_button_sign_off}> <IoMdArrowDroprightCircle className={styles.arrow}/>Cerrar sesión</button>
+            </div>
         </div>
       );
 }
