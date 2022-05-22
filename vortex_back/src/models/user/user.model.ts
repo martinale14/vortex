@@ -123,4 +123,14 @@ export class User {
       throw new VortexException('database_error');
     }
   }
+
+  static async retrieveAllUsers() {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.users');
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_eror');
+    }
+  }
 }

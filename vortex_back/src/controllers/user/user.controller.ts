@@ -71,4 +71,26 @@ export class UserController {
 
     res.status(status).json({ result, user });
   }
+
+  static async getAllUsers(_: Request, res: Response) {
+    let status = 200;
+    let result = 'success';
+    const users: any = [];
+
+    try {
+      const data = await User.retrieveAllUsers();
+
+      data.rows.forEach((e) => users.push(User.fromDB(e).toJson()));
+    } catch (e: any) {
+      if (e.message === 'database_eror') {
+        result = 'Error de base de datos';
+      } else {
+        result = 'Error desconocido';
+      }
+
+      status = 501;
+    }
+
+    res.status(status).json({ result, status, users });
+  }
 }
