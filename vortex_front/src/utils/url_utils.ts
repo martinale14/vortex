@@ -1,6 +1,7 @@
 import { URL } from './current_url';
 
 export const LOGIN_ROUTE = `${URL}/auth/login`;
+export const REGISTER_USER = `${URL}/auth/register`;
 export const GET_ALL_COMPANIES = `${URL}/company`;
 export const GET_ALL_PROJECTS = `${URL}/project/`;
 export const GET_ALL_SPRINTS = `${URL}/sprint/fromProject/`;
