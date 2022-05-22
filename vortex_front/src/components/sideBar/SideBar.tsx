@@ -5,6 +5,7 @@ import { IoPersonCircleSharp } from 'react-icons/io5';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Button from '../button/Button';
 
 interface sideProps {
   back?: Boolean;
