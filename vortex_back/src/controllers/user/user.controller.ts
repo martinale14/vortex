@@ -1,6 +1,7 @@
-import { User } from '../../models/user/user.model';
+import { User, UserPayload } from '../../models/user/user.model';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
 
 export class UserController {
   static async searchUser(req: Request, res: Response) {
@@ -82,7 +83,7 @@ export class UserController {
 
       data.rows.forEach((e) => users.push(User.fromDB(e).toJson()));
     } catch (e: any) {
-      if (e.message === 'database_eror') {
+      if (e.type === 'database_eror') {
         result = 'Error de base de datos';
       } else {
         result = 'Error desconocido';
@@ -92,5 +93,33 @@ export class UserController {
     }
 
     res.status(status).json({ result, status, users });
+  }
+
+  static async updateUser(req: Request, res: Response) {
+    let status = 200;
+    let result: any = 'success';
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      result = errors.array();
+      status = 402;
+    } else {
+      const payload = req.body as UserPayload;
+      try {
+        await User.updateUSer(payload, req.body.id);
+      } catch (e: any) {
+        if (e.type === 'database_eror') {
+          result = 'Error de base de datos';
+          status = 501;
+        } else if (e.type === 'duplicated_email') {
+          result = 'Email ya registrado';
+          status = 402;
+        } else {
+          result = 'Error desconocido';
+          status = 501;
+        }
+      }
+    }
+    res.status(status).json({ result });
   }
 }

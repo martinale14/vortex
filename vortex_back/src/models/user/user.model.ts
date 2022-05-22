@@ -133,4 +133,16 @@ export class User {
       throw new VortexException('database_eror');
     }
   }
+
+  static async updateUSer(payload: UserPayload, id: string) {
+    try {
+      await pool.query('CALL vortex.update_user ($1, $2, $3, $4)', [payload.name, payload.phone, payload.email, id]);
+    } catch (e: any) {
+      if (e.constraint === 'unique_email') {
+        throw new VortexException('duplicated_email');
+      }
+
+      throw new VortexException('database_eror');
+    }
+  }
 }
