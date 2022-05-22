@@ -1,6 +1,7 @@
 import styles from './Button.module.css';
 import { IoMdArrowDroprightCircle } from 'react-icons/io';
 import { MouseEventHandler } from 'react';
+import { IconType } from 'react-icons';
 
 interface PropsButton {
   back?: Boolean; //Optional value to change button style
@@ -8,6 +9,7 @@ interface PropsButton {
   text: string;
   type?: 'button' | 'submit' | 'reset' | undefined; //Button function
   noArrow?: any;
+  leftIcon?: IconType;
 }
 
 /**
@@ -27,7 +29,6 @@ function Button(props: PropsButton) {
     >
       {props.text}
       {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
-      
     </button>
   );
 }
