@@ -1,6 +1,7 @@
 .vortex_tableAdministration {
   width: 95%;
-  height: 85%;
+  min-height: 85%;
+  max-height: 85%;
   margin: 20px auto;
   border-radius: 10px;
   background-color: white;
@@ -13,7 +14,7 @@
   width: 28%;
 }
 
-th {
+.vortex_tableAdministration th {
   border-bottom: 2px solid #c4c4c4;
   border-right: 2px solid #c4c4c4;
   height: 40px;

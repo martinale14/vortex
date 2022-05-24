@@ -6,7 +6,7 @@ p{
     -webkit-box-shadow: var(--dropShdow); 
     box-shadow: var(--dropShdow);
     width: 80%;
-    height: 300px;
+    height: fit-content;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@ p{
 }
 
 .vortex_story_header > p{
-    margin: 0 2px 0 5px;
+    margin: 10px 2px 5px 5px;
     font-weight: bold;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -33,7 +33,7 @@ p{
 
 .vortex_story_body{
     width: calc(100% - 10px);
-    height: 78%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
 }
@@ -64,5 +64,5 @@ p{
 
 .vortex_story_version{
     text-align: end;
-    margin: auto 10px 0 auto;
+    margin: auto 10px 10px auto;
 }
