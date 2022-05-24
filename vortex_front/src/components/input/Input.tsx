@@ -8,7 +8,8 @@ interface propsInput {
   type: string;
   placeholder: string;
   value?: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  defaultValue?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   onchange?: ChangeEventHandler<HTMLTextAreaElement>;
   label: string;
   validationText?: string | null;
@@ -60,7 +61,7 @@ function Input(props: propsInput) {
         ) : (
           <textarea
             onFocus={effectEnterArea}
-            value={props.value}
+            defaultValue={props.defaultValue}
             onBlur={effectExitArea}
             onChange={props.onchange}
             placeholder={props.placeholder}

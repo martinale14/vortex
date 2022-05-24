@@ -3,8 +3,8 @@ import { IoCloseCircleSharp } from 'react-icons/io5';
 import Input from '../input/Input';
 import Button from '../button/Button';
 import { useContext, useState } from 'react';
-import { CREATE_COMPANY, HEADERS } from '../../utils/url_utils';
 import { UserContext } from '../../utils/contexts';
+import CompanyModalService from './CompanyModalService'
 
 interface CompanyModalProps {
   onClose?:any;
@@ -37,17 +37,10 @@ const CompanyModal = (props: CompanyModalProps) => {
           
         </div>
         <div className={styles.button}>
-          <Button text='Guardar' onClick={ () => {
-            fetch(CREATE_COMPANY,
-               {
-                method:'POST', 
-                headers: HEADERS,
-                body:JSON.stringify({name, email, phone: phone === '' ? null : phone, direction: direction === '' ? null : direction, createdBy: user.id})})
-            .then(res => res.json())
-            .then((_) => {
-              props.onSave();
-              props.onClose();
-            })
+          <Button text='Guardar' onClick={ async () => {
+            await CompanyModalService.createCompany({name, email, phone, direction, createdBy: user.id});
+            props.onSave();
+            props.onClose();
           }}></Button>
         </div>
       </div>
