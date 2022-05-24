@@ -8,12 +8,13 @@ import { CREATE_SPRINT, HEADERS } from '../../utils/url_utils';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../utils/contexts';
 import Dropdown from '../dropdown/dropdown'
+import StoryModalService from './StoryModalService'
 
 interface storyProps {
   onClose: any;
   onSave: any;
   sprintId?: number;
-  companies: any[];
+  company?: number;
 }
 
 function StoryModal(props: storyProps) {
@@ -24,7 +25,36 @@ function StoryModal(props: storyProps) {
   const [companyId, setCompanyId] = useState(0);
 
   const { user } = useContext<{ user: any; setUser: any }>(UserContext);
-  console.log(title, desc, startDate, companyId, setStartDate);
+
+  const createStory = () => {
+    const story = {
+      history: {
+        status: 'open',
+        isEpic: false,
+        createdBy: user.id,
+        projectId: props.company,
+        userResponsableId: null,
+        epicParentId: null,
+        sprintId: props.sprintId
+      },
+      version: {
+        title: title,
+        description: desc,
+        isBaseDoc: false,
+        createdBy: user.id
+      },
+      acc: [
+        {
+          description: accDesc,
+          type: 'DOUI',
+          createdBy: user.id
+        }
+      ]
+    }
+    StoryModalService.createStory(story);
+    props.onSave();
+    props.onClose();
+  }
 
   return (
     <div className={styles.vortex_background}>
@@ -37,36 +67,38 @@ function StoryModal(props: storyProps) {
         <img src={line} className={styles.vortex_imgLine} alt='line' />
         <div className={styles.vortex_cardStory_body}>
           <Input
-            className={styles.vortex_input_left}
+            className={styles.vortex_input_story}
             type='text'
             placeholder='Título'
             label='Título *'
+            value={title}
             onChange={(e: any) => {
               setTitle(e.target.value);
             }}
           />
-          <Dropdown 
+          {/* <Dropdown 
            options={['Empresa o razón social', ...props.companies.map(comp => comp.name)]} 
            values={[0, ...props.companies.map(comp => comp.id)]} 
            label='Empresa' placeholder='Empresa o razón social' 
            onChange={(event:any) => {
              setCompanyId(event.target.value);
-          }}></Dropdown>
-          <Input
-            className={styles.vortex_input_left}
+          }}></Dropdown> */}
+          {/* <Input
+            className={styles.vortex_input_story}
             type='text'
             placeholder='Sprint ##'
             label='Sprint'
             onChange={(e: any) => {
               setTitle(e.target.value);
             }}
-          />
+          /> */}
           <Input
-            className={styles.vortex_input_right}
+            className={styles.vortex_input_story}
             type='text'
             placeholder='Ingrese una descripción'
             label='Descripción*'
-            onChange={(e: any) => {
+            defaultValue={desc}
+            onchange={(e: any) => {
               setDesc(e.target.value);
             }}
             inputStyle={styles.vortex_input_desc}
@@ -74,11 +106,12 @@ function StoryModal(props: storyProps) {
           />
           <div className={styles.vortex_acc}>
             <Input
-              className={styles.vortex_input_right}
+              className={styles.vortex_textarea_acc}
               type='text'
               placeholder='Descripción'
               label='Añadir criterio de aceptación*'
-              onChange={(e: any) => {
+              defaultValue={accDesc}
+              onchange={(e: any) => {
                 setAccDesc(e.target.value);
               }}
               inputStyle={styles.vortex_input_desc}
@@ -91,7 +124,7 @@ function StoryModal(props: storyProps) {
           <Button
             text='Guardar'
             onClick={() => {
-              fetch(CREATE_SPRINT, {
+              /* fetch(CREATE_SPRINT, {
                 method: 'POST',
                 headers: HEADERS,
                 body: JSON.stringify({
@@ -118,7 +151,8 @@ function StoryModal(props: storyProps) {
                 .then((_) => {
                   props.onSave();
                   props.onClose();
-                });
+                }); */
+              createStory();
             }}
           ></Button>
         </div>

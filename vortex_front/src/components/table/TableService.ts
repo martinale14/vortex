@@ -14,7 +14,7 @@ class TableService {
     return (await axios.get(GET_ALL_SPRINTS + id)).data.sprints;
   }
 
-  static async fetchUserHistories(id: string) {
+  static async fetchUserStories(id: string) {
     return (await axios.get(GET_ALL_HISTORIES + id)).data.histories;
   }
 }

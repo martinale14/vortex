@@ -1,5 +1,6 @@
 import styles from './SprintCard.module.css'
 import { IoMdArrowDropright } from 'react-icons/io'
+import formatDate from '../../utils/FormatDate'
 
 interface propsSprint {
     sprint: Sprint;
@@ -23,8 +24,8 @@ function SprintCard(props: propsSprint) {
                 <IoMdArrowDropright className={styles.arrow}/>
             </header>
             <article className={styles.vortex_sprint_body}>
-                <p className={styles.vortex_sprint_date}>{`Inicio: ${sprint.startDate}`}</p>
-                <p className={styles.vortex_sprint_date}>{`Fin: ${sprint.endDate}`}</p>
+                <p className={styles.vortex_sprint_date}>{`Inicio: ${formatDate(new Date(sprint.startDate))}`}</p>
+                <p className={styles.vortex_sprint_date}>{`Fin: ${formatDate(new Date(sprint.endDate))}`}</p>
                 <p className={styles.vortex_sprint_status}>{`Estado: ${sprint.status}`}</p>
             </article>
         </div>

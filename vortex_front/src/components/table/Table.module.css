@@ -75,6 +75,7 @@ th {
 .vortex_add_icon {
   color: var(--secondaryColor);
   font-size: 25px;
+  cursor: pointer;
 }
 
 td {
@@ -137,6 +138,19 @@ td {
 
 .vortex_thead > .vortex_table_head_container {
   justify-content: flex-start;
+}
+
+.vortex_table_actions{
+  height: 25px;
+  margin-left: auto;
+  margin-right: 5px;
+  z-index: 1;
+}
+
+.vortex_table_actions button{
+  height: 100%;
+  font-size: 16px;
+  font-weight: normal;
 }
 
 @media (max-width: 900px) {

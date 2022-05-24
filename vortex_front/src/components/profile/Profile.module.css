@@ -123,3 +123,10 @@
 .vortex_profile_dates {
   margin-bottom: 10px;
 }
+
+@media (max-width: 1100px) {
+  .vortex_main_container_body {
+    width: 100%;
+    position: relative;
+  }
+}
