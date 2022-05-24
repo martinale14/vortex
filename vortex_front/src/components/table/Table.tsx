@@ -5,7 +5,6 @@ import { IoMdArrowDropright } from 'react-icons/io';
 import SprintCard from '../sprintCard/SprintCard';
 import StoryCard from '../storyCard/StoryCard';
 import { useEffect, useState } from 'react';
-import { GET_ALL_COMPANIES } from '../../utils/url_utils';
 import ProjectModal from '../projectModal/projectModal';
 import CompanyModal from '../companyModal/CompanyModal';
 import SprintModal from '../sprintModal/SprintModal';
@@ -73,6 +72,17 @@ function Table(_: propsTable) {
     setStories(data);
   };
 
+  const selectOption = (e: HTMLDivElement, className: string) => {
+
+    let option = document.getElementsByClassName(className);
+    
+    if(option.length > 0){
+      option[0].classList.remove(className, styles.vortex_selected);
+    }
+    
+    e.classList.add(className, styles.vortex_selected);
+  }
+
   const setActive = () => {
     const elements = document.getElementsByClassName('table_column');
 
@@ -115,6 +125,8 @@ function Table(_: propsTable) {
                       setProjects([]);
                       setSprints([]);
                       setStories([]);
+                      let e = document.getElementsByClassName(styles.vortex_selected_company)[0];
+                      e.classList.remove(styles.vortex_selected_company, styles.vortex_selected);
                     }}
                     iconType={MdBusiness}
                     title='Empresas'
@@ -128,6 +140,8 @@ function Table(_: propsTable) {
                           setSelectedSprint(-1);
                           setSprints([]);
                           setStories([]);
+                          let e = document.getElementsByClassName(styles.vortex_selected_project)[0];
+                          e.classList.remove(styles.vortex_selected_project, styles.vortex_selected);
                         }}
                         iconType={HiPresentationChartLine}
                         title='Proyectos'
@@ -214,11 +228,12 @@ function Table(_: propsTable) {
                 return (
                   <div
                     key={'company_' + company.id}
-                    onClick={() => {
+                    onClick={(e) => {
                       fetchProjects(company.id);
                       setSelectedCompany(company.id);
                       setSelectedProject(-1);
                       setSelectedSprint(-1);
+                      selectOption(e.currentTarget, styles.vortex_selected_company)
                     }}
                   >
                     <p>{company.name}</p>
@@ -232,10 +247,11 @@ function Table(_: propsTable) {
                 return (
                   <div
                     key={'project_' + project.id}
-                    onClick={() => {
+                    onClick={(e) => {
                       fetchSprints(project.id);
                       setSelectedProject(project.id);
                       setSelectedSprint(-1);
+                      selectOption(e.currentTarget, styles.vortex_selected_project)
                     }}
                   >
                     <p>{project.name}</p>

@@ -4,7 +4,6 @@ import line from '../../assets/lineOrange.svg';
 import exit from '../../assets/exit.svg';
 import Input from '../input/Input';
 import Button from '../button/Button';
-import { CREATE_SPRINT, HEADERS } from '../../utils/url_utils';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../utils/contexts';
 import Dropdown from '../dropdown/dropdown'
