@@ -126,7 +126,7 @@ export class User {
 
   static async retrieveAllUsers() {
     try {
-      const data = await pool.query('SELECT * FROM vortex.users');
+      const data = await pool.query('SELECT * FROM vortex.users ORDER BY created_at_user');
 
       return data;
     } catch (_) {
