@@ -3,11 +3,12 @@ import SideBar from '../../components/sideBar/SideBar';
 import styles from './Home.module.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../utils/contexts';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import LoginService from '../Login/LoginService';
 import Loading from '../../components/loading/Loading';
 
 interface propsLogin {}
+
 function Home(_: propsLogin) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
@@ -31,7 +32,9 @@ function Home(_: propsLogin) {
   const defineTitle = () => {
     switch (location.pathname) {
       case '/home/admin':
-        return <p className={styles.vortex_welcome}>Administrar usuarios</p>;
+        return (
+          null
+        );
       default:
         return (
           <p className={styles.vortex_welcome}>

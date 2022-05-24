@@ -9,7 +9,7 @@
   border-collapse: collapse;
 }
 
-.vortex_table_headAdmin {
+.vortex_table_headAdmin:first-child {
   width: 28%;
 }
 
@@ -30,7 +30,6 @@ th {
 
 .vortex_tableAdmin_head_container {
   display: flex;
-  flex-direction: row;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -57,6 +56,14 @@ td {
   vertical-align: top;
   border-right: 2px solid #c4c4c4;
   padding: 0;
+}
+
+.vortex_table_bodyAdminOne > div {
+  width: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .vortex_table_bodyAdminOne p {
@@ -88,7 +95,6 @@ td {
 
 .vortex_table_bodyAdmin_info {
   display: flex;
-  flex-direction: row;
   align-items: left;
   height: 40px;
   width: 100%;
@@ -99,10 +105,37 @@ td {
   /* border: 1px solid #C4C4C4; */
 }
 
+.vortex_table_bodyAdmin_info_actions{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  padding: 6px;
+  color: var(--darkColor);
+}
+
+.vortex_table_bodyAdmin_info_actions > p{
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
+.vortex_table_bodyAdmin_info_actions_delete{
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}
+
 .vortex_add_buttonDelete {
   outline: none;
   border: none;
   background-color: transparent;
+  cursor: pointer;
+}
+
+.vortex_thead > .vortex_table_head_container {
+  justify-content: flex-start;
 }
 
 @media (max-width: 900px) {
