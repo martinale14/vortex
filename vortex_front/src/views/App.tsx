@@ -7,6 +7,7 @@ import { UserContext } from '../utils/contexts';
 import Table from '../components/table/Table';
 import TableAdministration from '../components/tableAdministration/TableAdministration';
 import Profile from '../components/profile/Profile';
+import TableUsers from '../components/tableUsers/TableUsers';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -19,7 +20,8 @@ export default function App() {
           <Route path='/home' element={<Home />}>
             <Route path='' element={<Table />} />
             <Route path='templates' element={<Table />} />
-            <Route path='admin' element={<TableAdministration />} />
+            <Route path='admin' element={<TableUsers />} />
+            {/* <Route path='admin' element={<TableAdministration />} /> */}
             <Route path='profile' element={<Profile />} />
           </Route>
         </Routes>
