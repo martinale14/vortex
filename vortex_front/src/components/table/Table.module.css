@@ -109,6 +109,11 @@ td {
   color: white;
 }
 
+.vortex_table_body_one{
+  overflow-y: scroll;
+  height: 100%;
+}
+
 .vortex_table_body_one div:hover p {
   color: white;
 }
@@ -130,6 +135,9 @@ td {
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 20px;
 }
 
 .vortex_thead > div > p {
