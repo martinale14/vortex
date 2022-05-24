@@ -9,6 +9,7 @@ import UserModalServices from './UserModalServices';
 interface UserModalProps{
     onClose?: any;
     onSave?: any;
+    userId: number;
 }
 
 const UserModal = (props: UserModalProps) => {
@@ -17,9 +18,10 @@ const UserModal = (props: UserModalProps) => {
     const [emailUser, setEmailUser] = useState('');
     const [phoneUser, setPhoneUser] = useState('');
     const [roleUser, setRoleUser] = useState(0);
+    const userId = props.userId;
 
     const createUser = async () => {
-        const dataUser = {name: nameUser, email: emailUser, phone: phoneUser, role: roleUser, password: 'vortex123', pictureUrl:'https://res.cloudinary.com/dhlvkhuhz/image/upload/v1650363525/vortex/profile_pictures/01_i24e1l.jpg'}
+        const dataUser = {userId: userId, name: nameUser, email: emailUser, phone: phoneUser, role: roleUser, password: 'vortex123', pictureUrl:'https://res.cloudinary.com/dhlvkhuhz/image/upload/v1650363525/vortex/profile_pictures/01_i24e1l.jpg'}
         UserModalServices.createUser(dataUser);
     };
 
@@ -44,7 +46,12 @@ const UserModal = (props: UserModalProps) => {
                     onChange = {(event:any) => {setRoleUser(event.target.value)}}/>
                 </div>
                 <div className={styles.vortex_button}>
-                    <Button text='Guardar' onClick={() => { createUser() }} ></Button>
+                    <Button text='Guardar'
+                        onClick={async () => {
+                            createUser();
+                            props.onSave(userId);
+                            props.onClose();
+                    }}></Button>
                 </div>
             </div>
         </div>

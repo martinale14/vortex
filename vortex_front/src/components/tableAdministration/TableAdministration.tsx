@@ -14,6 +14,7 @@ interface propsTableAdmin {
 function TableAdministration(props: propsTableAdmin) {
   /**Lógica */
   const [users, setUsers] = useState<any[]>([]);
+  const [user, SetUser] = useState<number>(0);
   const [addUser, setAddUser] = useState(false);
 
   useEffect(() => {
@@ -80,6 +81,7 @@ function TableAdministration(props: propsTableAdmin) {
             }
             {addUser &&
                 <UserModal
+                  userId={user}
                   onSave={() => { TableAdministrationService.fetchUsers() }}
                   onClose={() => { setAddUser(false) }}
                 />
