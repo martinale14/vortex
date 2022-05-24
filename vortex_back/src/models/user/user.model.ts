@@ -150,4 +150,12 @@ export class User {
       throw new VortexException('database_eror');
     }
   }
+
+  static async updateProfilePicture(id: string, url: string) {
+    try {
+      await pool.query('UPDATE vortex.users SET picture_url_user = $1 WHERE id_user = $2', [url, id]);
+    } catch (e: any) {
+      throw new VortexException('database_eror');
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { User, UserPayload } from '../../models/user/user.model';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
+import cloudinary from 'cloudinary';
 
 export class UserController {
   static async searchUser(req: Request, res: Response) {
@@ -121,5 +122,22 @@ export class UserController {
       }
     }
     res.status(status).json({ result });
+  }
+
+  static async updateProfilePicture(req: Request, res: Response) {
+    cloudinary.v2.uploader
+      .upload_stream({ folder: 'vortex/profile_pictures', overwrite: false }, (error, result) => {
+        if (error) {
+          res.status(500).json({ result: 'Error interno' });
+        } else {
+          try {
+            User.updateProfilePicture(req.body.id, result!.url);
+            res.status(200).json({ result: 'Imagen Actualizada correctamente' });
+          } catch (_: any) {
+            res.status(500).json({ result: 'Error de base de datos' });
+          }
+        }
+      })
+      .end(req.file?.buffer);
   }
 }

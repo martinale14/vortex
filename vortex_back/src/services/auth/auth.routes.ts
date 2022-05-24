@@ -4,6 +4,7 @@ import { UserController } from '../../controllers/user/user.controller';
 import { authenticate } from '../../middlewares/auth.middleware';
 import { verifyJWT } from '../../middlewares/jwt.middleware';
 import { body } from 'express-validator';
+import multer from 'multer';
 
 const router = express.Router();
 
@@ -24,5 +25,7 @@ router.put(
   body('phone').exists(),
   UserController.updateUser
 );
+
+router.put('/users/update/picture', verifyJWT, multer().single('file'), UserController.updateProfilePicture);
 
 export default router;

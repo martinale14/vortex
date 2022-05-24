@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import session from 'express-session';
 import passport from 'passport';
+import cloudinary from 'cloudinary';
 
 // Importing routers
 import mainRouter from './services/public/main.routes';
@@ -26,6 +27,13 @@ const allowedOrigins: [string, string] = ['https://anahu-1428.web.app', 'http://
 // Generating the server
 const app = express();
 initializePassport();
+
+cloudinary.v2.config({
+  cloud_name: 'dhlvkhuhz',
+  api_key: '354812378663114',
+  api_secret: 'hHss8TadlwrmmOY9qv_-xMGFGq4',
+  secure: true
+});
 
 // Setting Middlewares
 app.use(
