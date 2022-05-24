@@ -1,5 +1,5 @@
 import styles from './TableAdministration.module.css';
-import { useContext, useEffect, useState } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { HiOutlineCursorClick } from 'react-icons/hi';
 import { MdDelete, MdFace } from 'react-icons/md';
 import { HiMail } from 'react-icons/hi';
@@ -11,16 +11,23 @@ interface propsTableAdmin {
   users: any;
 }
 
-function TableAdministration(props: propsTableAdmin) {
+const TableAdministration = forwardRef((props: propsTableAdmin, ref) => {
   /**Lógica */
   const [users, setUsers] = useState<any[]>([]);
   const [user, SetUser] = useState<number>(0);
   const [addUser, setAddUser] = useState(false);
 
   useEffect(() => {
-    console.log('entra al useEffect')
     fetchUsers();
   }, [addUser]);
+
+  useImperativeHandle(ref, () => ({
+
+    updateUsers() {
+      fetchUsers();
+    }
+
+  }));
 
   const fetchUsers = async () => {
     const data = await TableAdministrationService.fetchUsers();
@@ -81,7 +88,6 @@ function TableAdministration(props: propsTableAdmin) {
             }
             {addUser &&
                 <UserModal
-                  userId={user}
                   onSave={() => { TableAdministrationService.fetchUsers() }}
                   onClose={() => { setAddUser(false) }}
                 />
@@ -143,6 +149,6 @@ function TableAdministration(props: propsTableAdmin) {
       </tbody>
     </table>
   );
-}
+})
 
 export default TableAdministration;

@@ -1,26 +1,26 @@
-import { isVisible } from '@testing-library/user-event/dist/utils';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import TableAdministration from '../tableAdministration/TableAdministration';
 import TableAdministrationService from '../tableAdministration/TableAdministrationServices';
 import UserModal from '../userModal/UserModal';
 import styles from './TableUsers.module.css';
 
-interface PropsTableUsers {
-    onClose?: any;
+interface UpdateUsers {
+    updateUsers(): void;
 }
 
-function TableUsers(props: PropsTableUsers) {
+function TableUsers() {
 
     //Variables
     const [addUser, setAddUser] = useState(false);
     const [user, SetUser] = useState<number>(0);
-    var [isVisible, setIsVisible] = useState(false);
 
     const modalSave = () => {
         TableAdministrationService.fetchUsers();
-        props.onClose();
+        setAddUser(false);
     }
+
+    const tableAdmin = useRef<UpdateUsers>(null);
 
     return (
         <div className={styles.vortex_container}>
@@ -33,12 +33,14 @@ function TableUsers(props: PropsTableUsers) {
                     <p>Nuevo usuario</p>
                 </div>
             </div>
-            <TableAdministration users={addUser} />
+            <TableAdministration users={addUser} ref={tableAdmin} />
             {addUser &&
                 <UserModal
-                    userId={user}
                     onSave={() => { modalSave() }}
-                    onClose={() => { setAddUser(false) }}
+                    onClose={() => { 
+                        setAddUser(false);
+                        tableAdmin.current?.updateUsers();
+                    }}
                 />
             }
         </div>

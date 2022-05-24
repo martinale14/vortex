@@ -28,7 +28,7 @@ function StoryModal(props: storyProps) {
   const createStory = () => {
     const story = {
       history: {
-        status: 'open',
+        status: 'Abierto',
         isEpic: false,
         createdBy: user.id,
         projectId: props.company,

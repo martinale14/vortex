@@ -36,7 +36,7 @@ function Login(props: propsInput) {
           placeholder={props.placeholder}
           className={styles.input_Login}
         >
-          {props.options.map((opt, i) => <option value={props.values[i]} key={'opt_' + i}>{opt}</option>)}
+          {props.options.map((opt, i) => <option className={styles.drop_option} value={props.values[i]} key={'opt_' + i}>{opt}</option>)}
         </select>
         <div className={styles.input_background}></div>
       </div>

@@ -21,7 +21,6 @@ export default function App() {
             <Route path='' element={<Table />} />
             <Route path='templates' element={<Table />} />
             <Route path='admin' element={<TableUsers />} />
-            {/* <Route path='admin' element={<TableAdministration />} /> */}
             <Route path='profile' element={<Profile />} />
           </Route>
         </Routes>

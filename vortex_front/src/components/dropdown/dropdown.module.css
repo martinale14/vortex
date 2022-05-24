@@ -81,3 +81,7 @@
 .validation_text > p {
   margin-left: 10px;
 }
+
+.drop_option{
+  color: rgb(52, 52, 52);
+}
