@@ -153,6 +153,15 @@ td {
   font-weight: normal;
 }
 
+.vortex_selected_company, .vortex_selected_project{
+  background-color: var(--secondaryColor);
+}
+
+.vortex_selected p,
+.vortex_selected .arrow{
+  color: white;
+}
+
 @media (max-width: 900px) {
   .hidden {
     display: none;
