@@ -128,11 +128,25 @@ export class UserController {
     cloudinary.v2.uploader
       .upload_stream({ folder: 'vortex/profile_pictures', overwrite: false }, (error, result) => {
         if (error) {
+          console.log(error);
+
           res.status(500).json({ result: 'Error interno' });
         } else {
           try {
-            User.updateProfilePicture(req.body.id, result!.url);
-            res.status(200).json({ result: 'Imagen Actualizada correctamente' });
+            User.searchUserById(req.body!.id).then((data) => {
+              if (data.rows.length > 0) {
+                const user: User = User.fromDB(data.rows[0]);
+                const urlParams =
+                  user.pictureUrl !== undefined && user.pictureUrl !== null ? user.pictureUrl.split('/') : [''];
+                const publicId = urlParams[urlParams.length - 1].split('.')[0];
+
+                cloudinary.v2.uploader.destroy(`vortex/profile_pictures/${publicId}`);
+                User.updateProfilePicture(req.body.id, result!.url);
+                res.status(200).json({ result: 'Imagen Actualizada correctamente' });
+              } else {
+                res.status(406).json({ result: 'Usuario no encontrado' });
+              }
+            });
           } catch (_: any) {
             res.status(500).json({ result: 'Error de base de datos' });
           }
