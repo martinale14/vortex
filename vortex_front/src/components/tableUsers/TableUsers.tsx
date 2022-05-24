@@ -14,6 +14,7 @@ function TableUsers(props: PropsTableUsers) {
 
     //Variables
     const [addUser, setAddUser] = useState(false);
+    const [user, SetUser] = useState<number>(0);
     var [isVisible, setIsVisible] = useState(false);
 
     const modalSave = () => {
@@ -35,6 +36,7 @@ function TableUsers(props: PropsTableUsers) {
             <TableAdministration users={addUser} />
             {addUser &&
                 <UserModal
+                    userId={user}
                     onSave={() => { modalSave() }}
                     onClose={() => { setAddUser(false) }}
                 />
