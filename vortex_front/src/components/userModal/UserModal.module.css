@@ -1,0 +1,70 @@
+.vortex_darkBackground {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    background-color: rgba(103, 103, 103, 0.54);
+    display: grid;
+    place-items: center;
+    z-index: 50;
+  }
+  
+  .vortex_modal {
+    position: relative;
+    max-width: 1000px;
+    height: 600px;
+    width: 85%;
+    background-color: white;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 51;
+    color: var(--secondaryColor);
+    cursor: pointer;
+  }
+  
+  .vortex_modal > h2 {
+    margin: 27px 0 20px 0;
+    font-size: 36px;
+  }
+  
+  .vortex_modal > hr {
+    border: none;
+    height: 2px;
+    background-color: var(--primaryColor);
+    width: 100%;
+  }
+  
+  .vortex_modal > p {
+    margin-top: 41px;
+    font-size: 24px;
+  }
+
+  .vortex_form {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 55px;
+  }
+
+  .vortex_form input[type='date'] {
+    cursor: pointer;
+  }
+
+  .vortex_icon {
+    color: var(--primaryColor);
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    left: 27px;
+    top: 27px;
+    cursor: pointer;
+  }
+
+  .vortex_button {
+    width: 370px;
+    height: 48px;
+    margin-top: 82px;
+  }
