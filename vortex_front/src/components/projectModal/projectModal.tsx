@@ -2,22 +2,21 @@ import styles from './projectModal.module.css';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import Input from '../input/Input';
 import Button from '../button/Button';
-import Dropdown from '../dropdown/dropdown'
 import {useState, useContext} from 'react';
-import { CREATE_PROJECT, HEADERS } from '../../utils/url_utils';
 import { UserContext } from '../../utils/contexts';
+import ProjectModalService from './projectModalService'
 
 interface ProjectModalProps {
   onClose?:any;
   onSave?:any;
-  companies:any[];
+  companyId:number;
 }
 
 const ProjectModal = (props: ProjectModalProps) => {
   const [name, setName] = useState(''); 
   const [estimatedTime, setEstimatedTime] = useState('');
   const [startDate, setStartDate] = useState('');
-  const [companyId, setCompanyId] = useState(0);
+  const companyId = props.companyId;
 
   const {user} = useContext<{user : any, setUser:any}>(UserContext);
 
@@ -33,23 +32,13 @@ const ProjectModal = (props: ProjectModalProps) => {
         <div className={styles.form}>
           <Input type='text' label='Proyecto' placeholder='Nombre del proyecto' value={name} onChange={(e) => {setName(e.target.value)}}></Input>
           <Input type='number' label='Tiempo estimado (Semanas)' placeholder='00' value={estimatedTime} onChange={(e) => {setEstimatedTime(e.target.value)}}></Input>
-          <Dropdown 
-           options={['Empresa o razón social', ...props.companies.map(comp => comp.name)]} 
-           values={[0, ...props.companies.map(comp => comp.id)]} 
-           label='Empresa' placeholder='Empresa o razón social' 
-           onChange={(event:any) => {
-             setCompanyId(event.target.value);
-          }}></Dropdown>
           <Input type='date' label='Fecha de inicio' placeholder='dd/mm/aaaa' value={startDate} onChange={(e) => {setStartDate(e.target.value)}}></Input>
         </div>
         <div className={styles.button}>
-          <Button text='Guardar' onClick={ () => {
-            fetch(CREATE_PROJECT, {method:'POST', headers: HEADERS, body:JSON.stringify({name, startDate, estimatedTime, companyId, createdBy: user.id})})
-            .then(res => res.json())
-            .then((_) => {
-              props.onSave(companyId);
-              props.onClose();
-            })
+          <Button text='Guardar' onClick={ async () => {
+            await ProjectModalService.createProject({name, estimatedTime, startDate, createdBy: user.id, companyId});
+            props.onSave(companyId);
+            props.onClose();
           }}></Button>
         </div>
       </div>

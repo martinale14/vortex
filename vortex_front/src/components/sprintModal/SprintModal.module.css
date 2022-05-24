@@ -3,16 +3,17 @@
     top: 0;
     width: 100%;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(103, 103, 103, 0.54);
     position: absolute;
     z-index: 50;
 }
 
 .vortex_cardSprint{
-    width: 900px;
+    width: 70%;
     height: 400px;
-    margin: auto;
-    margin-top: 80px;
     background-color: #fff;
     border-radius: 18px;
     color: var(--secondaryColor);
@@ -21,25 +22,22 @@
 
 .vortex_cardSprint_header{
     display: flex;
-    flex-direction: row;
     padding-top:20px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.vortex_cardSprint_header > h2{
+    text-align: center;
+    margin-left: 10px;
 }
 
 .vortex_cardSprint_date{
     display: flex;
-    flex-direction: row;
-    padding: 20px;
-    align-content: space-between;
+    column-gap: 30px;
     justify-content: center;
-}
-
-.vortex_imgSprint{
-    width: 32px;
-    height: 32px;
-    margin-left: 90px;
-    align-items: center;
-    flex-direction:row;
-    justify-content: flex-start;
+    z-index: 1;
 }
 
 .vortex_imgLine{
@@ -48,46 +46,32 @@
 }
 
 .vortex_imgExit{
+    color: var(--primaryColor);
     width: 32px;
     height: 32px;
-    margin-right: 10%;
-    margin-left: 40px;
-    align-items: flex-end;
+    position: absolute;
+    left: 27px;
+    top: 20px;
     cursor: pointer;
 }
 
 .vortex_imgSprint{
     width: 32px;
     height: 32px;
-    margin-left: 180px;
-    align-items: center;
-    flex-direction:row;
-    justify-content: flex-start;
 }
 
 .vortex_button_save{
-    width: 370px;
+    width: 300px;
     margin: 35px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 80px auto 0 auto;
 }
 
 .vortex_text{
-    display: flex;
-    justify-content: center;
+    text-align: center;
     font-size: 18px;
-}
-
-.vortex_cardSprint > Input{
     margin: 20px;
 }
 
-.vortex_cardSprint > p{
-    margin-left: 21px;
-}
-
-h2{
-    display: flex;
-    justify-content: center;
-    margin-left: 14px;
+.vortex_cardSprint_date > div{
+    width: 35%;
 }

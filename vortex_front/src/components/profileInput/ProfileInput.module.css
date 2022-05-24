@@ -17,3 +17,13 @@
     font-size: 20px;
     color: var(--darkColor);
 }
+
+.vortex_profile_input > input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.vortex_profile_input > input[type=number] {
+  -moz-appearance: textfield;
+}

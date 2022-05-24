@@ -9,10 +9,10 @@ import ProfileInput from '../profileInput/ProfileInput';
 function Profile() {
   const { user } = useContext(UserContext);
 
-  const [phone, setPhone] = useState(user.phone);
-  const [updated, setUpdated] = useState(user.updatedAt);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
+  const [phone, setPhone] = useState(user.phone);
+  const [updated, setUpdated] = useState(user.updatedAt);
   const created = user.createdAt;
 
   return (
@@ -38,13 +38,13 @@ function Profile() {
         <div className={`${styles.vortex_profile_information} ${styles.vortex_profile_box}`}>
           <div className={styles.vortex_profile_input_container}>
             <div className={styles.vortex_profile_main_info}>
-              <ProfileInput readOnly type='text' label='Nombre' text={name}/>
-              <ProfileInput readOnly type='text' label='Correo' text={email}/>
+              <ProfileInput type='text' label='Nombre' defaultValue={name} onChange={(e) => {setName(e.target.value)}}/>
+              <ProfileInput type='text' label='Correo' defaultValue={email} onChange={(e) => {setEmail(e.target.value)}}/>
               <ProfileInput type='number' label='Teléfono' defaultValue={phone} onChange={(e) => {setPhone(e.target.value)}}/>
             </div>
             <div className={styles.vortex_profile_dates}>
-              <ProfileInput readOnly type='text' label='Fecha de creación' text={created} />
-              <ProfileInput readOnly type='text' label='Fecha de última modificación' text='15/5/2022' />
+              <ProfileInput readOnly type='text' label='Fecha de creación' date={new Date(created)} />
+              <ProfileInput readOnly type='text' label='Fecha de última modificación' date={new Date(updated)} />
             </div>
           </div>
         </div>

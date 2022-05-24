@@ -7,10 +7,12 @@ import Button from '../button/Button';
 import { HEADERS, CREATE_SPRINT } from '../../utils/url_utils';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
+import SprintModalService from './SprintModalService'
 
 interface sprintProps {
   onClose?: any;
-  projectId?: number;
+  onSave?: any;
+  projectId: number;
 }
 
 const SprintModal = (props: sprintProps) => {
@@ -50,20 +52,10 @@ const SprintModal = (props: sprintProps) => {
         <div className={styles.vortex_button_save}>
           <Button
             text={'Guardar'}
-            onClick={() => {
-              fetch(CREATE_SPRINT, {
-                method: 'POST',
-                headers: HEADERS,
-                body: JSON.stringify({
-                  startDate,
-                  endDate,
-                  status: 'Abierto',
-                  createdBy: user.id,
-                  projectId: props.projectId
-                })
-              }).then(() => {
-                props.onClose();
-              });
+            onClick={async () => {
+              await SprintModalService.createSprint({startDate, endDate, status: 'Abierto', createdBy: user.id, projectId: props.projectId});
+              props.onSave(props.projectId);
+              props.onClose();
             }}
           />
         </div>
