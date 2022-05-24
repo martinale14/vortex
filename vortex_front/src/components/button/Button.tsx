@@ -1,7 +1,7 @@
 import styles from './Button.module.css';
 import { IoMdArrowDroprightCircle } from 'react-icons/io';
 import { MouseEventHandler } from 'react';
-import { IconType } from 'react-icons';
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 interface PropsButton {
   back?: Boolean; //Optional value to change button style
@@ -9,7 +9,8 @@ interface PropsButton {
   text: string;
   type?: 'button' | 'submit' | 'reset' | undefined; //Button function
   noArrow?: any;
-  leftIcon?: IconType;
+  add?: any;
+  disabled?: boolean;
 }
 
 /**
@@ -23,10 +24,14 @@ function Button(props: PropsButton) {
     <button
       type={props.type ?? 'button'}
       className={`${styles.button_vortex} ${
-        props.back ? styles.button_vortex_back_fill : styles.button_vortex_next_fill
+        props.disabled ? styles.button_vortex_disabled 
+          : props.back ? styles.button_vortex_back_fill 
+            : styles.button_vortex_next_fill
       }`}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
+      {props.add && <AiFillPlusCircle size={20} className={styles.plusCircle}/>}
       {props.text}
       {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
     </button>

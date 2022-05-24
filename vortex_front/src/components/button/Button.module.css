@@ -66,3 +66,19 @@
   position: absolute;
   right: 15px;
 }
+
+.button_vortex_disabled{
+  border: 1px solid var(--primaryColor);
+  background-color: rgba(0, 0, 0, 0.139);
+  cursor: not-allowed;
+  color: #df8211;
+}
+
+.button_vortex_disabled:hover,
+.button_vortex_disabled:hover .button_vortex_icon{
+  color: #df8211;
+}
+
+.plusCircle{
+  margin-right: 5px;
+}
