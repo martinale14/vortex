@@ -34,7 +34,6 @@ function Button(props: PropsButton) {
       {props.add && <AiFillPlusCircle size={20} className={styles.plusCircle}/>}
       {props.text}
       {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
-      
     </button>
   );
 }

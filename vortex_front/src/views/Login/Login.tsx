@@ -11,6 +11,7 @@ import { UserContext } from '../../utils/contexts';
 import { useNavigate } from 'react-router-dom';
 import { Token } from '../../utils/auth';
 import { useEffect } from 'react';
+import LoginSecondaryButton from '../../components/loginSecondaryButton/LoginSecondaryButton';
 
 interface propsLogin {}
 
@@ -136,36 +137,34 @@ function Login(_: propsLogin) {
               />
 
               <Button text='Recuperar' onClick={handleClickRecover} />
-              <button
-                className={styles.raisedButton}
-                onClick={(e) => {
+
+              <LoginSecondaryButton
+                onClick={(e: any) => {
                   e.preventDefault();
 
                   const section = document.getElementById('login_main_section');
                   section?.classList.toggle(styles.secondSection, false);
                   section?.classList.toggle(styles.thirdthSection, false);
                 }}
-              >
-                Volver
-              </button>
+                text='Volver'
+              />
               <p className={styles.message}>{message}</p>
             </div>
             <div className={styles.cardInformation_login}>
               <p className={styles.recoverText}>
                 Un correo fue enviado a {email} por favor revisa tu bandeja de entrada
               </p>
-              <button
-                className={styles.raisedButton}
-                onClick={(e) => {
+
+              <LoginSecondaryButton
+                onClick={(e: any) => {
                   e.preventDefault();
 
                   const section = document.getElementById('login_main_section');
                   section?.classList.toggle(styles.secondSection, false);
                   section?.classList.toggle(styles.thirdthSection, false);
                 }}
-              >
-                Iniciar Sesión
-              </button>
+                text='Iniciar Sesión'
+              />
             </div>
           </div>
         </div>

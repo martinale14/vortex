@@ -123,4 +123,39 @@ export class User {
       throw new VortexException('database_error');
     }
   }
+
+  static async retrieveAllUsers() {
+    try {
+      const data = await pool.query('SELECT * FROM vortex.users');
+
+      return data;
+    } catch (_) {
+      throw new VortexException('database_eror');
+    }
+  }
+
+  static async updateUSer(payload: UserPayload, id: string) {
+    try {
+      await pool.query('CALL vortex.update_user ($1, $2, $3, $4)', [
+        payload.name,
+        payload.phone === '' ? null : payload.phone,
+        payload.email,
+        id
+      ]);
+    } catch (e: any) {
+      if (e.constraint === 'unique_email') {
+        throw new VortexException('duplicated_email');
+      }
+
+      throw new VortexException('database_eror');
+    }
+  }
+
+  static async updateProfilePicture(id: string, url: string) {
+    try {
+      await pool.query('UPDATE vortex.users SET picture_url_user = $1 WHERE id_user = $2', [url, id]);
+    } catch (e: any) {
+      throw new VortexException('database_eror');
+    }
+  }
 }

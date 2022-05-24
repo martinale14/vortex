@@ -4,8 +4,10 @@ import { FaHome } from 'react-icons/fa';
 import { IoPersonCircleSharp } from 'react-icons/io5';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Button from '../button/Button';
+import LoginService from '../../views/Login/LoginService';
+import { UserContext } from '../../utils/contexts';
 
 interface sideProps {
   back?: Boolean;
@@ -14,6 +16,7 @@ interface sideProps {
 function SideBar(_: sideProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setUser } = useContext(UserContext);
 
   const verifyActive = () => {
     const elements = document.getElementsByClassName(styles.vortex_side_bar_section);
@@ -27,7 +30,7 @@ function SideBar(_: sideProps) {
       }
     }
   };
-  
+
   useEffect(() => {
     document.getElementsByClassName(styles.vortex_side_bar_section);
     verifyActive();
@@ -68,7 +71,16 @@ function SideBar(_: sideProps) {
         <p>Mi perfil</p>
       </section>
       <div className={styles.vortex_sign_out}>
-        <Button text='Cerrar sesión' back noArrow/>
+        <Button
+          text='Cerrar sesión'
+          back
+          noArrow
+          onClick={async () => {
+            await LoginService.logOut();
+            setUser(null);
+            navigate('/');
+          }}
+        />
       </div>
     </div>
   );

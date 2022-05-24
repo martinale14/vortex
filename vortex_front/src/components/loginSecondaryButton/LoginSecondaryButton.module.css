@@ -1,0 +1,48 @@
+.button_design {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondaryColor);
+  cursor: pointer;
+  padding: 5px 15px;
+  width: 200px;
+  height: 30px;
+  border-radius: 100px;
+  overflow: hidden;
+  transition: all 0.2s ease-out;
+  margin-top: 50px;
+}
+
+.button_design:hover {
+  background-color: var(--secondaryColor);
+  color: var(--secondaryColor);
+}
+
+.button_design:hover > p {
+  color: white;
+  margin-left: 0;
+}
+
+.button_design > p {
+  color: var(--secondaryColor);
+  transition: all 0.2s ease-out;
+  margin-left: -30px;
+}
+
+.buton_icon {
+  display: grid;
+  place-items: center;
+  background-color: white;
+  border-radius: 100px;
+  height: 20px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  margin-right: 10px;
+  margin-top: 100%;
+  transition: all 0.2s ease-out;
+}
+
+.button_design:hover > .buton_icon {
+  margin-top: 0;
+}

@@ -1,4 +1,4 @@
-import { LOGIN_ROUTE } from '../../utils/url_utils';
+import { LOGIN_ROUTE, LOGOUT_ROUTE } from '../../utils/url_utils';
 import axios from '../../utils/axios_config';
 import { SEARCH_BY_JWT } from '../../utils/url_utils';
 import { Token } from '../../utils/auth';
@@ -30,6 +30,11 @@ class LoginService {
         }
       }
     }
+  };
+
+  static logOut = async () => {
+    await axios.get(LOGOUT_ROUTE);
+    localStorage.clear();
   };
 }
 
