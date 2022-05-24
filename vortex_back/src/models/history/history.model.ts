@@ -117,4 +117,14 @@ export class History {
       throw new VortexException('database_error');
     }
   }
+
+  static async getLineBase(idSprint: string) {
+    try {
+      const histories = await pool.query('SELECT * FROM vortex.select_history_by_sprint($1)', [idSprint]);
+
+      return histories;
+    } catch (e) {
+      throw new VortexException('database_error');
+    }
+  }
 }
