@@ -18,6 +18,10 @@ const ProjectModal = (props: ProjectModalProps) => {
   const [startDate, setStartDate] = useState('');
   const companyId = props.companyId;
 
+  const [nameValidation, setNameValidation] = useState<string | null>(null);
+  const [timeValidation, setTimeValidation] = useState<string | null>(null);
+  const [dateValidation, setDateValidation] = useState<string | null>(null);
+
   const {user} = useContext<{user : any, setUser:any}>(UserContext);
 
   return (
@@ -30,9 +34,27 @@ const ProjectModal = (props: ProjectModalProps) => {
         <hr />
         <p>Por favor ingrese los siguientes datos para crear un proyecto</p>
         <div className={styles.form}>
-          <Input type='text' label='Proyecto' placeholder='Nombre del proyecto' value={name} onChange={(e) => {setName(e.target.value)}}></Input>
-          <Input type='number' label='Tiempo estimado (Semanas)' placeholder='00' value={estimatedTime} onChange={(e) => {setEstimatedTime(e.target.value)}}></Input>
-          <Input type='date' label='Fecha de inicio' placeholder='dd/mm/aaaa' value={startDate} onChange={(e) => {setStartDate(e.target.value)}}></Input>
+          <Input type='text' label='Proyecto' placeholder='Nombre del proyecto' value={name} 
+            onChange={(e) => {
+              setName(e.target.value);
+              e.target.value.trim() === '' ? setNameValidation('Campo obligatorio') : setNameValidation(null)
+            }}
+            validationText={nameValidation}
+          />
+          <Input type='number' label='Tiempo estimado (Semanas)' placeholder='00' value={estimatedTime} 
+            onChange={(e) => {
+              setEstimatedTime(e.target.value);
+              e.target.value.trim() === '' ? setTimeValidation('Campo obligatorio') : setTimeValidation(null)
+            }}
+            validationText={timeValidation}
+          />
+          <Input type='date' label='Fecha de inicio' placeholder='dd/mm/aaaa' value={startDate} 
+            onChange={(e) => {
+              setStartDate(e.target.value)
+              e.target.value === '' ? setDateValidation('Campo obligatorio') : setDateValidation(null)
+            }}
+            validationText={dateValidation}
+          />
         </div>
         <div className={styles.button}>
           <Button text='Guardar' onClick={ async () => {

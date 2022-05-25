@@ -18,6 +18,10 @@ const UserModal = (props: UserModalProps) => {
     const [phoneUser, setPhoneUser] = useState('');
     const [roleUser, setRoleUser] = useState(0);
 
+    const [nameValidation, setNameValidation] = useState<string | null>(null);
+    const [emailValidation, setEmailValidation] = useState<string | null>(null);
+    const [roleValidation, setRoleValidation] = useState<string | null>(null);
+
     const createUser = async () => {
         const dataUser = {name: nameUser, email: emailUser, phone: phoneUser, role: roleUser, password: 'vortex123', pictureUrl:null}
         UserModalServices.createUser(dataUser);
@@ -33,15 +37,36 @@ const UserModal = (props: UserModalProps) => {
                 <hr/>
                 <p>Por favor ingrese los siguientes datos para crear un nuevo usuario</p>
                 <div className={styles.vortex_form}>
-                    <Input type='text' label='Nombre *' placeholder='Nombre completo' value={nameUser} onChange={(e) => {setNameUser(e.target.value)}}></Input>
-                    <Input type='text' label='Correo *' placeholder='nombre@ejemplo.com' value={emailUser} onChange={(e) => {setEmailUser(e.target.value)}}></Input>
-                    <Input type='number' label='Teléfono *' placeholder='31........' value={phoneUser} onChange={(e) => {setPhoneUser(e.target.value)}}></Input>
+                    <Input type='text' label='Nombre *' placeholder='Nombre completo' value={nameUser} 
+                        onChange={(e) => {
+                            setNameUser(e.target.value);
+                            e.target.value === '' ? setNameValidation('Campo obligatorio') : setNameValidation(null)
+                        }}
+                        validationText={nameValidation}
+                    />
+                    <Input type='text' label='Correo *' placeholder='nombre@ejemplo.com' value={emailUser} 
+                        onChange={(e) => {
+                            setEmailUser(e.target.value);
+                            e.target.value === '' ? setEmailValidation('Campo obligatorio') : setEmailValidation(null)
+                        }}
+                        validationText={emailValidation}
+                    />
+                    <Input type='number' label='Teléfono' placeholder='31........' value={phoneUser} 
+                        onChange={(e) => {
+                            setPhoneUser(e.target.value);
+                        }}
+                    />
                     <Dropdown 
-                    options = {['Rol','Administrador','Analista', 'Gerente', 'Desarrollador']}
-                    values = {[0,1,2,3,4]}
-                    label = 'Rol *'
-                    placeholder = 'Seleccione un rol'
-                    onChange = {(event:any) => {setRoleUser(event.target.value)}}/>
+                        options = {['Rol','Administrador','Analista', 'Gerente', 'Desarrollador']}
+                        values = {[0,1,2,3,4]}
+                        label = 'Rol *'
+                        placeholder = 'Seleccione un rol'
+                        onChange = {(e:any) => {
+                            setRoleUser(e.target.value);
+                            e.target.value === '0' ? setRoleValidation('Campo obligatorio') : setRoleValidation(null)
+                        }}
+                        validationText={roleValidation}
+                    />
                 </div>
                 <div className={styles.vortex_button}>
                     <Button text='Guardar'
@@ -49,7 +74,8 @@ const UserModal = (props: UserModalProps) => {
                             await createUser();
                             props.onSave();
                             props.onClose();
-                    }}></Button>
+                        }}
+                    />
                 </div>
             </div>
         </div>

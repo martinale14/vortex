@@ -18,6 +18,10 @@ const CompanyModal = (props: CompanyModalProps) => {
   const [phone, setPhone] = useState('');
   const [direction, setDirection] = useState('');
 
+  const [nameValidation, setNameValidation] = useState<string | null>(null);
+  const [emailValidation, setEmailValidation] = useState<string | null>(null);
+  const [directionValidation, setDirectionValidation] = useState<string | null>(null);
+
   const {user} = useContext<any>(UserContext);
   
   return (
@@ -30,10 +34,32 @@ const CompanyModal = (props: CompanyModalProps) => {
         <hr />
         <p>Por favor ingrese los siguientes datos para crear una nueva empresa</p>
         <div className={styles.form}>
-          <Input type='text' value={name} label='Nombre' placeholder='Nombre o razón Social'  onChange={(e) => {setName(e.target.value)}}></Input>
-          <Input type='text' value={email} label='Correo' placeholder='nombre@ejemplo.com'  onChange={(e) => {setEmail(e.target.value)}}></Input>
-          <Input type='number' value={phone} label='Teléfono' placeholder='31........'  onChange={(e) => {setPhone(e.target.value)}}></Input>
-          <Input type='text' value={direction} label='Dirección' placeholder='Carrera 8 # 35 -26' onChange={(e) => {setDirection(e.target.value)}}></Input>
+          <Input type='text' value={name} label='Nombre' placeholder='Nombre o razón Social'  
+            onChange={(e) => {
+              setName(e.target.value);
+              e.target.value.trim() === '' ? setNameValidation('Campo obligatorio') : setNameValidation(null)
+            }} 
+            validationText={nameValidation}
+          />
+          <Input type='text' value={email} label='Correo' placeholder='nombre@ejemplo.com'  
+            onChange={(e) => {
+              setEmail(e.target.value);
+              e.target.value.trim() === '' ? setEmailValidation('Campo obligatorio') : setEmailValidation(null)
+            }}
+            validationText={emailValidation}  
+          />
+          <Input type='number' value={phone} label='Teléfono' placeholder='31........'  
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+          <Input type='text' value={direction} label='Dirección' placeholder='Carrera 8 # 35 -26' 
+            onChange={(e) => {
+              setDirection(e.target.value);
+              e.target.value.trim() === '' ? setDirectionValidation('Campo obligatorio') : setDirectionValidation(null)
+            }}
+            validationText={directionValidation}
+          />
           
         </div>
         <div className={styles.button}>
