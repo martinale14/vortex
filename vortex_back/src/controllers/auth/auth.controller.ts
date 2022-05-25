@@ -2,6 +2,7 @@ import { User, UserPayload } from '../../models/user/user.model';
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { JwtController } from './jwt.controller';
+import { getRoleName } from '../../models/user/roles.model';
 
 export class AuthController {
   static async register(req: Request, res: Response) {
@@ -35,6 +36,7 @@ export class AuthController {
     const token = JwtController.getSignedToken(user);
     const refreshToken = JwtController.createRefreshToken(req.session.passport.user.email);
     const usr = req.session.passport.user;
+    usr.role = getRoleName(usr.role);
 
     res.status(200).json({ result: 'Authentication succesfull', token, refreshToken, user: usr });
   }
