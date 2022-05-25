@@ -16,6 +16,8 @@ export const CREATE_USER = `${URL}/auth/register`;
 export const SEARCH_BY_JWT = `${URL}/search/user/id`;
 export const GENERATE_NEW_TOKEN = `${URL}/auth/token`;
 export const LOGOUT_ROUTE = `${URL}/auth/logout`;
+export const UPDATE_PICTURE = `${URL}/auth/users/update/picture`;
+export const UPDATE_USER = `${URL}/auth/users/update`;
 
 export const HEADERS = {
   'Content-Type': 'application/json',

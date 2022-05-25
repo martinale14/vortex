@@ -1,5 +1,5 @@
 import styles from './TableAdministration.module.css';
-import { useContext, useEffect, useState } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { HiOutlineCursorClick } from 'react-icons/hi';
 import { MdDelete, MdFace } from 'react-icons/md';
 import { HiMail } from 'react-icons/hi';
@@ -11,16 +11,20 @@ interface propsTableAdmin {
   users: any;
 }
 
-function TableAdministration(props: propsTableAdmin) {
+const TableAdministration = forwardRef((props: propsTableAdmin, ref) => {
   /**Lógica */
   const [users, setUsers] = useState<any[]>([]);
-  const [user, SetUser] = useState<number>(0);
   const [addUser, setAddUser] = useState(false);
 
   useEffect(() => {
-    console.log('entra al useEffect')
     fetchUsers();
   }, [addUser]);
+
+  useImperativeHandle(ref, () => ({
+    updateUsers() {
+      fetchUsers();
+    }
+  }));
 
   const fetchUsers = async () => {
     const data = await TableAdministrationService.fetchUsers();
@@ -68,31 +72,38 @@ function TableAdministration(props: propsTableAdmin) {
           <td className={styles.vortex_table_bodyAdminTwo}>
             {
               /* logica para editar usuario */
-              users.map((user) => {
+              users.map((_, i) => {
                 return (
-                  <div className={styles.vortex_table_bodyAdmin_info_actions}>
-                    <button className={styles.vortex_add_buttonDelete} onClick={() => { setAddUser(true) }}>
+                  <div key={'user_' + i} className={styles.vortex_table_bodyAdmin_info_actions}>
+                    <button
+                      className={styles.vortex_add_buttonDelete}
+                      onClick={() => {
+                        setAddUser(true);
+                      }}
+                    >
                       <FaUserEdit className={styles.vortex_add_icon}></FaUserEdit>
                     </button>
-                    <p>Editar</p>
                   </div>
                 );
               })
             }
-            {addUser &&
-                <UserModal
-                  userId={user}
-                  onSave={() => { TableAdministrationService.fetchUsers() }}
-                  onClose={() => { setAddUser(false) }}
-                />
-            }
+            {addUser && (
+              <UserModal
+                onSave={() => {
+                  TableAdministrationService.fetchUsers();
+                }}
+                onClose={() => {
+                  setAddUser(false);
+                }}
+              />
+            )}
           </td>
           <td className={styles.vortex_table_bodyAdminTwo}>
             {
               /* logica de nombre */
-              users.map((user) => {
+              users.map((user, i) => {
                 return (
-                  <div className={styles.vortex_table_bodyAdmin_info}>
+                  <div key={'user2_' + i} className={styles.vortex_table_bodyAdmin_info}>
                     <p>{user.name}</p>
                   </div>
                 );
@@ -102,9 +113,9 @@ function TableAdministration(props: propsTableAdmin) {
           <td className={styles.vortex_table_bodyAdminTwo}>
             {
               /* logica de correo */
-              users.map((user) => {
+              users.map((user, i) => {
                 return (
-                  <div className={styles.vortex_table_bodyAdmin_info}>
+                  <div key={'user3_' + i} className={styles.vortex_table_bodyAdmin_info}>
                     <p>{user.email}</p>
                   </div>
                 );
@@ -114,9 +125,9 @@ function TableAdministration(props: propsTableAdmin) {
           <td className={styles.vortex_table_bodyAdminTwo}>
             {
               /* logica de rol */
-              users.map((user) => {
+              users.map((user, i) => {
                 return (
-                  <div className={styles.vortex_table_bodyAdmin_info}>
+                  <div key={'user4_' + i} className={styles.vortex_table_bodyAdmin_info}>
                     <p>{user.role}</p>
                   </div>
                 );
@@ -126,12 +137,10 @@ function TableAdministration(props: propsTableAdmin) {
           <td className={styles.vortex_table_bodyAdminTwo}>
             {
               /* logica para desactivar/eliminar usario */
-              users.map((user) => {
+              users.map((_, i) => {
                 return (
-                  <div className={styles.vortex_table_bodyAdmin_info_actions_delete}>
-                    <button
-                      className={styles.vortex_add_buttonDelete}
-                      onClick={() => {}}>
+                  <div key={'user5_' + i} className={styles.vortex_table_bodyAdmin_info_actions_delete}>
+                    <button className={styles.vortex_add_buttonDelete} onClick={() => {}}>
                       <MdDelete className={styles.vortex_add_icon}></MdDelete>
                     </button>
                   </div>
@@ -143,6 +152,6 @@ function TableAdministration(props: propsTableAdmin) {
       </tbody>
     </table>
   );
-}
+});
 
 export default TableAdministration;

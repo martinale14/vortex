@@ -6,23 +6,24 @@ interface propsInput {
   onChange: any;
   label: string;
   validationText?: string | null;
-  options :string [];
-  values : number[];
+  options: string[];
+  values: number[];
+  className?: string;
 }
 
 function Login(props: propsInput) {
-  const effectExit = (event: any):any => {
+  const effectExit = (event: any): any => {
     if (event.target.value.length === 0) {
       event.target.classList.toggle(styles.input_filled, false);
     }
   };
 
-  const effectEnter = (event: any):any => {
+  const effectEnter = (event: any): any => {
     (event.target as HTMLInputElement).classList.toggle(styles.input_filled, true);
   };
 
   return (
-    <div>
+    <div className={props.className}>
       <p className={styles.label}>{props.label}</p>
 
       <div className={styles.input_container}>
@@ -36,7 +37,11 @@ function Login(props: propsInput) {
           placeholder={props.placeholder}
           className={styles.input_Login}
         >
-          {props.options.map((opt, i) => <option value={props.values[i]} key={'opt_' + i}>{opt}</option>)}
+          {props.options.map((opt, i) => (
+            <option className={styles.drop_option} value={props.values[i]} key={'opt_' + i}>
+              {opt}
+            </option>
+          ))}
         </select>
         <div className={styles.input_background}></div>
       </div>

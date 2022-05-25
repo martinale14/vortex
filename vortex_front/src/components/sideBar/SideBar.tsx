@@ -16,7 +16,7 @@ interface sideProps {
 function SideBar(_: sideProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const verifyActive = () => {
     const elements = document.getElementsByClassName(styles.vortex_side_bar_section);
@@ -44,12 +44,14 @@ function SideBar(_: sideProps) {
         </div>
         <p>Inicio</p>
       </section>
-      <section id='to:/home/admin' className={styles.vortex_side_bar_section} onClick={() => navigate('/home/admin')}>
-        <div className={styles.vortex_container_img}>
-          <MdAdminPanelSettings className={styles.vortex_side_icon} />
-        </div>
-        <p>Administrar</p>
-      </section>
+      {user.role === 'Administrador' ? (
+        <section id='to:/home/admin' className={styles.vortex_side_bar_section} onClick={() => navigate('/home/admin')}>
+          <div className={styles.vortex_container_img}>
+            <MdAdminPanelSettings className={styles.vortex_side_icon} />
+          </div>
+          <p>Administrar</p>
+        </section>
+      ) : null}
       <section
         id='to:/home/templates'
         className={styles.vortex_side_bar_section}

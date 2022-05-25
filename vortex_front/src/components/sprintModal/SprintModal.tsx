@@ -4,10 +4,9 @@ import exit from '../../assets/exit.svg';
 import sprint from '../../assets/sprint.svg';
 import Input from '../input/Input';
 import Button from '../button/Button';
-import { HEADERS, CREATE_SPRINT } from '../../utils/url_utils';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
-import SprintModalService from './SprintModalService'
+import SprintModalService from './SprintModalService';
 
 interface sprintProps {
   onClose?: any;
@@ -18,6 +17,9 @@ interface sprintProps {
 const SprintModal = (props: sprintProps) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
+  const [startValidation, setStartValidation] = useState<string | null>(null);
+  const [endValidation, setEndValidation] = useState<string | null>(null);
 
   const { user } = useContext<{ user: any; setUser: any }>(UserContext);
 
@@ -38,7 +40,9 @@ const SprintModal = (props: sprintProps) => {
             label='Fecha de inicio'
             onChange={(e: any) => {
               setStartDate(e.target.value);
+              e.target.value === '' ? setStartValidation('Campo obligatorio') : setStartValidation(null)
             }}
+            validationText={startValidation}
           />
           <Input
             type='date'
@@ -46,14 +50,22 @@ const SprintModal = (props: sprintProps) => {
             label='Fecha de fin'
             onChange={(e: any) => {
               setEndDate(e.target.value);
+              e.target.value === '' ? setEndValidation('Campo obligatorio') : setEndValidation(null)
             }}
+            validationText={endValidation}
           />
         </div>
         <div className={styles.vortex_button_save}>
           <Button
             text={'Guardar'}
             onClick={async () => {
-              await SprintModalService.createSprint({startDate, endDate, status: 'Abierto', createdBy: user.id, projectId: props.projectId});
+              await SprintModalService.createSprint({
+                startDate,
+                endDate,
+                status: 'Abierto',
+                createdBy: user.id,
+                projectId: props.projectId
+              });
               props.onSave(props.projectId);
               props.onClose();
             }}

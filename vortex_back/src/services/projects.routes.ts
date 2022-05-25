@@ -7,4 +7,6 @@ router.get('/:companyId', ProjectController.getProjectsByCompany);
 
 router.post('/', ProjectController.createProject);
 
+router.get('/excel/:projectId', ProjectController.generateExcel);
+
 export default router;

@@ -109,6 +109,15 @@ td {
   color: white;
 }
 
+.vortex_table_body_one {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.vortex_table_body_one::-webkit-scrollbar {
+  display: none;
+}
+
 .vortex_table_body_one div:hover p {
   color: white;
 }
@@ -130,6 +139,13 @@ td {
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 20px;
+}
+
+.vortex_container::-webkit-scrollbar {
+  display: none;
 }
 
 .vortex_thead > div > p {
@@ -140,17 +156,27 @@ td {
   justify-content: flex-start;
 }
 
-.vortex_table_actions{
+.vortex_table_actions {
   height: 25px;
   margin-left: auto;
   margin-right: 5px;
   z-index: 1;
 }
 
-.vortex_table_actions button{
+.vortex_table_actions button {
   height: 100%;
   font-size: 16px;
   font-weight: normal;
+}
+
+.vortex_selected_company,
+.vortex_selected_project {
+  background-color: var(--secondaryColor);
+}
+
+.vortex_selected p,
+.vortex_selected .arrow {
+  color: white;
 }
 
 @media (max-width: 900px) {
