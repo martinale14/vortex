@@ -1,0 +1,69 @@
+.vortex_tableTemplate{
+  width: 95%;
+  height: 85%;
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: var(--dropShdow);
+  box-shadow: var(--dropShdow);
+  border-collapse: collapse;    
+}
+
+.vortex_tableTemplate > p {
+  color: #5D5D5D;
+  font-size: 18px;
+  margin: 35px;
+  margin-top: 40px;
+}
+
+.vortex_container_templates{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 80px;
+  width: 95%;
+  height: 75%;
+}
+
+.vortex_card_template{
+  margin-left: 40px;
+  padding: 30px;
+  padding-top: 8px;
+  width: 50%;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: var(--dropShdow);
+  box-shadow: var(--dropShdow);
+  border-collapse: collapse;
+}
+
+.vortex_card_template > p{
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.vortex_card_template Button{
+    width: calc(100% - 10%);
+    display: flex;
+    margin-bottom: 10px;
+    left: 15px;
+}
+
+.vortex_header_template{
+  width: calc(100% - 10px);
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid var(--primaryColor);    
+}
+
+.vortex_header_template > h1{
+   font-size: 20px;
+   font-weight: bold;
+   color: var(--secondaryColor);  
+}
+
+/* .vortex_container_button{
+   width: calc(100% - 35%);
+   display: flex;
+} */

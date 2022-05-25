@@ -22,7 +22,6 @@
     align-items: center;
     z-index: 51;
     color: var(--secondaryColor);
-    cursor: pointer;
   }
   
   .vortex_modal > h2 {

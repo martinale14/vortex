@@ -35,6 +35,12 @@ function Home(_: propsLogin) {
         return (
           null
         );
+      case '/home/templates':
+        return (
+          <p className={styles.vortex_welcome}> 
+            Gestionar plantillas
+          </p>
+        );  
       default:
         return (
           <p className={styles.vortex_welcome}>
