@@ -18,6 +18,9 @@ const SprintModal = (props: sprintProps) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  const [startValidation, setStartValidation] = useState<string | null>(null);
+  const [endValidation, setEndValidation] = useState<string | null>(null);
+
   const { user } = useContext<{ user: any; setUser: any }>(UserContext);
 
   return (
@@ -37,7 +40,9 @@ const SprintModal = (props: sprintProps) => {
             label='Fecha de inicio'
             onChange={(e: any) => {
               setStartDate(e.target.value);
+              e.target.value === '' ? setStartValidation('Campo obligatorio') : setStartValidation(null)
             }}
+            validationText={startValidation}
           />
           <Input
             type='date'
@@ -45,7 +50,9 @@ const SprintModal = (props: sprintProps) => {
             label='Fecha de fin'
             onChange={(e: any) => {
               setEndDate(e.target.value);
+              e.target.value === '' ? setEndValidation('Campo obligatorio') : setEndValidation(null)
             }}
+            validationText={endValidation}
           />
         </div>
         <div className={styles.vortex_button_save}>
