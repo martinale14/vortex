@@ -32,7 +32,15 @@ function Home(_: propsLogin) {
   const defineTitle = () => {
     switch (location.pathname) {
       case '/home/admin':
-        return null;
+        return (
+          null
+        );
+      case '/home/templates':
+        return (
+          <p className={styles.vortex_welcome}> 
+            Gestionar plantillas
+          </p>
+        );
       default:
         return (
           <p className={styles.vortex_welcome}>
