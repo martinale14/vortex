@@ -1,6 +1,6 @@
 import styles from './Profile.module.css';
 import backProfile from '../../assets/backCopy.png';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
 import profileImg from '../../assets/img_avatar.png';
 import Button from '../button/Button';
@@ -12,7 +12,7 @@ function Profile() {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone);
-  const [updated, setUpdated] = useState(user.updatedAt);
+  const [updated] = useState(user.updatedAt);
   const created = user.createdAt;
 
   return (
@@ -23,6 +23,7 @@ function Profile() {
       <section className={styles.vortex_profile_section}>
         <div className={`${styles.vortex_profile_user} ${styles.vortex_profile_box}`}>
           <div className={styles.vortex_profile_image_container}>
+            <div>Pulsa para actualizar</div>
             <img src={user?.pictureUrl || profileImg} alt='User pic' />
           </div>
           <div className={styles.vortex_profile_userinfo}>
@@ -38,9 +39,30 @@ function Profile() {
         <div className={`${styles.vortex_profile_information} ${styles.vortex_profile_box}`}>
           <div className={styles.vortex_profile_input_container}>
             <div className={styles.vortex_profile_main_info}>
-              <ProfileInput type='text' label='Nombre' defaultValue={name} onChange={(e) => {setName(e.target.value)}}/>
-              <ProfileInput type='text' label='Correo' defaultValue={email} onChange={(e) => {setEmail(e.target.value)}}/>
-              <ProfileInput type='number' label='Teléfono' defaultValue={phone} onChange={(e) => {setPhone(e.target.value)}}/>
+              <ProfileInput
+                type='text'
+                label='Nombre'
+                defaultValue={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <ProfileInput
+                type='text'
+                label='Correo'
+                defaultValue={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <ProfileInput
+                type='number'
+                label='Teléfono'
+                defaultValue={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+              />
             </div>
             <div className={styles.vortex_profile_dates}>
               <ProfileInput readOnly type='text' label='Fecha de creación' date={new Date(created)} />

@@ -6,8 +6,7 @@ import Input from '../input/Input';
 import Button from '../button/Button';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../utils/contexts';
-import Dropdown from '../dropdown/dropdown'
-import StoryModalService from './StoryModalService'
+import StoryModalService from './StoryModalService';
 
 interface storyProps {
   onClose: any;
@@ -20,8 +19,7 @@ function StoryModal(props: storyProps) {
   const [title, setTitle] = useState('');
   const [accDesc, setAccDesc] = useState('');
   const [desc, setDesc] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [companyId, setCompanyId] = useState(0);
+  const [acc, setAcc] = useState(['']);
 
   const { user } = useContext<{ user: any; setUser: any }>(UserContext);
 
@@ -49,11 +47,11 @@ function StoryModal(props: storyProps) {
           createdBy: user.id
         }
       ]
-    }
+    };
     StoryModalService.createStory(story);
     props.onSave();
     props.onClose();
-  }
+  };
 
   return (
     <div className={styles.vortex_background}>
@@ -92,7 +90,7 @@ function StoryModal(props: storyProps) {
             }}
           /> */}
           <Input
-            className={styles.vortex_input_story}
+            className={styles.vortex_textarea_acc}
             type='text'
             placeholder='Ingrese una descripción'
             label='Descripción*'
@@ -100,60 +98,40 @@ function StoryModal(props: storyProps) {
             onchange={(e: any) => {
               setDesc(e.target.value);
             }}
-            inputStyle={styles.vortex_input_desc}
+            inputStyle={`${styles.vortex_input_desc} ${styles.vortex_input_textArea}`}
             textArea
           />
-          <div className={styles.vortex_acc}>
-            <Input
-              className={styles.vortex_textarea_acc}
-              type='text'
-              placeholder='Descripción'
-              label='Añadir criterio de aceptación*'
-              defaultValue={accDesc}
-              onchange={(e: any) => {
-                setAccDesc(e.target.value);
-              }}
-              inputStyle={styles.vortex_input_desc}
-              textArea
-            />
-          </div>
-        </div>
-
-        <div className={styles.vortex_button_save}>
-          <Button
-            text='Guardar'
-            onClick={() => {
-              /* fetch(CREATE_SPRINT, {
-                method: 'POST',
-                headers: HEADERS,
-                body: JSON.stringify({
-                  status: 'open',
-                  isEpic: false,
-                  createdBy: user.id,
-                  projectId: 2,
-                  userResponsableId: null,
-                  epicParentId: null,
-                  sprintId: props.sprintId,
-                  version: {
-                    createdBy: user.id
-                  },
-                  acc: [
-                    {
-                      description: accDesc,
-                      type: 'DOUI',
-                      createdBy: user.id
-                    }
-                  ]
-                })
-              })
-                .then((res) => res.json())
-                .then((_) => {
-                  props.onSave();
-                  props.onClose();
-                }); */
-              createStory();
+          <button
+            onClick={(_: any) => {
+              setAcc([...acc, '']);
             }}
-          ></Button>
+          >
+            Agregar Criterio de Aceptación
+          </button>
+          <div className={styles.vortex_acc}>
+            {acc.map((_: any) => (
+              <Input
+                className={styles.vortex_acc}
+                type='text'
+                placeholder='Descripción'
+                label='Añadir criterio de aceptación*'
+                defaultValue={accDesc}
+                onchange={(e: any) => {
+                  setAccDesc(e.target.value);
+                }}
+                inputStyle={styles.vortex_input_desc}
+                textArea
+              />
+            ))}
+          </div>
+          <div className={styles.vortex_button_save}>
+            <Button
+              text='Guardar'
+              onClick={() => {
+                createStory();
+              }}
+            ></Button>
+          </div>
         </div>
       </div>
     </div>
