@@ -4,10 +4,9 @@ import exit from '../../assets/exit.svg';
 import sprint from '../../assets/sprint.svg';
 import Input from '../input/Input';
 import Button from '../button/Button';
-import { HEADERS, CREATE_SPRINT } from '../../utils/url_utils';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
-import SprintModalService from './SprintModalService'
+import SprintModalService from './SprintModalService';
 
 interface sprintProps {
   onClose?: any;
@@ -53,7 +52,13 @@ const SprintModal = (props: sprintProps) => {
           <Button
             text={'Guardar'}
             onClick={async () => {
-              await SprintModalService.createSprint({startDate, endDate, status: 'Abierto', createdBy: user.id, projectId: props.projectId});
+              await SprintModalService.createSprint({
+                startDate,
+                endDate,
+                status: 'Abierto',
+                createdBy: user.id,
+                projectId: props.projectId
+              });
               props.onSave(props.projectId);
               props.onClose();
             }}

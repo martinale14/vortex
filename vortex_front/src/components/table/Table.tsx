@@ -15,7 +15,8 @@ import TableTitle from '../tableTitle/TableTitle';
 import { MdBusiness, MdArrowRight, MdLibraryAddCheck } from 'react-icons/md';
 import { HiPresentationChartLine } from 'react-icons/hi';
 import { IoReload } from 'react-icons/io5';
-import Button from '../button/Button'
+import Button from '../button/Button';
+import ReactLoading from 'react-loading';
 
 interface propsTable {}
 interface VortexObject {
@@ -37,6 +38,8 @@ function Table(_: propsTable) {
   const [selectedCompany, setSelectedCompany] = useState<number>(-1);
   const [selectedProject, setSelectedProject] = useState<number>(-1);
   const [selectedSprint, setSelectedSprint] = useState<number>(-1);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchCompanies();
@@ -68,20 +71,21 @@ function Table(_: propsTable) {
   };
 
   const fetchStories = async (sprintId: Number) => {
+    setIsLoading(true);
     const data = await TableService.fetchUserStories(sprintId.toString());
     setStories(data);
+    setIsLoading(false);
   };
 
   const selectOption = (e: HTMLDivElement, className: string) => {
-
     let option = document.getElementsByClassName(className);
-    
-    if(option.length > 0){
+
+    if (option.length > 0) {
       option[0].classList.remove(className, styles.vortex_selected);
     }
-    
+
     e.classList.add(className, styles.vortex_selected);
-  }
+  };
 
   const setActive = () => {
     const elements = document.getElementsByClassName('table_column');
@@ -131,7 +135,7 @@ function Table(_: propsTable) {
                     iconType={MdBusiness}
                     title='Empresas'
                   />
-                  {selectedCompany !== -1 &&
+                  {selectedCompany !== -1 && (
                     <>
                       <MdArrowRight color='#ff9312' size={25} />
                       <TableTitle
@@ -147,8 +151,8 @@ function Table(_: propsTable) {
                         title='Proyectos'
                       />
                     </>
-                  }
-                  {selectedProject !== -1 &&
+                  )}
+                  {selectedProject !== -1 && (
                     <>
                       <MdArrowRight color='#ff9312' size={25} />
                       <TableTitle
@@ -160,12 +164,18 @@ function Table(_: propsTable) {
                         title='Sprints'
                       />
                     </>
-                  }
+                  )}
                 </div>
                 <div className={styles.vortex_table_actions}>
-                  <Button disabled={selectedSprint !== -1 ? false : true} add noArrow text='Historia de usuario' onClick={() => {
-                    setAddStory(true);
-                  }}/>
+                  <Button
+                    disabled={selectedSprint !== -1 ? false : true}
+                    add
+                    noArrow
+                    text='Historia de usuario'
+                    onClick={() => {
+                      setAddStory(true);
+                    }}
+                  />
                 </div>
               </div>
             </th>
@@ -188,14 +198,14 @@ function Table(_: propsTable) {
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={HiPresentationChartLine} title='Proyectos' />
                 <div>
-                  {selectedCompany !== -1 && 
+                  {selectedCompany !== -1 && (
                     <AiFillPlusCircle
                       onClick={() => {
                         setAddProject(true);
                       }}
                       className={styles.vortex_add_icon}
                     />
-                  }
+                  )}
                 </div>
               </div>
             </th>
@@ -203,14 +213,14 @@ function Table(_: propsTable) {
               <div className={styles.vortex_table_head_container}>
                 <TableTitle color='#008f82' iconType={IoReload} title='Sprints' />
                 <div>
-                  {selectedProject !== -1 &&
+                  {selectedProject !== -1 && (
                     <AiFillPlusCircle
                       onClick={() => {
                         setAddSprint(true);
                       }}
                       className={styles.vortex_add_icon}
                     />
-                  }
+                  )}
                 </div>
               </div>
             </th>
@@ -233,7 +243,7 @@ function Table(_: propsTable) {
                       setSelectedCompany(company.id);
                       setSelectedProject(-1);
                       setSelectedSprint(-1);
-                      selectOption(e.currentTarget, styles.vortex_selected_company)
+                      selectOption(e.currentTarget, styles.vortex_selected_company);
                     }}
                   >
                     <p>{company.name}</p>
@@ -251,7 +261,7 @@ function Table(_: propsTable) {
                       fetchSprints(project.id);
                       setSelectedProject(project.id);
                       setSelectedSprint(-1);
-                      selectOption(e.currentTarget, styles.vortex_selected_project)
+                      selectOption(e.currentTarget, styles.vortex_selected_project);
                     }}
                   >
                     <p>{project.name}</p>
@@ -279,7 +289,9 @@ function Table(_: propsTable) {
             </td>
             <td className={`${styles.vortex_last} table_column`}>
               <div className={styles.vortex_container}>
-                {stories.length === 0 && selectedSprint !== -1 ? (
+                {isLoading ? (
+                  <ReactLoading type='spinningBubbles' height='100px' width='100px' color='#008f82' />
+                ) : stories.length === 0 && selectedSprint !== -1 ? (
                   <div>
                     <p>No hay historias de usuario para este sprint</p>
                   </div>
@@ -293,7 +305,7 @@ function Table(_: propsTable) {
           </tr>
         </tbody>
       </table>
-      {addProject &&
+      {addProject && (
         <ProjectModal
           companyId={selectedCompany}
           onSave={(companyId: number) => {
@@ -303,39 +315,43 @@ function Table(_: propsTable) {
             setAddProject(false);
           }}
         />
-      }
+      )}
 
-      {addCompany &&
+      {addCompany && (
         <CompanyModal
-          onSave={() => {fetchCompanies()}}
+          onSave={() => {
+            fetchCompanies();
+          }}
           onClose={() => {
             setAddCompany(false);
           }}
         />
-      }
+      )}
 
-      {addSprint &&
+      {addSprint && (
         <SprintModal
           projectId={selectedProject}
-          onSave={(projectId: number) => {fetchSprints(projectId)}}
+          onSave={(projectId: number) => {
+            fetchSprints(projectId);
+          }}
           onClose={() => {
             setAddSprint(false);
           }}
         />
-      }
+      )}
 
-      {addStory &&
+      {addStory && (
         <StoryModal
-          company={selectedCompany}
+          project={selectedProject}
           sprintId={selectedSprint}
           onSave={() => {
-            fetchStories(selectedSprint)
+            fetchStories(selectedSprint);
           }}
           onClose={() => {
             setAddStory(false);
           }}
         />
-      }
+      )}
     </>
   );
 }

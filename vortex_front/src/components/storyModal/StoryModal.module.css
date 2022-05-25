@@ -10,6 +10,10 @@
   place-items: center;
 }
 
+.vortex_add_acc_button {
+  width: 60%;
+}
+
 .vortex_cardStory {
   width: 850px;
   height: 700px;
@@ -73,6 +77,10 @@
   width: 70%;
 }
 
+.vortex_input_dropdown > p {
+  margin-top: 0;
+}
+
 .vortex_textarea_acc > p {
   margin-top: 0;
 }
@@ -80,14 +88,12 @@
 .vortex_input_desc {
   padding: 10px;
   resize: none;
-  overflow: scroll;
 }
 
 .vortex_acc {
   width: 90%;
 }
-
-.vortex_input_desc::-webkit-scrollbar {
+.vortex_cardStory_body::-webkit-scrollbar {
   display: none;
 }
 
@@ -103,9 +109,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .vortex_cardStory_header > h2 {
   margin-right: 300px;
   margin-left: 10px;
+}
+
+.vortex_acc > div {
+  cursor: pointer;
+  display: flex;
+}
+
+.vortex_acc > div > .acc_action_delete {
+  display: flex;
+  align-items: flex-end;
 }

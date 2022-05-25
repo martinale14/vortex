@@ -20,29 +20,33 @@
 
 .vortex_profile_section {
   height: 100%;
+  position: relative;
   width: 100%;
   display: flex;
-  justify-content: center;
+  padding-top: 60px;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   row-gap: 30px;
 }
 
 .vortex_profile_user {
-  height: 120px;
+  min-height: 100px;
+  max-height: 100px;
   position: relative;
+  display: flex;
 }
 
 .vortex_profile_image_container {
   width: 100px;
   height: 100px;
   overflow: hidden;
-  position: absolute;
-  top: -50px;
-  left: 50px;
+  position: relative;
   border-radius: 50px;
   border: 2px solid white;
   cursor: pointer;
+  margin-top: -40px;
+  margin-left: 40px;
 }
 
 .vortex_profile_image_container > div {
@@ -72,7 +76,7 @@
 }
 
 .vortex_profile_userinfo {
-  margin-left: 160px;
+  margin-left: 20px;
   width: calc(100% - 170px);
   height: 100%;
   display: flex;
