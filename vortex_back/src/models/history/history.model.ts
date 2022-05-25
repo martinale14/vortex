@@ -23,6 +23,7 @@ export class History {
   userResponsableId: number;
   epicParentId: number;
   sprintId: number;
+  responsableName: string;
 
   constructor(
     id: string,
@@ -35,7 +36,8 @@ export class History {
     projectId: number,
     userResponsableId: number,
     epicParentId: number,
-    sprintId: number
+    sprintId: number,
+    responsableName: string
   ) {
     this.id = id;
     this.status = status;
@@ -48,6 +50,7 @@ export class History {
     this.userResponsableId = userResponsableId;
     this.epicParentId = epicParentId;
     this.sprintId = sprintId;
+    this.responsableName = responsableName;
   }
 
   static fromDB(object: { [key: string]: any }): History {
@@ -62,7 +65,8 @@ export class History {
       object.project_id_hist,
       object.user_responsable_id_hist,
       object.epic_parent_id_hist,
-      object.sprint_id_hist
+      object.sprint_id_hist,
+      object.responsable_name_hist
     );
 
     return history;
@@ -80,7 +84,8 @@ export class History {
       projectId: this.projectId,
       userResponsableId: this.userResponsableId,
       epicParentId: this.epicParentId,
-      sprintId: this.sprintId
+      sprintId: this.sprintId,
+      responsableName: this.responsableName
     };
 
     return histJson;
@@ -109,6 +114,16 @@ export class History {
   }
 
   static async getHistoriesBySprint(idSprint: string) {
+    try {
+      const histories = await pool.query('SELECT * FROM vortex.select_history_by_sprint($1)', [idSprint]);
+
+      return histories;
+    } catch (e) {
+      throw new VortexException('database_error');
+    }
+  }
+
+  static async getLineBase(idSprint: string) {
     try {
       const histories = await pool.query('SELECT * FROM vortex.select_history_by_sprint($1)', [idSprint]);
 

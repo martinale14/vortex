@@ -24,14 +24,16 @@ function Button(props: PropsButton) {
     <button
       type={props.type ?? 'button'}
       className={`${styles.button_vortex} ${
-        props.disabled ? styles.button_vortex_disabled 
-          : props.back ? styles.button_vortex_back_fill 
-            : styles.button_vortex_next_fill
+        props.disabled
+          ? styles.button_vortex_disabled
+          : props.back
+          ? styles.button_vortex_back_fill
+          : styles.button_vortex_next_fill
       }`}
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      {props.add && <AiFillPlusCircle size={20} className={styles.plusCircle}/>}
+      {props.add && <AiFillPlusCircle size={20} className={styles.plusCircle} />}
       {props.text}
       {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
     </button>

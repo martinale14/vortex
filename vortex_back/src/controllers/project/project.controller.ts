@@ -10,7 +10,7 @@ export class ProjectController {
 
     try {
       await Project.createProject(payload);
-    } catch (e) {      
+    } catch (e) {
       status = 500;
       result = 'Hubo un error inesperado';
     }
@@ -36,4 +36,6 @@ export class ProjectController {
 
     res.status(status).json({ result, projects });
   }
+
+  static async generateExcel(_: Request, __: Response) {}
 }
