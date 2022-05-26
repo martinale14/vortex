@@ -12,7 +12,7 @@
 }
 
 .vortex_cardSprint{
-    width: 70%;
+    width: 50%;
     height: 400px;
     background-color: #fff;
     border-radius: 18px;
@@ -41,7 +41,7 @@
 }
 
 .vortex_imgLine{
-    width: 900px;
+    width: 100%;
     height: 4px;
 }
 
