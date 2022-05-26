@@ -7,6 +7,7 @@ export const GET_ALL_PROJECTS = `${URL}/project/`;
 export const GET_ALL_SPRINTS = `${URL}/sprint/fromProject/`;
 export const GET_ALL_HISTORIES = `${URL}/history/fromSprint/`;
 export const GET_STORIES_BYSPRINT = `${URL}/history/fromSprint`;
+export const GET_STORIES_BYPROJECT = `${URL}/history/fromProject/`;
 export const GET_ALL_USERS = `${URL}/auth/users`;
 export const CREATE_PROJECT = `${URL}/project`;
 export const CREATE_COMPANY = `${URL}/company`;

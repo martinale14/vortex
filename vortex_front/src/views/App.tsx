@@ -8,6 +8,7 @@ import Table from '../components/table/Table';
 import Profile from '../components/profile/Profile';
 import TableUsers from '../components/tableUsers/TableUsers';
 import TableTemplate from '../components/tableTemplate/TableTemplate';
+import ProjectTable from '../components/ProjectTable/ProjectTable';
 import { Toaster } from 'react-hot-toast';
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Route path='/' element={<Login />} />
           <Route path='/home' element={<Home />}>
             <Route path='' element={<Table />} />
+            <Route path='project/:projectId' element={<ProjectTable />} />
             <Route path='templates' element={<TableTemplate />} />
             <Route path='admin' element={<TableUsers />} />
             <Route path='profile' element={<Profile />} />

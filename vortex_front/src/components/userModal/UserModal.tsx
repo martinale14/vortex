@@ -5,6 +5,7 @@ import Dropdown from '../dropdown/dropdown';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { useState } from 'react';
 import UserModalServices from './UserModalServices';
+import toast from 'react-hot-toast';
 
 interface UserModalProps{
     onClose?: any;
@@ -71,6 +72,10 @@ const UserModal = (props: UserModalProps) => {
                 <div className={styles.vortex_button}>
                     <Button text='Guardar'
                         onClick={async () => {
+                            if(nameUser.trim() === '' || emailUser.trim() === '' || roleUser === 0){
+                                toast.error('Por favor llena los campos obligatorios');
+                                return
+                            }
                             await createUser();
                             props.onSave();
                             props.onClose();

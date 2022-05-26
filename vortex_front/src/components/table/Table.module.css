@@ -157,10 +157,17 @@ td {
 }
 
 .vortex_table_actions {
-  height: 25px;
   margin-left: auto;
-  margin-right: 5px;
   z-index: 1;
+}
+
+.vortex_table_action_one, .vortex_table_action_two{
+  height: 25px;
+  margin-right: 7px;
+}
+
+.vortex_table_action_one {
+  width: 250px;
 }
 
 .vortex_table_actions button {

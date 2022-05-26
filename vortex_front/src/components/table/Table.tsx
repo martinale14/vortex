@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Table.module.css';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoMdArrowDropright } from 'react-icons/io';
 import SprintCard from '../sprintCard/SprintCard';
 import StoryCard from '../storyCard/StoryCard';
-import { useEffect, useState } from 'react';
 import ProjectModal from '../projectModal/projectModal';
 import CompanyModal from '../companyModal/CompanyModal';
 import SprintModal from '../sprintModal/SprintModal';
@@ -42,6 +43,7 @@ function Table(_: propsTable) {
   const [selectedSprint, setSelectedSprint] = useState<number>(-1);
 
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCompanies();
@@ -169,15 +171,28 @@ function Table(_: propsTable) {
                   )}
                 </div>
                 <div className={styles.vortex_table_actions}>
-                  <Button
-                    disabled={selectedSprint !== -1 ? false : true}
-                    add
-                    noArrow
-                    text='Historia de usuario'
-                    onClick={() => {
-                      setAddStory(true);
-                    }}
-                  />
+                  <div className={styles.vortex_table_action_one}>
+                    <Button
+                      disabled={selectedProject !== -1 ? false : true}
+                      add
+                      noArrow
+                      text='Vista detallada del proyecto'
+                      onClick={() => {
+                        navigate(`/home/project/${selectedProject}`)
+                      }}
+                    />
+                  </div>
+                  <div className={styles.vortex_table_action_two}>
+                    <Button
+                      disabled={selectedSprint !== -1 ? false : true}
+                      add
+                      noArrow
+                      text='Historia de usuario'
+                      onClick={() => {
+                        setAddStory(true);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </th>

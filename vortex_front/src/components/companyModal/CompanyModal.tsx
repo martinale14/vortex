@@ -4,7 +4,8 @@ import Input from '../input/Input';
 import Button from '../button/Button';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
-import CompanyModalService from './CompanyModalService'
+import CompanyModalService from './CompanyModalService';
+import { toast } from 'react-hot-toast';
 
 interface CompanyModalProps {
   onClose?:any;
@@ -16,11 +17,11 @@ const CompanyModal = (props: CompanyModalProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [direction, setDirection] = useState('');
+  const [address, setAddress] = useState('');
 
   const [nameValidation, setNameValidation] = useState<string | null>(null);
   const [emailValidation, setEmailValidation] = useState<string | null>(null);
-  const [directionValidation, setDirectionValidation] = useState<string | null>(null);
+  const [addressValidation, setAddressValidation] = useState<string | null>(null);
 
   const {user} = useContext<any>(UserContext);
   
@@ -53,18 +54,22 @@ const CompanyModal = (props: CompanyModalProps) => {
               setPhone(e.target.value);
             }}
           />
-          <Input type='text' value={direction} label='Dirección' placeholder='Carrera 8 # 35 -26' 
+          <Input type='text' value={address} label='Dirección' placeholder='Carrera 8 # 35 -26' 
             onChange={(e) => {
-              setDirection(e.target.value);
-              e.target.value.trim() === '' ? setDirectionValidation('Campo obligatorio') : setDirectionValidation(null)
+              setAddress(e.target.value);
+              e.target.value.trim() === '' ? setAddressValidation('Campo obligatorio') : setAddressValidation(null)
             }}
-            validationText={directionValidation}
+            validationText={addressValidation}
           />
           
         </div>
         <div className={styles.button}>
           <Button text='Guardar' onClick={ async () => {
-            await CompanyModalService.createCompany({name, email, phone, direction, createdBy: user.id});
+            if(name.trim() === '' || email.trim() === '' || address.trim() === ''){
+              toast.error('Por favor llena los campos obligatorios');
+              return;
+            }
+            await CompanyModalService.createCompany({name, email, phone, direction: address, createdBy: user.id});
             props.onSave();
             props.onClose();
           }}></Button>

@@ -5,6 +5,7 @@ import Button from '../button/Button';
 import {useState, useContext} from 'react';
 import { UserContext } from '../../utils/contexts';
 import ProjectModalService from './projectModalService'
+import toast from 'react-hot-toast';
 
 interface ProjectModalProps {
   onClose?:any;
@@ -58,6 +59,10 @@ const ProjectModal = (props: ProjectModalProps) => {
         </div>
         <div className={styles.button}>
           <Button text='Guardar' onClick={ async () => {
+            if(name.trim() === '' || estimatedTime === '' || startDate === ''){
+              toast.error('Por favor llena los campos obligatorios');
+              return;
+            }
             await ProjectModalService.createProject({name, estimatedTime, startDate, createdBy: user.id, companyId});
             props.onSave(companyId);
             props.onClose();

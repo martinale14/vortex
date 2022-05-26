@@ -7,6 +7,7 @@ import Button from '../button/Button';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/contexts';
 import SprintModalService from './SprintModalService';
+import { toast } from 'react-hot-toast';
 
 interface sprintProps {
   onClose?: any;
@@ -59,6 +60,10 @@ const SprintModal = (props: sprintProps) => {
           <Button
             text={'Guardar'}
             onClick={async () => {
+              if(startDate === '' || endDate === ''){
+                toast.error('Por favor llena los campos obligatorios');
+                return
+              }
               await SprintModalService.createSprint({
                 startDate,
                 endDate,

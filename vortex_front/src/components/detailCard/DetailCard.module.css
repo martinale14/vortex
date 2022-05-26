@@ -1,0 +1,74 @@
+.vortex_sprint_card {
+    -webkit-box-shadow: var(--dropShdow);
+    box-shadow: var(--dropShdow);
+    width: 80%;
+    min-width: 180px;
+    margin: 0 20px;
+    height: fit-content;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.2s;
+    padding: 0 10px;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .vortex_sprint_card:hover {
+    background-color: var(--secondaryColor);
+  }
+  
+  .vortex_sprint_card:hover .arrow {
+    color: white;
+  }
+  
+  .vortex_sprint_card:hover p {
+    color: white;
+  }
+  
+  .vortex_sprint_card:hover .vortex_sprint_header {
+    border-bottom: 1px solid white;
+  }
+  
+  .vortex_sprint_header {
+    width: calc(100% - 10px);
+    height: 22%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--primaryColor);
+    margin-top: 12px;
+  }
+  
+  .vortex_sprint_header > p {
+    margin: 0 0 0 5px;
+  }
+  
+  .vortex_sprint_body {
+    width: calc(100% - 10px);
+    height: 78%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .vortex_sprint_body p {
+    color: var(--darkColor);
+  }
+  
+  .vortex_sprint_date {
+    margin: 10px 0 0 0;
+    font-size: 14px;
+  }
+  
+  .vortex_sprint_status {
+    font-size: 14px;
+    margin-top: auto;
+    margin-bottom: 15px;
+  }
+  
+  .arrow {
+    font-size: 20px;
+    color: var(--secondaryColor);
+    margin-left: auto;
+    margin-right: 10px;
+  }
