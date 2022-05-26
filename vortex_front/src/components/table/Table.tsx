@@ -24,6 +24,8 @@ interface VortexObject {
   id: number;
 }
 
+let epicParent: number | null = null;
+
 function Table(_: propsTable) {
   const [companies, setCompanies] = useState<any[]>([]);
   const [projects, setProjects] = useState([]);
@@ -297,7 +299,18 @@ function Table(_: propsTable) {
                   </div>
                 ) : (
                   stories.map((story: any) => {
-                    return <StoryCard key={'story_' + story.hist.id} story={story} />;
+                    return (
+                      <StoryCard
+                        onClick={() => {
+                          if (story.hist.isEpic) {
+                            epicParent = story.hist.id;
+                            setAddStory(true);
+                          }
+                        }}
+                        key={'story_' + story.hist.id}
+                        story={story}
+                      />
+                    );
                   })
                 )}
               </div>
@@ -347,7 +360,9 @@ function Table(_: propsTable) {
           onSave={() => {
             fetchStories(selectedSprint);
           }}
+          epicParent={epicParent}
           onClose={() => {
+            epicParent = null;
             setAddStory(false);
           }}
         />

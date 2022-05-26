@@ -18,6 +18,7 @@ export const GENERATE_NEW_TOKEN = `${URL}/auth/token`;
 export const LOGOUT_ROUTE = `${URL}/auth/logout`;
 export const UPDATE_PICTURE = `${URL}/auth/users/update/picture`;
 export const UPDATE_USER = `${URL}/auth/users/update`;
+export const GET_ALL_TEMPLATES = `${URL}/templates`;
 
 export const HEADERS = {
   'Content-Type': 'application/json',

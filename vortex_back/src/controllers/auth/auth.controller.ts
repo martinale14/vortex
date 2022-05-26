@@ -3,7 +3,8 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { JwtController } from './jwt.controller';
 import { getRoleName } from '../../models/user/roles.model';
-
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
 export class AuthController {
   static async register(req: Request, res: Response) {
     let status = 201;
@@ -51,5 +52,40 @@ export class AuthController {
     console.log(req);
     console.log(res);
     console.log(other);
+  }
+
+  static async forgetPassword(req: Request, res: Response) {
+    const result = await User.searchUserByEmail(req.body.email);
+
+    if (result.rows.length > 0) {
+      AuthController.sendRecoverEmail(User.fromDB(result.rows[0]).email);
+      res.status(200).json({ result: 'Correo de recuperación enviado exitosamente' });
+    } else {
+      res.status(406).json({ result: 'Correo no encontrado' });
+    }
+  }
+
+  static sendRecoverEmail(email: string) {
+    const API_KEY = process.env.MAILGUN_API_KEY;
+    const DOMAIN = process.env.MAILGUN_DOMAIN;
+
+    const mailgun = new Mailgun(formData);
+    const client = mailgun.client({ username: 'api', key: API_KEY! });
+
+    const messageData = {
+      from: 'test@' + DOMAIN,
+      to: email,
+      subject: 'Hello',
+      text: 'Testing some Mailgun awesomeness!'
+    };
+
+    client.messages
+      .create(DOMAIN!, messageData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
