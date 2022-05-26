@@ -73,7 +73,7 @@ export class AuthController {
     const client = mailgun.client({ username: 'api', key: API_KEY! });
 
     const messageData = {
-      from: 'Ana <anahubackend@vortex.com',
+      from: 'test@' + DOMAIN,
       to: email,
       subject: 'Hello',
       text: 'Testing some Mailgun awesomeness!'
