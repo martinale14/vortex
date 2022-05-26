@@ -16,6 +16,7 @@ interface storyProps {
   onSave: any;
   sprintId?: number;
   project?: number;
+  epicParent?: number | null;
 }
 
 function StoryModal(props: storyProps) {
@@ -24,6 +25,7 @@ function StoryModal(props: storyProps) {
   const [acc, setAcc] = useState([{ key: 0, value: '' }]);
   const [devs, setDevs] = useState([]);
   const [inCharge, setInCharge] = useState('');
+  const [isEpic, setIsEpic] = useState<boolean>(false);
 
   const { user } = useContext<{ user: any; setUser: any }>(UserContext);
 
@@ -43,11 +45,11 @@ function StoryModal(props: storyProps) {
     const story = {
       history: {
         status: 'Abierto',
-        isEpic: false,
+        isEpic: isEpic,
         createdBy: user.id,
         projectId: props.project,
         userResponsableId: inCharge !== '' ? inCharge : null,
-        epicParentId: null,
+        epicParentId: props.epicParent,
         sprintId: props.sprintId
       },
       version: {
@@ -138,6 +140,19 @@ function StoryModal(props: storyProps) {
             textArea
           />
 
+          {props.epicParent !== null ? null : (
+            <div className={styles.check}>
+              <input
+                value={isEpic.toString()}
+                onChange={(_) => {
+                  setIsEpic(!isEpic);
+                }}
+                type='checkbox'
+              />
+              <label>¿Es una épica?</label>
+            </div>
+          )}
+
           <div className={styles.vortex_add_acc_button}>
             <Button
               noArrow={true}
@@ -147,7 +162,6 @@ function StoryModal(props: storyProps) {
               }}
             ></Button>
           </div>
-
           <div className={styles.vortex_acc}>
             {acc.map((e: any, i: number) => (
               <div key={'acc_' + e.key}>

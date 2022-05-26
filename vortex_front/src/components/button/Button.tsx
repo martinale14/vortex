@@ -11,6 +11,7 @@ interface PropsButton {
   noArrow?: any;
   add?: any;
   disabled?: boolean;
+  className?: string;
 }
 
 /**
@@ -29,7 +30,7 @@ function Button(props: PropsButton) {
           : props.back
           ? styles.button_vortex_back_fill
           : styles.button_vortex_next_fill
-      }`}
+      } ${props.className}`}
       onClick={props.onClick}
       disabled={props.disabled}
     >

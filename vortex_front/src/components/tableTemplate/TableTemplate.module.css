@@ -1,66 +1,104 @@
-.vortex_tableTemplate{
+.vortex_tableTemplate {
   width: 95%;
-  height: 85%;
+  height: fit-content;
   margin: 20px auto;
+  padding: 20px;
   border-radius: 10px;
-  background-color: white;
-  -webkit-box-shadow: var(--dropShdow);
-  box-shadow: var(--dropShdow);
-  border-collapse: collapse;    
-}
-
-.vortex_tableTemplate > p {
-  color: #5D5D5D;
-  font-size: 18px;
-  margin: 35px;
-  margin-top: 40px;
-}
-
-.vortex_container_templates{
-  display: flex;
-  justify-content: space-around;
-  margin-top: 80px;
-  width: 95%;
-  height: 75%;
-}
-
-.vortex_card_template{
-  margin-left: 40px;
-  padding: 30px;
-  padding-top: 8px;
-  width: 50%;
-  border-radius: 10px;
-  background-color: white;
   -webkit-box-shadow: var(--dropShdow);
   box-shadow: var(--dropShdow);
   border-collapse: collapse;
 }
 
-.vortex_card_template > p{
-    margin-top: 30px;
-    font-weight: bold;
+.vortex_tableTemplate > p {
+  color: #5d5d5d;
+  font-size: 18px;
 }
 
-.vortex_card_template Button{
-    width: calc(100% - 10%);
-    display: flex;
-    margin-bottom: 10px;
-    left: 15px;
+.vortex_container_templates {
+  display: flex;
+  height: fit-content;
+  min-height: 600px;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-.vortex_header_template{
+.vortex_card_template {
+  padding: 30px;
+  margin-top: 20px;
+  padding-top: 8px;
+  width: 380px;
+  border-radius: 10px;
+  -webkit-box-shadow: var(--dropShdow);
+  box-shadow: var(--dropShdow);
+  border-collapse: collapse;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.vortex_card_template > p {
+  margin-top: 40px;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+.vortex_card_template > ul {
+  overflow-y: scroll;
+  align-self: flex-start;
+  margin-top: 10px;
+  list-style-position: inside;
+}
+
+.vortex_card_template > ul::-webkit-scrollbar {
+  display: none;
+}
+
+.vortex_card_template li {
+  list-style-type: disc;
+  margin-top: 5px;
+}
+
+.vortex_card_template Button {
+  width: 100%;
+  display: flex;
+}
+
+.vortex_card_template Input,
+.vortex_card_template form {
+  width: 100%;
+}
+
+.vortex_header_template {
   width: calc(100% - 10px);
   height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid var(--primaryColor);    
+  border-bottom: 2px solid var(--primaryColor);
 }
 
-.vortex_header_template > h1{
-   font-size: 20px;
-   font-weight: bold;
-   color: var(--secondaryColor);  
+.vortex_header_template > h1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--secondaryColor);
+}
+
+.buttons_actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  justify-self: flex-end;
+}
+
+.buttonAdd {
+  padding: 0;
+  margin-left: 10px;
+}
+
+.button_spacer {
+  flex: 1;
 }
 
 /* .vortex_container_button{
