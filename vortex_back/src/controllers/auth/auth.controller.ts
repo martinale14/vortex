@@ -59,7 +59,7 @@ export class AuthController {
 
     if (result.rows.length > 0) {
       AuthController.sendRecoverEmail(User.fromDB(result.rows[0]).email);
-      res.status(406).json({ result: 'Correo no encontrado' });
+      res.status(200).json({ result: 'Correo de recuperación enviado exitosamente' });
     } else {
       res.status(406).json({ result: 'Correo no encontrado' });
     }
