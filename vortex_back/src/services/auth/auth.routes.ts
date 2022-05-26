@@ -12,6 +12,8 @@ router.post('/login', authenticate, AuthController.login);
 
 router.get('/logout', AuthController.logout);
 
+router.post('/fogetPassword', AuthController.forgetPassword);
+
 router.post('/register', verifyJWT, AuthController.register);
 
 router.get('/users', verifyJWT, UserController.getAllUsers);
