@@ -18,6 +18,7 @@ import sprintRouter from './services/sprints.routes';
 import historyRouter from './services/histories.routes';
 import accRouter from './services/acc.routes';
 import versionRouter from './services/versions.routes';
+import templateRouter from './services/template.routes';
 
 import { initializePassport } from './utilities/passport.util';
 import { verifyJWT } from './middlewares/jwt.middleware';
@@ -71,6 +72,7 @@ app.use('/api/v1/history', verifyJWT, historyRouter);
 app.use('/api/v1/acc', verifyJWT, accRouter);
 app.use('/api/v1/version', verifyJWT, versionRouter);
 app.use('/api/v1/search', verifyJWT, searchRouter);
+app.use('/api/v1/templates', verifyJWT, templateRouter);
 app.all('*', notFoundRouter);
 
 // Starting the server
