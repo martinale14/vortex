@@ -2,6 +2,7 @@ import styles from './Button.module.css';
 import { IoMdArrowDroprightCircle } from 'react-icons/io';
 import { MouseEventHandler } from 'react';
 import { AiFillPlusCircle } from 'react-icons/ai';
+import ReactLoading from 'react-loading';
 
 interface PropsButton {
   back?: Boolean; //Optional value to change button style
@@ -12,6 +13,7 @@ interface PropsButton {
   add?: any;
   disabled?: boolean;
   className?: string;
+  isLoading?: boolean;
 }
 
 /**
@@ -35,7 +37,8 @@ function Button(props: PropsButton) {
       disabled={props.disabled}
     >
       {props.add && <AiFillPlusCircle size={20} className={styles.plusCircle} />}
-      {props.text}
+      {(props.isLoading ?? false) ? <ReactLoading height='30px' width='30px' type='spinningBubbles' color='#008f82' />
+ : props.text}
       {props.noArrow ? null : <IoMdArrowDroprightCircle className={styles.arrow} />}
     </button>
   );

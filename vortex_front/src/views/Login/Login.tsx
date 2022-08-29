@@ -22,6 +22,8 @@ function Login(_: propsLogin) {
   const [emailValidationText, setEmailValidationText] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function Login(_: propsLogin) {
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setEmailValidationText(ValidationManager.validateEmail(email));
-
+    setIsLoading(true);
     if (email !== '' && password !== '') {
       if (ValidationManager.validateGroup([emailValidationText])) {
         const data = await LoginService.login({ email, password });
@@ -63,6 +65,7 @@ function Login(_: propsLogin) {
         }
       }
     }
+    setIsLoading(false);
   };
 
   const handleClickRecover = () => {
@@ -107,7 +110,7 @@ function Login(_: propsLogin) {
                 placeholder='Ingrese la contraseña'
                 className={styles.loginInput}
               />
-              <Button type='submit' text='Iniciar sesión' onClick={handleClick} />
+              <Button type='submit' text='Iniciar sesión' onClick={handleClick} isLoading={isLoading}/>
               <button
                 className={styles.raisedButton}
                 onClick={(e) => {
